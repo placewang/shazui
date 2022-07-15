@@ -1,11 +1,10 @@
 #include  "MotorCan.h"
-
 #include  "can.h"
                                                                                
 MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78};
 MotorSubCmd	 MSCmd={0x8001,0x8002,0x8003,0x8004,0x8009,0x800B,0x8008,0x800C,0x8040,0x8041, 0x0201,0x8005};
 
-MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
+MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,{0},{0},MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
 MotorAlarm   MEState ={1,16,17,18,19,20,21,22,33,34,35,41,36,0,0,0};
 
 /*
@@ -51,6 +50,7 @@ signed char MotorSendCanData(const unsigned char * dataval,\
 	}
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}                    //等待总线空闲
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_RS)){;}	
+	while(!CAN_GetFlagStatus(CAN1,CAN_STATUS_TCS)){;}		
 	McanPeliTxBuff.CANID     =Dev_num;                                 //Can发送ID
 	McanPeliTxBuff.DLC       =num;                                     //数据长度
 	McanPeliTxBuff.CANIDtype =0;                                       //ID类型（标准帧/扩展帧）
@@ -141,20 +141,22 @@ signed char ReadAnPackData(MotorRevBuff *buff)
 {
 	int i=0;
 	int len=8;
+	int fr=0;
 	unsigned char Data[8]={0};
+	
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}
 	while(CAN_GetFlagStatus(CAN1, CAN_IT_RI)){;}		
 	if(buff->MLen(buff)>=8)
 	{
-			for(i=0;i<len;i++)
-			{
-				Data[i]=buff->RevBuff[buff->out];
-				buff->out=(buff->out+1)%MOTORBUFFLEN;
-			}
-			if(DataAnalyze(Data))
-			{
-				return 1;
-			}	
+					for(i=0;i<len;i++)
+					{
+						Data[i]=buff->RevBuff[buff->out];
+						buff->out=(buff->out+1)%MOTORBUFFLEN;
+					}
+					if(DataAnalyze(Data))
+					{
+						return 1;
+					}	
 	}
 	return 0;
 }
@@ -206,9 +208,9 @@ unsigned char GetMotorStartOrStop(const unsigned int MID)
 轮询查电机状态及速度，位置，扭矩
 */
 
-
 void PollingMotorSta(void)
 {
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorYID);
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorXID);
+//	ReadAnPackData(&MRevBuff);
 }

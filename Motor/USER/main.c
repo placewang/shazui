@@ -26,32 +26,32 @@ int main()
 		SPI_1_32bit_Init(SPI,32);
 		CAN_Filter_20GroupInit(CAN_1M);
 		MotorCanInit();
-	  MoveZero(0x02,100,200);
+	  MoveZero(0x01,200,100);
+//	  MoveZero(0x02,100,200);
 		while(1)
 		{
-			
-				if(MExeSta.MoveZeroStaY)
-					{
-				  	MoveToTargetPos(0x64,1350,0x02);
-						MExeSta.MoveZeroStaY=0;
-					}	
-//					if(MExeSta.MoveTargetStaY)
-//					{
-//						MoveToTargetPos(0x64,4038,0x02);
-//						MExeSta.MoveTargetStaY=0;
-//						MRevBuff.YMoveTargetval=0;
-//					}
-					ReadAnPackData(&MRevBuff);
-					MotorStaRenew();
-//					if(MRevBuff.TaskTime>=315)
-//					{
-//						MotorStaRenew();
-//						PollingMotorSta();
-//						ReadAnPackData(&MRevBuff);
-//						MRevBuff.TaskTime=0;
-//					}
-
-
+				ReadAnPackData(&MRevBuff);
+				MotorStaRenew();
+//				if(MExeSta.MoveZeroStaY)
+//				{
+//				  	MoveToTargetPos(0x64,2008,0x02);
+//						ClearMStat(0x02,1);
+//				}
+				if(MExeSta.MoveZeroStaX)
+				{
+				 	  MoveToTargetPos(1000,61405,0x01);
+						ClearMStat(0x01,1);
+				}	
+			if(MExeSta.MoveTargetStaX)
+			{
+					MoveToTargetPos(1000,0,0x01);
+					ClearMStat(0x01,0);
+			}
+			if(MRevBuff.TaskTime>=315)
+			{
+							PollingMotorSta();	
+							MRevBuff.TaskTime=0;
+			}
 //			if(SK_IN6)
 //				{
 //					DELAY_Ms(1000);

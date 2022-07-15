@@ -56,6 +56,8 @@ typedef struct MotorRev
 	signed   int   M2pos;											  //剪刀电机实时位置
 	signed   int   YMoveTargetval;              //剪刀电机运动目标值
 	signed   int   XMoveTargetval;              //平移电机运动目标值
+	signed   int   YMoveStandard[16];           //平移电机选刀位置存储
+  signed   int   XMoveStandard[16];           //剪刀电机出刀位置存储
 	int (*MFull)(struct MotorRev *);            //判断缓存满函数
 	int (*MEmpty)(struct MotorRev *);           //判断缓存满函数
 	unsigned int (*MLen)(struct MotorRev *);	  //计算循环队列长度
@@ -105,15 +107,15 @@ unsigned int MRevbuffLen(MotorRevBuff *);
 
 unsigned char MotorCanInit(void);
 
-signed char MoveZero(const unsigned short MID,const signed short Seep,const unsigned short Torque);
+signed char MoveZero(const unsigned short,const signed short,const unsigned short);
 signed char MotorSendCanData(const unsigned char * ,const unsigned int ,const unsigned int );
 void PollingMotorSta(void);
 void  MotorStaRenew(void);
 unsigned char GetMotorStartOrStop(const unsigned int);
 signed char ReadAnPackData(MotorRevBuff *);
 
-void MoveToTargetPos(const signed ,const signed int , const unsigned short );
-
+void MoveToTargetPos(const signed ,signed int , const unsigned short );
+void ClearMStat(const unsigned short,char);
 
 #endif
 
