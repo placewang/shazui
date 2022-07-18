@@ -1,12 +1,15 @@
 #ifndef MOTOR_CAN_H
 #define MOTOR_CAN_H
+
 #include "delay.h"
+
 #define  MOTORBUFFLEN                     80 
 #define  MOTORREVCANID                    0x000001
 #define  MOTORDATALEN                     8
 
 #define  MotorYID                         0x02          //剪刀电机ID
 #define  MotorXID                         0x01					//平移电机ID
+#define  MotorXYLACUNA                    2146          //剪刀电机在平移位置上的两刀之间的间隙偏移量
 //电机主命令
 typedef struct {
 	unsigned char ZeroHit;																//撞零
@@ -107,7 +110,7 @@ unsigned int MRevbuffLen(MotorRevBuff *);
 
 unsigned char MotorCanInit(void);
 
-signed char MoveZero(const unsigned short,const signed short,const unsigned short);
+signed char MoveZero(const unsigned short,const signed short,const unsigned short,unsigned char,signed short);
 signed char MotorSendCanData(const unsigned char * ,const unsigned int ,const unsigned int );
 void PollingMotorSta(void);
 void  MotorStaRenew(void);
@@ -116,7 +119,8 @@ signed char ReadAnPackData(MotorRevBuff *);
 
 void MoveToTargetPos(const signed ,signed int , const unsigned short );
 void ClearMStat(const unsigned short,char);
-
+/*************/
+signed char DreMoveZero(void);
 #endif
 
 

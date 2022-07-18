@@ -27,11 +27,20 @@ Project File Date:  07/12/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'E:\kail\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling main.c...
+compiling MotorMove.c...
+..\USER\MotorMove.c(279): warning:  #1-D: last line of file ends without a newline
+  }
+..\USER\MotorMove.c(216): warning:  #177-D: variable "MotorInitVal" was declared but never referenced
+  		unsigned char   MotorInitVal[8]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+..\USER\MotorMove.c(218): warning:  #177-D: variable "seepXMZ" was declared but never referenced
+  		signed   short  seepXMZ=600;
+..\USER\MotorMove.c(219): warning:  #177-D: variable "TorqueXMZ" was declared but never referenced
+  		signed   short  TorqueXMZ=150;
+..\USER\MotorMove.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=7908 RO-data=352 RW-data=368 ZI-data=1248  
+Program Size: Code=7596 RO-data=352 RW-data=368 ZI-data=1248  
 FromELF: creating hex file...
-".\HEX\motor_can.axf" - 0 Error(s), 0 Warning(s).
+".\HEX\motor_can.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   C:\Users\admin\Desktop\Ë«Öá¼ôÏß\Motor\kailproject\RTE

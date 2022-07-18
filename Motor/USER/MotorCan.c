@@ -141,7 +141,6 @@ signed char ReadAnPackData(MotorRevBuff *buff)
 {
 	int i=0;
 	int len=8;
-	int fr=0;
 	unsigned char Data[8]={0};
 	
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}
