@@ -59,3 +59,4 @@
 .\hex\can.o: ..\USER\In\queue.h
 .\hex\can.o: ..\USER\In\MotorCan.h
 .\hex\can.o: ..\USER\In\delay.h
+.\hex\can.o: ..\USER\In\led.h

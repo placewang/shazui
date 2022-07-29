@@ -4,7 +4,6 @@
 #define _MAIN_C_
 
 #include "delay.h"
-
 #include "led.h"
 #include "uart.h"
 #include "tim3_pwm_input.h"
@@ -26,41 +25,15 @@ int main()
 		SPI_1_32bit_Init(SPI,32);
 		CAN_Filter_20GroupInit(CAN_1M);
 		MotorCanInit();
-	 
 		while(1)
 		{
-				DreMoveZero();
-
-//				if(MExeSta.MoveZeroStaY)
-//				{
-//				  	MoveToTargetPos(0x64,2008,0x02);
-//						ClearMStat(0x02,1);
-//				}
-//				if(MExeSta.MoveZeroStaX)
-//				{
-//				 	  MoveToTargetPos(1000,61405,0x01);
-//						ClearMStat(0x01,1);
-//				}	
-//			  if(MExeSta.MoveTargetStaX)
-//			 {
-//					MoveToTargetPos(1000,0,0x01);
-//					ClearMStat(0x01,0);
-//		  	}
+			DreMoveZero();
 			ReadAnPackData(&MRevBuff);
-			MotorStaRenew();
 			if(MRevBuff.TaskTime>=315)
 			{
-							PollingMotorSta();	
-							MRevBuff.TaskTime=0;
+					PollingMotorSta();	
+					MRevBuff.TaskTime=0;
 			}
-//			if(SK_IN6)
-//				{
-//					DELAY_Ms(1000);
-//				}
-//				else
-//				{
-//					DELAY_Ms(1000);
-//				}
 		}
 }
 

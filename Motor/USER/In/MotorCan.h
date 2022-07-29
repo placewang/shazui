@@ -2,14 +2,19 @@
 #define MOTOR_CAN_H
 
 #include "delay.h"
-
+#include "led.h"
 #define  MOTORBUFFLEN                     80 
 #define  MOTORREVCANID                    0x000001
 #define  MOTORDATALEN                     8
 
 #define  MotorYID                         0x02          //剪刀电机ID
 #define  MotorXID                         0x01					//平移电机ID
-#define  MotorXYLACUNA                    2146          //剪刀电机在平移位置上的两刀之间的间隙偏移量
+#define  MotorXYLACUNA                    2000          //剪刀电机在平移位置上的两刀之间的间隙偏移量
+#define  MotorYReadyPos                   2008          //剪刀电机就绪位置 
+#define  MotorYbackKnife                  6620          //剪刀复位反向回刀位置
+#define  MotorYbackKnifeIN                4500          //剪刀复位反向回刀到位位置
+#define  MotorINPUT                       SK_IN6        //剪刀到位检测 
+
 //电机主命令
 typedef struct {
 	unsigned char ZeroHit;																//撞零
@@ -24,6 +29,7 @@ typedef struct {
 	unsigned char RotatingSpeed;                          //读转速
 	unsigned char ClearALarm;                             //清报警
 	unsigned char MovezeroRev;                            //归零完成后自动回复
+	unsigned char OriginalEncodedVal;                     //读原始编码器值   
 }MotorCmd;
 //电机子命令
 typedef struct {
@@ -38,7 +44,8 @@ typedef struct {
 	unsigned short SetStartStiffness;                    //设置电机启动刚性
 	unsigned short SetStopStiffness;	                   //设置电机停止刚性
 	unsigned short SetLimit;                             //设置电机运动极限（大小）
-	unsigned short ElectronicGearRatio;                  //设置电机电子齿轮比  
+	unsigned short ElectronicGearRatio;                  //设置电机电子齿轮比
+  unsigned short VersionSwitch;                         //协议版本切换
 }MotorSubCmd;
 
 typedef struct MotorRev
@@ -59,8 +66,10 @@ typedef struct MotorRev
 	signed   int   M2pos;											  //剪刀电机实时位置
 	signed   int   YMoveTargetval;              //剪刀电机运动目标值
 	signed   int   XMoveTargetval;              //平移电机运动目标值
-	signed   int   YMoveStandard[16];           //平移电机选刀位置存储
-  signed   int   XMoveStandard[16];           //剪刀电机出刀位置存储
+	signed   int   YMoveStandard[16];           //剪刀电机选刀位置存储
+  signed   int   XMoveStandard[16];           //平移电机出刀位置存储
+	signed   int   XoriginalEncodeval;          //平移原始编码器返回值存储
+	signed   int   YoriginalEncodeval;					//剪刀原始编码器返回值存储	
 	int (*MFull)(struct MotorRev *);            //判断缓存满函数
 	int (*MEmpty)(struct MotorRev *);           //判断缓存满函数
 	unsigned int (*MLen)(struct MotorRev *);	  //计算循环队列长度
@@ -73,6 +82,10 @@ typedef struct executionstat
 		unsigned char  MoveTargetStaY;                //剪刀电机运动至目标位置
 		unsigned char  MoveTargetStaX;                //平移电机运动到目标位置
 		unsigned char  MoveStart;                     //运动开始标志 
+		unsigned char  OriginalEncodedY;              //剪刀原始编码器返回
+		unsigned char  OriginalEncodedX;              //平移原始编码器返回
+		unsigned short MoveTimeOutY;                  //剪刀超时
+		unsigned short MoveTimeOutX;                  //移动超时
 }MotorExeSTa;
 
 typedef struct Alarm
@@ -93,12 +106,14 @@ typedef struct Alarm
 	unsigned char  MotorEorrStat;              //电机报错状态
 	unsigned char  MotorErrID;								 //电机报警编号（设备报警）
 	unsigned char  MotorAlarmGrade;            //电机报警等级	
+	unsigned char  MotorErrYSta;               //剪刀电机报警状态
+	unsigned char  MotorErrXSta;               //平移电机报警状态
 //	unsigned char  (*MESta)(MotorRevBuff *,struct Alarm *);
 }MotorAlarm;
 
 
 extern MotorRevBuff MRevBuff;   
-extern MotorAlarm   MEState;
+extern MotorAlarm   MErrState;
 extern MotorCmd     MCmd;
 extern MotorSubCmd	MSCmd;
 extern MotorExeSTa  MExeSta;
@@ -110,13 +125,12 @@ unsigned int MRevbuffLen(MotorRevBuff *);
 
 unsigned char MotorCanInit(void);
 
-signed char MoveZero(const unsigned short,const signed short,const unsigned short,unsigned char,signed short);
+//signed char MoveZero(const unsigned short,const signed short,const unsigned short,unsigned char,signed int);
 signed char MotorSendCanData(const unsigned char * ,const unsigned int ,const unsigned int );
 void PollingMotorSta(void);
 void  MotorStaRenew(void);
-unsigned char GetMotorStartOrStop(const unsigned int);
 signed char ReadAnPackData(MotorRevBuff *);
-
+signed char EnableOrClearALarm(const unsigned short MID,const unsigned char Ner);
 void MoveToTargetPos(const signed ,signed int , const unsigned short );
 void ClearMStat(const unsigned short,char);
 /*************/

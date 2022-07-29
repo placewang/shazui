@@ -32,7 +32,7 @@
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\Include\reg_uart.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\Include\reg_wwdg.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\Include\mm32_reg_redefine_v1.h
-.\hex\motorcan.o: ..\USER\In\can.h
+.\hex\motorcan.o: ..\USER\In\led.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_conf.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_adc.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_bkp.h
@@ -57,3 +57,4 @@
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h
 .\hex\motorcan.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h
+.\hex\motorcan.o: ..\USER\In\can.h

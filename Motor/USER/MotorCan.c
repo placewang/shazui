@@ -1,11 +1,11 @@
 #include  "MotorCan.h"
 #include  "can.h"
                                                                                
-MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78};
-MotorSubCmd	 MSCmd={0x8001,0x8002,0x8003,0x8004,0x8009,0x800B,0x8008,0x800C,0x8040,0x8041, 0x0201,0x8005};
+MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78,0x73};
+MotorSubCmd	 MSCmd={0x8001,0x8002,0x8003,0x8004,0x8009,0x800B,0x8008,0x800C,0x8040,0x8041, 0x0201,0x8005,0x800e};
 
-MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,{0},{0},MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
-MotorAlarm   MEState ={1,16,17,18,19,20,21,22,33,34,35,41,36,0,0,0};
+MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,{0},{0},0,0,MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
+MotorAlarm   MErrState ={1,16,17,18,19,20,21,22,33,34,35,41,36,0,0,0,0,0};
 
 /*
 判断缓存区是否满
@@ -48,6 +48,7 @@ signed char MotorSendCanData(const unsigned char * dataval,\
 	{
 		return -1;
 	}
+	ClearMStat(dataval[1] ,3);
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}                    //等待总线空闲
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_RS)){;}	
 	while(!CAN_GetFlagStatus(CAN1,CAN_STATUS_TCS)){;}		
@@ -71,12 +72,20 @@ signed char DataAnalyze(const unsigned char *Dpack)
 {
 	if(Dpack!=NULL)
 	{
-			if(Dpack[0]==0xF0)
+			if(Dpack[0]==0xF0&&Dpack[1]==MotorXID)
 			{
-				MEState.MotorErrID     =Dpack[1];
-				MEState.MotorEorrStat  =Dpack[2];
-				MEState.MotorAlarmGrade=Dpack[3];
+				MErrState.MotorErrID     =Dpack[1];
+				MErrState.MotorEorrStat  =Dpack[2];
+				MErrState.MotorAlarmGrade=Dpack[3];
+				MErrState.MotorErrXSta=1;
 			}
+			else if(Dpack[0]==0xF0&&Dpack[1]==MotorYID)
+			{
+				MErrState.MotorErrID     =Dpack[1];
+				MErrState.MotorEorrStat  =Dpack[2];
+				MErrState.MotorAlarmGrade=Dpack[3];
+				MErrState.MotorErrYSta=1;
+			}			
 			else if(Dpack[0]==0x75&&Dpack[1]==MotorXID)
 			{
 				MRevBuff.M1Seep=Dpack[4];
@@ -111,14 +120,39 @@ signed char DataAnalyze(const unsigned char *Dpack)
 				MRevBuff.M2pos|=Dpack[6]<<16;
 				MRevBuff.M2pos|=Dpack[7]<<24;
 			}
+			else if(Dpack[0]==0x15&&Dpack[1]==MotorXID)
+			{
+					MExeSta.MoveTargetStaX=1;	
+			}
+			else if(Dpack[0]==0x15&&Dpack[1]==MotorYID)
+			{
+					MExeSta.MoveTargetStaY=1;
+			}
 			else if(Dpack[0]==0x78&&Dpack[1]==MotorXID&&Dpack[2]==0x01&&Dpack[3]==0)
 			{
-				MRevBuff.Stop1pos=1;
+					MExeSta.MoveZeroStaX=1;	
 			}
 			else if(Dpack[0]==0x78&&Dpack[1]==MotorYID&&Dpack[2]==0x01&&Dpack[3]==0)
 			{
-				MRevBuff.Stop2pos=1;
+					MExeSta.MoveZeroStaY=1;	
 			}
+			
+			else if(Dpack[0]==0x73&&Dpack[1]==MotorXID&&Dpack[2]==0xff&&Dpack[3]==0xff)
+			{
+				MRevBuff.XoriginalEncodeval=Dpack[4];
+				MRevBuff.XoriginalEncodeval|=Dpack[5]<<8;
+				MRevBuff.XoriginalEncodeval|=Dpack[6]<<16;
+				MRevBuff.XoriginalEncodeval|=Dpack[7]<<24;
+				MExeSta.OriginalEncodedX=2;
+			}
+			else if(Dpack[0]==0x73&&Dpack[1]==MotorYID&&Dpack[2]==0xff&&Dpack[3]==0xff)
+			{
+				MRevBuff.YoriginalEncodeval=Dpack[4];
+				MRevBuff.YoriginalEncodeval|=Dpack[5]<<8;
+				MRevBuff.YoriginalEncodeval|=Dpack[6]<<16;
+				MRevBuff.YoriginalEncodeval|=Dpack[7]<<24;
+				MExeSta.OriginalEncodedY=2;
+			}			
 			else
 			{
 				return 0;
@@ -170,38 +204,61 @@ signed char ReadAnPackData(MotorRevBuff *buff)
 signed char GetMotorSpeed_Torque_Pos(MotorRevBuff *bff,const unsigned int  ID)
 {
 	unsigned char   MotorInitVal[8]={MCmd.RotatingSpeed,ID,0x00,0x00,0x00,0x00,0x00,0x00};
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
-	MotorInitVal[0]=MCmd.Torque;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
+//	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
+//	MotorInitVal[0]=MCmd.Torque;
+//	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
 	MotorInitVal[0]=MCmd.GetEncodervalue ;
 	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
 	return 0;
 }
-/****************************************************************************************
-获取电机当前运动状态
-@Mbff:  数据接受结构体
-@ID：设备MID
-return 0:停止  1：运动
-****************************************************************************************/
-unsigned char GetMotorStartOrStop(const unsigned int MID)
+/*	
+清标志状态		
+@MID:设备ID
+@zero 
+				0:清运动状态
+				1:清回零标志
+				3:清报警		
+*/
+
+void ClearMStat(const unsigned short MID,char zero)
 {
-			
-	if(MID==MotorYID)
-	{
-			if((MRevBuff.M1Seep>=-30&&MRevBuff.M1Seep<=20)&&( MRevBuff.M1torq >=0&&MRevBuff.M1torq<=500))
-			{
-				return 0;
-			}
-	}
-	if(MID==MotorXID)
-	{
-			if((MRevBuff.M2Seep>-30&&MRevBuff.M2Seep<20)&&( MRevBuff.M2torq >0&&MRevBuff.M2torq<500))
-			{
-				return 0;
-			}
-	}
-	return 1;
-}
+		if(MID==MotorYID&&zero==0)
+		{
+			MExeSta.MoveTargetStaY=0;	
+			MRevBuff.YMoveTargetval=0;
+		}
+		else if (MID==MotorXID&&zero==0)
+		{
+			MExeSta.MoveTargetStaX=0;
+			MRevBuff.XMoveTargetval=0;
+		}
+		else if(MID==MotorYID&&zero==1)
+		{
+			MExeSta.MoveZeroStaY=0;
+			MExeSta.OriginalEncodedY=0;
+		}
+		else if (MID==MotorXID&&zero==1)
+		{
+			MExeSta.MoveZeroStaX=0;	
+			MExeSta.OriginalEncodedX=0;
+		}
+		else if(MID==MotorXID&&zero==3)
+		{
+				MErrState.MotorErrID     =0;
+				MErrState.MotorEorrStat  =0;
+				MErrState.MotorAlarmGrade=0;
+				MErrState.MotorErrXSta=0;
+		}
+		else if(MID==MotorYID&&zero==3)
+		{
+				MErrState.MotorErrID     =0;
+				MErrState.MotorEorrStat  =0;
+				MErrState.MotorAlarmGrade=0;
+				MErrState.MotorErrYSta=0;
+		}
+		
+}	
+
 
 /*
 轮询查电机状态及速度，位置，扭矩
