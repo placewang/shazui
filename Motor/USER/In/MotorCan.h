@@ -10,10 +10,12 @@
 #define  MotorYID                         0x02          //剪刀电机ID
 #define  MotorXID                         0x01					//平移电机ID
 #define  MotorXYLACUNA                    2000          //剪刀电机在平移位置上的两刀之间的间隙偏移量
+#define  MotorYLACUNA                     2412          //剪刀电机回零偏移量
 #define  MotorYReadyPos                   2008          //剪刀电机就绪位置 
 #define  MotorYbackKnife                  6620          //剪刀复位反向回刀位置
 #define  MotorYbackKnifeIN                4500          //剪刀复位反向回刀到位位置
 #define  MotorINPUT                       SK_IN6        //剪刀到位检测 
+#define  MotorZeroIN                      SK_IN1        //剪刀电机零位检测
 
 //电机主命令
 typedef struct {
@@ -29,8 +31,10 @@ typedef struct {
 	unsigned char RotatingSpeed;                          //读转速
 	unsigned char ClearALarm;                             //清报警
 	unsigned char MovezeroRev;                            //归零完成后自动回复
-	unsigned char OriginalEncodedVal;                     //读原始编码器值   
+	unsigned char OriginalEncodedVal;                     //读原始编码器值
+	unsigned char SeepMode;                               //速度模式	
 }MotorCmd;
+
 //电机子命令
 typedef struct {
 	unsigned short SetEncodervalue;                      //设置编码器值                         
@@ -131,10 +135,14 @@ void PollingMotorSta(void);
 void  MotorStaRenew(void);
 signed char ReadAnPackData(MotorRevBuff *);
 signed char EnableOrClearALarm(const unsigned short MID,const unsigned char Ner);
-void MoveToTargetPos(const signed ,signed int , const unsigned short );
+void MoveToTargetPos(const signed short ,signed int , const unsigned short );
 void ClearMStat(const unsigned short,char);
+signed char ReadMotorOriginalEncodedVal(const unsigned short MID);
+signed char KnifeSelection(const short );
+signed char CloseKnife(const short );
 /*************/
 signed char DreMoveZero(void);
+signed char YMoveZero(const signed short torque,signed int tarSeep, const unsigned short MID);
 #endif
 
 

@@ -1,7 +1,7 @@
 #include  "MotorCan.h"
 #include  "can.h"
                                                                                
-MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78,0x73};
+MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78,0x73,0x0B};
 MotorSubCmd	 MSCmd={0x8001,0x8002,0x8003,0x8004,0x8009,0x800B,0x8008,0x800C,0x8040,0x8041, 0x0201,0x8005,0x800e};
 
 MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,{0},{0},0,0,MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
@@ -268,5 +268,7 @@ void PollingMotorSta(void)
 {
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorYID);
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorXID);
+	ReadMotorOriginalEncodedVal(MotorXID);
+	ReadMotorOriginalEncodedVal(MotorYID);
 //	ReadAnPackData(&MRevBuff);
 }

@@ -20,20 +20,38 @@ int main()
 {
 		DELAY_Init();
 		LED_Init();
+		Input_Init();
 		UART1_ITRX_InIt(115200);
 		TIM3_PWM_Input_Test();
 		SPI_1_32bit_Init(SPI,32);
 		CAN_Filter_20GroupInit(CAN_1M);
 		MotorCanInit();
+
 		while(1)
 		{
-			DreMoveZero();
-			ReadAnPackData(&MRevBuff);
-			if(MRevBuff.TaskTime>=315)
+			if(Posv==0)
 			{
-					PollingMotorSta();	
-					MRevBuff.TaskTime=0;
+				if(DreMoveZero())
+				{
+					Posv=1;
+				}
 			}
+			if(Posv==1)
+			{
+					KnifeSelection(16);
+					Posv=2;
+			}
+			if(Posv==2)
+			{
+				CloseKnife(1);
+				Posv=3;
+			}
+			ReadAnPackData(&MRevBuff);
+//			if(MRevBuff.TaskTime>=315)
+//			{
+//					PollingMotorSta();	
+//					MRevBuff.TaskTime=0;
+//			}
 		}
 }
 

@@ -179,7 +179,7 @@ typedef enum {
 
 void LED_Init(void);
 void Motor_StepDir_GPIO_init(void);
-
+void Input_Init(void);
 /// @}
 
 
