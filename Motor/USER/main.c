@@ -38,13 +38,23 @@ int main()
 			}
 			if(Posv==1)
 			{
-					KnifeSelection(16);
+					KnifeSelection(1);
 					Posv=2;
 			}
 			if(Posv==2)
 			{
 				CloseKnife(1);
 				Posv=3;
+			}
+			if(Posv==3)
+			{
+					KnifeSelection(16);
+					Posv=4;
+			}
+			if(Posv==4)
+			{
+				CloseKnife(16);
+				Posv=1;
 			}
 			ReadAnPackData(&MRevBuff);
 //			if(MRevBuff.TaskTime>=315)
