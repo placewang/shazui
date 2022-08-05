@@ -268,7 +268,6 @@ void PollingMotorSta(void)
 {
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorYID);
 	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorXID);
-	ReadMotorOriginalEncodedVal(MotorXID);
-	ReadMotorOriginalEncodedVal(MotorYID);
-//	ReadAnPackData(&MRevBuff);
+//	ReadMotorOriginalEncodedVal(MotorXID);
+//	ReadMotorOriginalEncodedVal(MotorYID);
 }

@@ -404,7 +404,7 @@ signed char ScissorsReset(void)
 {
 		signed short seepX=2800;
 		signed short seepY=5000;
-	  signed short torqueY=300;
+	  signed short torqueY=400;
 		static   char   ifstat=0;			
 		static   char   Restnum=0;
 		static   char   stepnum=0;
@@ -437,7 +437,6 @@ signed char ScissorsReset(void)
 *************************************************************/
 void clearM(void)
 {
-
 		ClearMStat(MotorXID,1);
 		ClearMStat(MotorYID,1);
 		ClearMStat(MotorXID,0);
@@ -484,6 +483,7 @@ signed char DreMoveZero(void)
 			if(MExeSta.OriginalEncodedX==2)
 			{ 
 				OriginalEncodedX1=MRevBuff.XoriginalEncodeval;                                     //存第一次撞零后的编码器原始值 
+				clearM();
 				MoveZero(0x01,seepXMZ,TorqueXMZ,0x00,0xB0);                                        //反向撞零测最大行程
 				RunState=4;
 			}				
@@ -492,10 +492,11 @@ signed char DreMoveZero(void)
     else if(MExeSta.MoveZeroStaX&&RunState==4)
 		{	
 			if(MExeSta.OriginalEncodedX==0)
-			{ReadMotorOriginalEncodedVal(MotorXID);}                                             //发送读编码器原始值
+			{ReadMotorOriginalEncodedVal(MotorXID);}                                              //发送读编码器原始值
 		  if(MExeSta.OriginalEncodedX==2)
 			{ 
 				OriginalEncodedX2=MRevBuff.XoriginalEncodeval;                                      //存第二次撞零后的编码器原始值 
+				clearM();
 				RunState=5;
 			}	
 		}
@@ -573,13 +574,13 @@ signed char DreMoveZero(void)
 		return 0;
 }
 /*******************************************************************************
-剪刀出刀
+剪刀出刀 阻塞
 @KnifeNum:剪刀编号1-16
 ********************************************************************************/
 signed char KnifeSelection(const short KnifeNum)
 {
 		signed   short  seepXMZ=800;
-		signed   short  TorqueXMZ=200;
+//		signed   short  TorqueXMZ=200;
 		signed   short  SeepYMZ=3800;
 		signed   short  TorqueYMZ=280;
 	
@@ -620,8 +621,79 @@ signed char KnifeSelection(const short KnifeNum)
 
 }
 
+/*******************************************************************************
+剪刀出刀  非阻塞
+@KnifeNum:剪刀编号1-16
+********************************************************************************/
+signed char KnifeSelection2(const short KnifeNum)
+{
+		signed   short  seepXMZ=800;
+//		signed   short  TorqueXMZ=200;
+		signed   short  SeepYMZ=3800;
+		signed   short  TorqueYMZ=280;
+		static   char   OutKnifeStep=0;
+	if(KnifeNum<=0||KnifeNum>16)
+	{
+		return -1;
+	}
+	if(OutKnifeStep==0)
+	{
+		MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[KnifeNum-1], MotorXID);
+		OutKnifeStep=1;
+	}
+	
+	else if(OutKnifeStep==1&&MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX<1000*6)
+	{
+		MoveSeepMode(TorqueYMZ,SeepYMZ*-1,MotorYID);                             //推出剪刀
+		OutKnifeStep=2;
+	}
+	
+	else if(OutKnifeStep==1&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
+	{
+		EnableOrClearALarm(MotorXID,0);
+		EnableOrClearALarm(MotorXID,3);
+		OutKnifeStep=0;
+		clearM();
+		return -1;
+	}
+	else if(OutKnifeStep==2&&MExeSta.MoveTimeOutY>1000*0.3)
+	{
+		MoveSeepMode(TorqueYMZ,0x00,MotorYID);   
+		OutKnifeStep=3;
+	}	
+	
+	else if(OutKnifeStep==3)
+	{					 
+		if(KnifeNum==1)                                      //移出齿轮啮合
+		{
+			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
+		}
+		else
+		{
+				MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
+		}
+		OutKnifeStep=4;
+  }
+	else if(OutKnifeStep==4&&MExeSta.MoveTimeOutX>1000*0.1)
+	{
+		MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
+		OutKnifeStep=5;
+	}
+	else if(OutKnifeStep==5&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>1000*0.1)
+	{
+		OutKnifeStep=0;
+		return 1;	
+	}
+	return 0;
+
+}
+
+
+
+
+
 /**************************************************************************
-剪刀收刀
+剪刀收刀 阻塞方式
 @KnifeNum:剪刀编号1-16
 0:默认当前剪刀号
 
@@ -631,9 +703,9 @@ signed char KnifeSelection(const short KnifeNum)
 signed char CloseKnife(const short KnifeNum)
 {
 		signed   short  seepXMZ=1200;
-		signed   short  TorqueXMZ=200;
+//		signed   short  TorqueXMZ=200;
 		signed   short  SeepYMZ=3800;
-		signed   short  TorqueYMZ=280;
+		signed   short  TorqueYMZ=400;
 		if(KnifeNum<=0||KnifeNum>16)
 		{
 			return -1;
@@ -676,3 +748,100 @@ signed char CloseKnife(const short KnifeNum)
 		while(ReadAnPackData(&MRevBuff)){;}                                       //清包
 		return 1;	
 }
+
+
+/**************************************************************************
+剪刀收刀 非阻塞方式
+@KnifeNum:剪刀编号1-16
+0:默认当前剪刀号
+
+****************************************************************************/
+
+
+signed char CloseKnife2(const short KnifeNum)
+{
+		signed   short  seepXMZ=1200;
+//		signed   short  TorqueXMZ=200;
+		signed   short  SeepYMZ=3800;
+		signed   short  TorqueYMZ=400;
+		static   char   CloseKnife=0;
+		if(KnifeNum<=0||KnifeNum>16)
+		{
+			return -1;
+		}
+		if(CloseKnife==0)
+		{
+			if(KnifeNum==1)
+			{
+				MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
+			}
+			else
+			{
+					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
+			}
+			CloseKnife=1;
+	  }
+		else if(CloseKnife==1&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
+		{
+			EnableOrClearALarm(MotorXID,0);
+			EnableOrClearALarm(MotorXID,3);
+			CloseKnife=0;
+			clearM();
+			return -1;
+		}		
+		else if(CloseKnife==1&&MExeSta.MoveTargetStaX)
+		{
+				MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
+				CloseKnife=2;
+		}
+		else if(CloseKnife==2&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>=1000*0.1)
+		{
+			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1],MotorXID);
+			CloseKnife=3;		
+		}
+		else if(CloseKnife==3&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
+		{
+			EnableOrClearALarm(MotorXID,0);
+			EnableOrClearALarm(MotorXID,3);
+			CloseKnife=0;
+			clearM();
+			return -1;
+		}				
+		else if(CloseKnife==3&&MExeSta.MoveTargetStaX)
+		{
+			MoveSeepMode(TorqueYMZ,SeepYMZ,MotorYID);                                  //收剪刀
+			CloseKnife=4;
+		}
+		
+		else if(CloseKnife==4&&MExeSta.MoveTimeOutY>1000*0.3)                       //时间到停止
+		{
+			CloseKnife=5;
+			MoveSeepMode(TorqueYMZ,0x00,MotorYID);
+		}
+		else if(CloseKnife==5)
+		{
+				if(KnifeNum==1)                                                           //移出齿轮啮合
+				{
+						MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
+				}
+				else
+				{
+						MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
+				}
+				CloseKnife=6;
+		}
+		else if(CloseKnife==6&&MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>=1000*0.1)
+		{
+			MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
+			CloseKnife=7;
+		}
+		else if(CloseKnife==7&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>=1000*0.1)
+		{
+			CloseKnife=0;
+			clearM();
+			return 1;
+		}			
+		return 0;
+}
+
+

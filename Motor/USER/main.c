@@ -29,39 +29,33 @@ int main()
 
 		while(1)
 		{
+			
 			if(Posv==0)
 			{
-				if(DreMoveZero())
-				{
-					Posv=1;
-				}
+					Posv=DreMoveZero();
 			}
-			if(Posv==1)
+			if(Posv==1&&KnifeSelection2(1))
 			{
-					KnifeSelection(1);
 					Posv=2;
 			}
-			if(Posv==2)
+			if(Posv==2&&CloseKnife2(1))
 			{
-				CloseKnife(1);
 				Posv=3;
 			}
-			if(Posv==3)
+			if(Posv==3&&KnifeSelection2(16))
 			{
-					KnifeSelection(16);
 					Posv=4;
 			}
-			if(Posv==4)
+			if(Posv==4&&CloseKnife2(16))
 			{
-				CloseKnife(16);
 				Posv=1;
 			}
 			ReadAnPackData(&MRevBuff);
-//			if(MRevBuff.TaskTime>=315)
-//			{
-//					PollingMotorSta();	
-//					MRevBuff.TaskTime=0;
-//			}
+			if(MRevBuff.TaskTime>=315)
+			{
+					PollingMotorSta();	
+					MRevBuff.TaskTime=0;
+			}
 		}
 }
 

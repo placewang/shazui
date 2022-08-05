@@ -143,6 +143,8 @@ signed char CloseKnife(const short );
 /*************/
 signed char DreMoveZero(void);
 signed char YMoveZero(const signed short torque,signed int tarSeep, const unsigned short MID);
+signed char KnifeSelection2(const short KnifeNum);
+signed char CloseKnife2(const short KnifeNum);
 #endif
 
 
