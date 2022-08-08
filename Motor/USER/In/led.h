@@ -148,21 +148,10 @@ typedef enum {
 
 
 
-
-
 #else
 #define GLOBAL extern
 
-
-
-
-
-
-
 #endif
-
-
-
 
 
 #undef GLOBAL

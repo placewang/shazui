@@ -248,9 +248,10 @@ Section Cross References
     motormove.o(i.CloseKnife2) refers to motorcan.o(.data) for MRevBuff
     motormove.o(i.CloseKnife2) refers to motormove.o(.bss) for MExeSta
     motormove.o(i.DreMoveZero) refers to motormove.o(i.clearM) for clearM
+    motormove.o(i.DreMoveZero) refers to motormove.o(i.YMoveZeroTrial) for YMoveZeroTrial
     motormove.o(i.DreMoveZero) refers to motormove.o(i.MoveZero) for MoveZero
+    motormove.o(i.DreMoveZero) refers to motormove.o(i.EnableOrClearALarm) for EnableOrClearALarm
     motormove.o(i.DreMoveZero) refers to motorcan.o(i.MotorSendCanData) for MotorSendCanData
-    motormove.o(i.DreMoveZero) refers to motormove.o(i.ReadMotorOriginalEncodedVal) for ReadMotorOriginalEncodedVal
     motormove.o(i.DreMoveZero) refers to motormove.o(i.MoveToTargetPos) for MoveToTargetPos
     motormove.o(i.DreMoveZero) refers to motormove.o(i.YMoveZero) for YMoveZero
     motormove.o(i.DreMoveZero) refers to motorcan.o(i.ClearMStat) for ClearMStat
@@ -294,6 +295,7 @@ Section Cross References
     motormove.o(i.MoveToTargetPos) refers to motorcan.o(.data) for MRevBuff
     motormove.o(i.MoveZero) refers to motorcan.o(i.ClearMStat) for ClearMStat
     motormove.o(i.MoveZero) refers to motorcan.o(i.MotorSendCanData) for MotorSendCanData
+    motormove.o(i.MoveZero) refers to motormove.o(.bss) for MExeSta
     motormove.o(i.MoveZero) refers to motorcan.o(.data) for MCmd
     motormove.o(i.ReadMotorOriginalEncodedVal) refers to motorcan.o(i.MotorSendCanData) for MotorSendCanData
     motormove.o(i.ReadMotorOriginalEncodedVal) refers to motorcan.o(.data) for MCmd
@@ -329,6 +331,12 @@ Section Cross References
     motormove.o(i.YMoveZero) refers to motormove.o(.data) for step
     motormove.o(i.YMoveZero) refers to motorcan.o(.data) for MCmd
     motormove.o(i.YMoveZero) refers to motormove.o(.bss) for MExeSta
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(i.MoveZero) for MoveZero
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(i.EnableOrClearALarm) for EnableOrClearALarm
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(i.YMoveZero) for YMoveZero
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(i.MoveSeepMode) for MoveSeepMode
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(.data) for TrialCount
+    motormove.o(i.YMoveZeroTrial) refers to motormove.o(.bss) for MExeSta
     motormove.o(i.clearM) refers to motorcan.o(i.ClearMStat) for ClearMStat
     main.o(i.main) refers to delay.o(i.DELAY_Init) for DELAY_Init
     main.o(i.main) refers to gpio.o(i.LED_Init) for LED_Init
@@ -874,7 +882,8 @@ Removing Unused input sections from the image.
     Removing motormove.o(.rev16_text), (4 bytes).
     Removing motormove.o(.revsh_text), (4 bytes).
     Removing motormove.o(i.CloseKnife), (316 bytes).
-    Removing motormove.o(i.KnifeSelection), (264 bytes).
+    Removing motormove.o(i.KnifeSelection), (260 bytes).
+    Removing motormove.o(i.ReadMotorOriginalEncodedVal), (64 bytes).
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
     Removing cdcmple.o(.text), (40 bytes).
@@ -883,7 +892,7 @@ Removing Unused input sections from the image.
     Removing ddiv.o(.text), (240 bytes).
     Removing dfixul.o(.text), (64 bytes).
 
-264 unused section(s) (total 9117 bytes) removed from the image.
+265 unused section(s) (total 9177 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1023,100 +1032,100 @@ Image Symbol Table
     i.DELAY_Ms                               0x08000e6c   Section        0  delay.o(i.DELAY_Ms)
     i.DataAnalyze                            0x08000e84   Section        0  motorcan.o(i.DataAnalyze)
     i.DreMoveZero                            0x08001108   Section        0  motormove.o(i.DreMoveZero)
-    i.EnableOrClearALarm                     0x08001418   Section        0  motormove.o(i.EnableOrClearALarm)
-    i.GPIO_Init                              0x0800146c   Section        0  hal_gpio.o(i.GPIO_Init)
-    i.GPIO_PinAFConfig                       0x08001506   Section        0  hal_gpio.o(i.GPIO_PinAFConfig)
-    i.GPIO_ReadInputDataBit                  0x0800152e   Section        0  hal_gpio.o(i.GPIO_ReadInputDataBit)
-    i.GPIO_ReadOutputDataBit                 0x08001540   Section        0  hal_gpio.o(i.GPIO_ReadOutputDataBit)
-    i.GPIO_ResetBits                         0x08001552   Section        0  hal_gpio.o(i.GPIO_ResetBits)
-    i.GPIO_SetBits                           0x08001556   Section        0  hal_gpio.o(i.GPIO_SetBits)
-    i.GPIO_StructInit                        0x0800155a   Section        0  hal_gpio.o(i.GPIO_StructInit)
-    i.GetCAN_FilterNum                       0x0800156c   Section        0  can.o(i.GetCAN_FilterNum)
-    i.GetMotorSpeed_Torque_Pos               0x08001588   Section        0  motorcan.o(i.GetMotorSpeed_Torque_Pos)
-    i.Input_Init                             0x080015b8   Section        0  gpio.o(i.Input_Init)
-    i.KnifeSelection2                        0x080015f8   Section        0  motormove.o(i.KnifeSelection2)
-    i.LED_Init                               0x08001794   Section        0  gpio.o(i.LED_Init)
-    i.MRevbuffEmpty                          0x080017f8   Section        0  motorcan.o(i.MRevbuffEmpty)
-    i.MRevbuffFull                           0x0800180a   Section        0  motorcan.o(i.MRevbuffFull)
-    i.MRevbuffLen                            0x08001826   Section        0  motorcan.o(i.MRevbuffLen)
-    i.MotorCanInit                           0x08001840   Section        0  motormove.o(i.MotorCanInit)
-    i.MotorMoveStandard                      0x080019c4   Section        0  motormove.o(i.MotorMoveStandard)
-    MotorMoveStandard                        0x080019c5   Thumb Code    78  motormove.o(i.MotorMoveStandard)
-    i.MotorSendCanData                       0x08001a1c   Section        0  motorcan.o(i.MotorSendCanData)
-    i.MoveSeepMode                           0x08001a9c   Section        0  motormove.o(i.MoveSeepMode)
-    i.MoveToTargetPos                        0x08001b00   Section        0  motormove.o(i.MoveToTargetPos)
-    i.MoveZero                               0x08001b74   Section        0  motormove.o(i.MoveZero)
-    i.NVIC_Configure                         0x08001c58   Section        0  tim3_pwm_input.o(i.NVIC_Configure)
-    i.NVIC_Init                              0x08001c74   Section        0  hal_misc.o(i.NVIC_Init)
-    i.PollingMotorSta                        0x08001cdc   Section        0  motorcan.o(i.PollingMotorSta)
-    i.Queue_init                             0x08001cf4   Section        0  uart.o(i.Queue_init)
-    i.RCC_AHBPeriphClockCmd                  0x08001d1c   Section        0  hal_rcc.o(i.RCC_AHBPeriphClockCmd)
-    i.RCC_APB1PeriphClockCmd                 0x08001d3c   Section        0  hal_rcc.o(i.RCC_APB1PeriphClockCmd)
-    i.RCC_APB2PeriphClockCmd                 0x08001d5c   Section        0  hal_rcc.o(i.RCC_APB2PeriphClockCmd)
-    i.RCC_GetClocksFreq                      0x08001d7c   Section        0  hal_rcc.o(i.RCC_GetClocksFreq)
-    i.RCC_GetHCLKFreq                        0x08001dc4   Section        0  hal_rcc.o(i.RCC_GetHCLKFreq)
-    i.RCC_GetPCLK1Freq                       0x08001de4   Section        0  hal_rcc.o(i.RCC_GetPCLK1Freq)
-    i.RCC_GetPCLK2Freq                       0x08001e08   Section        0  hal_rcc.o(i.RCC_GetPCLK2Freq)
-    i.RCC_GetSysClockFreq                    0x08001e2c   Section        0  hal_rcc.o(i.RCC_GetSysClockFreq)
-    i.ReadAnPackData                         0x08001eac   Section        0  motorcan.o(i.ReadAnPackData)
-    i.ReadMotorOriginalEncodedVal            0x08001f1c   Section        0  motormove.o(i.ReadMotorOriginalEncodedVal)
-    i.RestStep1                              0x08001f5c   Section        0  motormove.o(i.RestStep1)
-    i.RestStep2                              0x0800204c   Section        0  motormove.o(i.RestStep2)
-    i.RestStep3                              0x0800216c   Section        0  motormove.o(i.RestStep3)
-    i.SPI2_Config                            0x080021e8   Section        0  spi.o(i.SPI2_Config)
-    SPI2_Config                              0x080021e9   Thumb Code    82  spi.o(i.SPI2_Config)
-    i.SPI2_GPIO_Config                       0x0800223a   Section        0  spi.o(i.SPI2_GPIO_Config)
-    SPI2_GPIO_Config                         0x0800223b   Thumb Code   166  spi.o(i.SPI2_GPIO_Config)
-    i.SPI_1_32bit_Init                       0x080022e0   Section        0  spi.o(i.SPI_1_32bit_Init)
-    i.SPI_BiDirectionalLineConfig            0x080022f4   Section        0  hal_spi.o(i.SPI_BiDirectionalLineConfig)
-    i.SPI_CSInternalSelected                 0x08002334   Section        0  hal_spi.o(i.SPI_CSInternalSelected)
-    i.SPI_Cmd                                0x0800234c   Section        0  hal_spi.o(i.SPI_Cmd)
-    i.SPI_Init                               0x08002364   Section        0  hal_spi.o(i.SPI_Init)
-    i.SPI_StructInit                         0x080023f0   Section        0  hal_spi.o(i.SPI_StructInit)
-    i.ScissorsReset                          0x08002410   Section        0  motormove.o(i.ScissorsReset)
-    i.Send_CANFrame                          0x080024a0   Section        0  can.o(i.Send_CANFrame)
-    i.SetSysClock                            0x08002510   Section        0  system_mm32spin06xx_s.o(i.SetSysClock)
-    SetSysClock                              0x08002511   Thumb Code     8  system_mm32spin06xx_s.o(i.SetSysClock)
-    i.SetSysClockToXX                        0x08002518   Section        0  system_mm32spin06xx_s.o(i.SetSysClockToXX)
-    SetSysClockToXX                          0x08002519   Thumb Code   368  system_mm32spin06xx_s.o(i.SetSysClockToXX)
-    i.SysTick_Handler                        0x080026a4   Section        0  delay.o(i.SysTick_Handler)
-    i.SystemInit                             0x080026ac   Section        0  system_mm32spin06xx_s.o(i.SystemInit)
-    i.TIM2_IRQHandler                        0x08002718   Section        0  tim3_pwm_input.o(i.TIM2_IRQHandler)
-    i.TIM3_IRQHandler                        0x08002770   Section        0  tim3_pwm_input.o(i.TIM3_IRQHandler)
-    i.TIM3_PWM_Input_Init                    0x080027f4   Section        0  tim3_pwm_input.o(i.TIM3_PWM_Input_Init)
-    i.TIM3_PWM_Input_Test                    0x08002848   Section        0  tim3_pwm_input.o(i.TIM3_PWM_Input_Test)
-    i.TIM_ARRPreloadConfig                   0x08002878   Section        0  hal_tim.o(i.TIM_ARRPreloadConfig)
-    i.TIM_ClearFlag                          0x08002890   Section        0  hal_tim.o(i.TIM_ClearFlag)
-    i.TIM_ClearITPendingBit                  0x08002898   Section        0  hal_tim.o(i.TIM_ClearITPendingBit)
-    i.TIM_Cmd                                0x080028a0   Section        0  hal_tim.o(i.TIM_Cmd)
-    i.TIM_GetITStatus                        0x080028b8   Section        0  hal_tim.o(i.TIM_GetITStatus)
-    i.TIM_ITConfig                           0x080028d2   Section        0  hal_tim.o(i.TIM_ITConfig)
-    i.TIM_TimeBaseInit                       0x080028e8   Section        0  hal_tim.o(i.TIM_TimeBaseInit)
-    i.TIM_TimeBaseStructInit                 0x08002954   Section        0  hal_tim.o(i.TIM_TimeBaseStructInit)
-    i.TimingDelayDecrement                   0x08002968   Section        0  delay.o(i.TimingDelayDecrement)
-    TimingDelayDecrement                     0x08002969   Thumb Code    20  delay.o(i.TimingDelayDecrement)
-    i.UART1_IRQHandler                       0x08002980   Section        0  uart.o(i.UART1_IRQHandler)
-    i.UART1_ITRX_InIt                        0x080029f4   Section        0  uart.o(i.UART1_ITRX_InIt)
-    i.UART_ClearITPendingBit                 0x08002aa8   Section        0  hal_uart.o(i.UART_ClearITPendingBit)
-    i.UART_Cmd                               0x08002aac   Section        0  hal_uart.o(i.UART_Cmd)
-    i.UART_GetFlagStatus                     0x08002ab8   Section        0  hal_uart.o(i.UART_GetFlagStatus)
-    i.UART_GetITStatus                       0x08002aca   Section        0  hal_uart.o(i.UART_GetITStatus)
-    i.UART_ITConfig                          0x08002adc   Section        0  hal_uart.o(i.UART_ITConfig)
-    i.UART_Init                              0x08002af0   Section        0  hal_uart.o(i.UART_Init)
-    i.UART_ReceiveData                       0x08002b68   Section        0  hal_uart.o(i.UART_ReceiveData)
-    i.UART_StructInit                        0x08002b70   Section        0  hal_uart.o(i.UART_StructInit)
-    i.W25xx_CS_High                          0x08002b8c   Section        0  spi.o(i.W25xx_CS_High)
-    i.YMoveZero                              0x08002b9c   Section        0  motormove.o(i.YMoveZero)
-    i.__ARM_clz                              0x08002cc8   Section        0  depilogue.o(i.__ARM_clz)
-    i.__NVIC_SetPriority                     0x08002cf8   Section        0  delay.o(i.__NVIC_SetPriority)
-    __NVIC_SetPriority                       0x08002cf9   Thumb Code   110  delay.o(i.__NVIC_SetPriority)
-    i.__scatterload_copy                     0x08002d70   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08002d7e   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08002d80   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.clearM                                 0x08002d8e   Section        0  motormove.o(i.clearM)
-    i.exNVIC_Init                            0x08002db4   Section        0  hal_misc.o(i.exNVIC_Init)
-    i.main                                   0x08002e1c   Section        0  main.o(i.main)
-    .constdata                               0x08002ee4   Section      128  motormove.o(.constdata)
+    i.EnableOrClearALarm                     0x0800137c   Section        0  motormove.o(i.EnableOrClearALarm)
+    i.GPIO_Init                              0x080013d0   Section        0  hal_gpio.o(i.GPIO_Init)
+    i.GPIO_PinAFConfig                       0x0800146a   Section        0  hal_gpio.o(i.GPIO_PinAFConfig)
+    i.GPIO_ReadInputDataBit                  0x08001492   Section        0  hal_gpio.o(i.GPIO_ReadInputDataBit)
+    i.GPIO_ReadOutputDataBit                 0x080014a4   Section        0  hal_gpio.o(i.GPIO_ReadOutputDataBit)
+    i.GPIO_ResetBits                         0x080014b6   Section        0  hal_gpio.o(i.GPIO_ResetBits)
+    i.GPIO_SetBits                           0x080014ba   Section        0  hal_gpio.o(i.GPIO_SetBits)
+    i.GPIO_StructInit                        0x080014be   Section        0  hal_gpio.o(i.GPIO_StructInit)
+    i.GetCAN_FilterNum                       0x080014d0   Section        0  can.o(i.GetCAN_FilterNum)
+    i.GetMotorSpeed_Torque_Pos               0x080014ec   Section        0  motorcan.o(i.GetMotorSpeed_Torque_Pos)
+    i.Input_Init                             0x0800151c   Section        0  gpio.o(i.Input_Init)
+    i.KnifeSelection2                        0x0800155c   Section        0  motormove.o(i.KnifeSelection2)
+    i.LED_Init                               0x080016f4   Section        0  gpio.o(i.LED_Init)
+    i.MRevbuffEmpty                          0x08001758   Section        0  motorcan.o(i.MRevbuffEmpty)
+    i.MRevbuffFull                           0x0800176a   Section        0  motorcan.o(i.MRevbuffFull)
+    i.MRevbuffLen                            0x08001786   Section        0  motorcan.o(i.MRevbuffLen)
+    i.MotorCanInit                           0x080017a0   Section        0  motormove.o(i.MotorCanInit)
+    i.MotorMoveStandard                      0x08001924   Section        0  motormove.o(i.MotorMoveStandard)
+    MotorMoveStandard                        0x08001925   Thumb Code    78  motormove.o(i.MotorMoveStandard)
+    i.MotorSendCanData                       0x0800197c   Section        0  motorcan.o(i.MotorSendCanData)
+    i.MoveSeepMode                           0x080019fc   Section        0  motormove.o(i.MoveSeepMode)
+    i.MoveToTargetPos                        0x08001a60   Section        0  motormove.o(i.MoveToTargetPos)
+    i.MoveZero                               0x08001ad4   Section        0  motormove.o(i.MoveZero)
+    i.NVIC_Configure                         0x08001bc8   Section        0  tim3_pwm_input.o(i.NVIC_Configure)
+    i.NVIC_Init                              0x08001be4   Section        0  hal_misc.o(i.NVIC_Init)
+    i.PollingMotorSta                        0x08001c4c   Section        0  motorcan.o(i.PollingMotorSta)
+    i.Queue_init                             0x08001c64   Section        0  uart.o(i.Queue_init)
+    i.RCC_AHBPeriphClockCmd                  0x08001c8c   Section        0  hal_rcc.o(i.RCC_AHBPeriphClockCmd)
+    i.RCC_APB1PeriphClockCmd                 0x08001cac   Section        0  hal_rcc.o(i.RCC_APB1PeriphClockCmd)
+    i.RCC_APB2PeriphClockCmd                 0x08001ccc   Section        0  hal_rcc.o(i.RCC_APB2PeriphClockCmd)
+    i.RCC_GetClocksFreq                      0x08001cec   Section        0  hal_rcc.o(i.RCC_GetClocksFreq)
+    i.RCC_GetHCLKFreq                        0x08001d34   Section        0  hal_rcc.o(i.RCC_GetHCLKFreq)
+    i.RCC_GetPCLK1Freq                       0x08001d54   Section        0  hal_rcc.o(i.RCC_GetPCLK1Freq)
+    i.RCC_GetPCLK2Freq                       0x08001d78   Section        0  hal_rcc.o(i.RCC_GetPCLK2Freq)
+    i.RCC_GetSysClockFreq                    0x08001d9c   Section        0  hal_rcc.o(i.RCC_GetSysClockFreq)
+    i.ReadAnPackData                         0x08001e1c   Section        0  motorcan.o(i.ReadAnPackData)
+    i.RestStep1                              0x08001e8c   Section        0  motormove.o(i.RestStep1)
+    i.RestStep2                              0x08001f78   Section        0  motormove.o(i.RestStep2)
+    i.RestStep3                              0x08002098   Section        0  motormove.o(i.RestStep3)
+    i.SPI2_Config                            0x08002114   Section        0  spi.o(i.SPI2_Config)
+    SPI2_Config                              0x08002115   Thumb Code    82  spi.o(i.SPI2_Config)
+    i.SPI2_GPIO_Config                       0x08002166   Section        0  spi.o(i.SPI2_GPIO_Config)
+    SPI2_GPIO_Config                         0x08002167   Thumb Code   166  spi.o(i.SPI2_GPIO_Config)
+    i.SPI_1_32bit_Init                       0x0800220c   Section        0  spi.o(i.SPI_1_32bit_Init)
+    i.SPI_BiDirectionalLineConfig            0x08002220   Section        0  hal_spi.o(i.SPI_BiDirectionalLineConfig)
+    i.SPI_CSInternalSelected                 0x08002260   Section        0  hal_spi.o(i.SPI_CSInternalSelected)
+    i.SPI_Cmd                                0x08002278   Section        0  hal_spi.o(i.SPI_Cmd)
+    i.SPI_Init                               0x08002290   Section        0  hal_spi.o(i.SPI_Init)
+    i.SPI_StructInit                         0x0800231c   Section        0  hal_spi.o(i.SPI_StructInit)
+    i.ScissorsReset                          0x0800233c   Section        0  motormove.o(i.ScissorsReset)
+    i.Send_CANFrame                          0x080023cc   Section        0  can.o(i.Send_CANFrame)
+    i.SetSysClock                            0x0800243c   Section        0  system_mm32spin06xx_s.o(i.SetSysClock)
+    SetSysClock                              0x0800243d   Thumb Code     8  system_mm32spin06xx_s.o(i.SetSysClock)
+    i.SetSysClockToXX                        0x08002444   Section        0  system_mm32spin06xx_s.o(i.SetSysClockToXX)
+    SetSysClockToXX                          0x08002445   Thumb Code   368  system_mm32spin06xx_s.o(i.SetSysClockToXX)
+    i.SysTick_Handler                        0x080025d0   Section        0  delay.o(i.SysTick_Handler)
+    i.SystemInit                             0x080025d8   Section        0  system_mm32spin06xx_s.o(i.SystemInit)
+    i.TIM2_IRQHandler                        0x08002644   Section        0  tim3_pwm_input.o(i.TIM2_IRQHandler)
+    i.TIM3_IRQHandler                        0x0800269c   Section        0  tim3_pwm_input.o(i.TIM3_IRQHandler)
+    i.TIM3_PWM_Input_Init                    0x08002720   Section        0  tim3_pwm_input.o(i.TIM3_PWM_Input_Init)
+    i.TIM3_PWM_Input_Test                    0x08002774   Section        0  tim3_pwm_input.o(i.TIM3_PWM_Input_Test)
+    i.TIM_ARRPreloadConfig                   0x080027a4   Section        0  hal_tim.o(i.TIM_ARRPreloadConfig)
+    i.TIM_ClearFlag                          0x080027bc   Section        0  hal_tim.o(i.TIM_ClearFlag)
+    i.TIM_ClearITPendingBit                  0x080027c4   Section        0  hal_tim.o(i.TIM_ClearITPendingBit)
+    i.TIM_Cmd                                0x080027cc   Section        0  hal_tim.o(i.TIM_Cmd)
+    i.TIM_GetITStatus                        0x080027e4   Section        0  hal_tim.o(i.TIM_GetITStatus)
+    i.TIM_ITConfig                           0x080027fe   Section        0  hal_tim.o(i.TIM_ITConfig)
+    i.TIM_TimeBaseInit                       0x08002814   Section        0  hal_tim.o(i.TIM_TimeBaseInit)
+    i.TIM_TimeBaseStructInit                 0x08002880   Section        0  hal_tim.o(i.TIM_TimeBaseStructInit)
+    i.TimingDelayDecrement                   0x08002894   Section        0  delay.o(i.TimingDelayDecrement)
+    TimingDelayDecrement                     0x08002895   Thumb Code    20  delay.o(i.TimingDelayDecrement)
+    i.UART1_IRQHandler                       0x080028ac   Section        0  uart.o(i.UART1_IRQHandler)
+    i.UART1_ITRX_InIt                        0x08002920   Section        0  uart.o(i.UART1_ITRX_InIt)
+    i.UART_ClearITPendingBit                 0x080029d4   Section        0  hal_uart.o(i.UART_ClearITPendingBit)
+    i.UART_Cmd                               0x080029d8   Section        0  hal_uart.o(i.UART_Cmd)
+    i.UART_GetFlagStatus                     0x080029e4   Section        0  hal_uart.o(i.UART_GetFlagStatus)
+    i.UART_GetITStatus                       0x080029f6   Section        0  hal_uart.o(i.UART_GetITStatus)
+    i.UART_ITConfig                          0x08002a08   Section        0  hal_uart.o(i.UART_ITConfig)
+    i.UART_Init                              0x08002a1c   Section        0  hal_uart.o(i.UART_Init)
+    i.UART_ReceiveData                       0x08002a94   Section        0  hal_uart.o(i.UART_ReceiveData)
+    i.UART_StructInit                        0x08002a9c   Section        0  hal_uart.o(i.UART_StructInit)
+    i.W25xx_CS_High                          0x08002ab8   Section        0  spi.o(i.W25xx_CS_High)
+    i.YMoveZero                              0x08002ac8   Section        0  motormove.o(i.YMoveZero)
+    i.YMoveZeroTrial                         0x08002bf4   Section        0  motormove.o(i.YMoveZeroTrial)
+    i.__ARM_clz                              0x08002d40   Section        0  depilogue.o(i.__ARM_clz)
+    i.__NVIC_SetPriority                     0x08002d70   Section        0  delay.o(i.__NVIC_SetPriority)
+    __NVIC_SetPriority                       0x08002d71   Thumb Code   110  delay.o(i.__NVIC_SetPriority)
+    i.__scatterload_copy                     0x08002de8   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08002df6   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08002df8   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.clearM                                 0x08002e06   Section        0  motormove.o(i.clearM)
+    i.exNVIC_Init                            0x08002e2c   Section        0  hal_misc.o(i.exNVIC_Init)
+    i.main                                   0x08002e94   Section        0  main.o(i.main)
+    .constdata                               0x08002f5c   Section      128  motormove.o(.constdata)
     .data                                    0x20000000   Section       20  system_mm32spin06xx_s.o(.data)
     .data                                    0x20000014   Section       16  hal_rcc.o(.data)
     .data                                    0x20000024   Section        4  delay.o(.data)
@@ -1127,21 +1136,21 @@ Image Symbol Table
     count2                                   0x2000002a   Data           1  uart.o(.data)
     .data                                    0x2000002b   Section        2  can.o(.data)
     .data                                    0x20000030   Section      326  motorcan.o(.data)
-    .data                                    0x20000178   Section       15  motormove.o(.data)
-    step                                     0x20000178   Data           1  motormove.o(.data)
-    ifstat                                   0x20000179   Data           1  motormove.o(.data)
-    Restnum                                  0x2000017a   Data           1  motormove.o(.data)
-    stepnum                                  0x2000017b   Data           1  motormove.o(.data)
-    OriginalEncodedX1                        0x2000017c   Data           4  motormove.o(.data)
-    OriginalEncodedX2                        0x20000180   Data           4  motormove.o(.data)
-    RunState                                 0x20000184   Data           1  motormove.o(.data)
-    OutKnifeStep                             0x20000185   Data           1  motormove.o(.data)
-    CloseKnife                               0x20000186   Data           1  motormove.o(.data)
-    .data                                    0x20000188   Section       16  main.o(.data)
-    .bss                                     0x20000198   Section      204  uart.o(.bss)
-    .bss                                     0x20000264   Section       16  can.o(.bss)
-    .bss                                     0x20000274   Section       12  motormove.o(.bss)
-    STACK                                    0x20000280   Section     1024  startup_mm32spin06xx_s_keil.o(STACK)
+    .data                                    0x20000176   Section        9  motormove.o(.data)
+    step                                     0x20000176   Data           1  motormove.o(.data)
+    ifstat                                   0x20000177   Data           1  motormove.o(.data)
+    Restnum                                  0x20000178   Data           1  motormove.o(.data)
+    stepnum                                  0x20000179   Data           1  motormove.o(.data)
+    TrialState                               0x2000017a   Data           1  motormove.o(.data)
+    TrialCount                               0x2000017b   Data           1  motormove.o(.data)
+    RunState                                 0x2000017c   Data           1  motormove.o(.data)
+    OutKnifeStep                             0x2000017d   Data           1  motormove.o(.data)
+    CloseKnife                               0x2000017e   Data           1  motormove.o(.data)
+    .data                                    0x20000180   Section       16  main.o(.data)
+    .bss                                     0x20000190   Section      204  uart.o(.bss)
+    .bss                                     0x2000025c   Section       16  can.o(.bss)
+    .bss                                     0x2000026c   Section       12  motormove.o(.bss)
+    STACK                                    0x20000278   Section     1024  startup_mm32spin06xx_s_keil.o(STACK)
 
     Global Symbols
 
@@ -1275,93 +1284,93 @@ Image Symbol Table
     CAN_Peli_Transmit                        0x080009a5   Thumb Code   168  hal_can.o(i.CAN_Peli_Transmit)
     CAN_ResetMode_Cmd                        0x08000a51   Thumb Code    24  hal_can.o(i.CAN_ResetMode_Cmd)
     ClearMStat                               0x08000a69   Thumb Code   120  motorcan.o(i.ClearMStat)
-    CloseKnife2                              0x08000aed   Thumb Code   572  motormove.o(i.CloseKnife2)
+    CloseKnife2                              0x08000aed   Thumb Code   576  motormove.o(i.CloseKnife2)
     Cmd_pack                                 0x08000d4d   Thumb Code   190  uart.o(i.Cmd_pack)
     DELAY_Init                               0x08000e19   Thumb Code    72  delay.o(i.DELAY_Init)
     DELAY_Ms                                 0x08000e6d   Thumb Code    20  delay.o(i.DELAY_Ms)
     DataAnalyze                              0x08000e85   Thumb Code   632  motorcan.o(i.DataAnalyze)
-    DreMoveZero                              0x08001109   Thumb Code   746  motormove.o(i.DreMoveZero)
-    EnableOrClearALarm                       0x08001419   Thumb Code    80  motormove.o(i.EnableOrClearALarm)
-    GPIO_Init                                0x0800146d   Thumb Code   154  hal_gpio.o(i.GPIO_Init)
-    GPIO_PinAFConfig                         0x08001507   Thumb Code    40  hal_gpio.o(i.GPIO_PinAFConfig)
-    GPIO_ReadInputDataBit                    0x0800152f   Thumb Code    18  hal_gpio.o(i.GPIO_ReadInputDataBit)
-    GPIO_ReadOutputDataBit                   0x08001541   Thumb Code    18  hal_gpio.o(i.GPIO_ReadOutputDataBit)
-    GPIO_ResetBits                           0x08001553   Thumb Code     4  hal_gpio.o(i.GPIO_ResetBits)
-    GPIO_SetBits                             0x08001557   Thumb Code     4  hal_gpio.o(i.GPIO_SetBits)
-    GPIO_StructInit                          0x0800155b   Thumb Code    16  hal_gpio.o(i.GPIO_StructInit)
-    GetCAN_FilterNum                         0x0800156d   Thumb Code    22  can.o(i.GetCAN_FilterNum)
-    GetMotorSpeed_Torque_Pos                 0x08001589   Thumb Code    42  motorcan.o(i.GetMotorSpeed_Torque_Pos)
-    Input_Init                               0x080015b9   Thumb Code    60  gpio.o(i.Input_Init)
-    KnifeSelection2                          0x080015f9   Thumb Code   378  motormove.o(i.KnifeSelection2)
-    LED_Init                                 0x08001795   Thumb Code    94  gpio.o(i.LED_Init)
-    MRevbuffEmpty                            0x080017f9   Thumb Code    18  motorcan.o(i.MRevbuffEmpty)
-    MRevbuffFull                             0x0800180b   Thumb Code    28  motorcan.o(i.MRevbuffFull)
-    MRevbuffLen                              0x08001827   Thumb Code    24  motorcan.o(i.MRevbuffLen)
-    MotorCanInit                             0x08001841   Thumb Code   378  motormove.o(i.MotorCanInit)
-    MotorSendCanData                         0x08001a1d   Thumb Code   122  motorcan.o(i.MotorSendCanData)
-    MoveSeepMode                             0x08001a9d   Thumb Code    90  motormove.o(i.MoveSeepMode)
-    MoveToTargetPos                          0x08001b01   Thumb Code   104  motormove.o(i.MoveToTargetPos)
-    MoveZero                                 0x08001b75   Thumb Code   218  motormove.o(i.MoveZero)
-    NVIC_Configure                           0x08001c59   Thumb Code    26  tim3_pwm_input.o(i.NVIC_Configure)
-    NVIC_Init                                0x08001c75   Thumb Code   100  hal_misc.o(i.NVIC_Init)
-    PollingMotorSta                          0x08001cdd   Thumb Code    20  motorcan.o(i.PollingMotorSta)
-    Queue_init                               0x08001cf5   Thumb Code    30  uart.o(i.Queue_init)
-    RCC_AHBPeriphClockCmd                    0x08001d1d   Thumb Code    28  hal_rcc.o(i.RCC_AHBPeriphClockCmd)
-    RCC_APB1PeriphClockCmd                   0x08001d3d   Thumb Code    28  hal_rcc.o(i.RCC_APB1PeriphClockCmd)
-    RCC_APB2PeriphClockCmd                   0x08001d5d   Thumb Code    28  hal_rcc.o(i.RCC_APB2PeriphClockCmd)
-    RCC_GetClocksFreq                        0x08001d7d   Thumb Code    58  hal_rcc.o(i.RCC_GetClocksFreq)
-    RCC_GetHCLKFreq                          0x08001dc5   Thumb Code    24  hal_rcc.o(i.RCC_GetHCLKFreq)
-    RCC_GetPCLK1Freq                         0x08001de5   Thumb Code    26  hal_rcc.o(i.RCC_GetPCLK1Freq)
-    RCC_GetPCLK2Freq                         0x08001e09   Thumb Code    26  hal_rcc.o(i.RCC_GetPCLK2Freq)
-    RCC_GetSysClockFreq                      0x08001e2d   Thumb Code   110  hal_rcc.o(i.RCC_GetSysClockFreq)
-    ReadAnPackData                           0x08001ead   Thumb Code   106  motorcan.o(i.ReadAnPackData)
-    ReadMotorOriginalEncodedVal              0x08001f1d   Thumb Code    54  motormove.o(i.ReadMotorOriginalEncodedVal)
-    RestStep1                                0x08001f5d   Thumb Code   222  motormove.o(i.RestStep1)
-    RestStep2                                0x0800204d   Thumb Code   264  motormove.o(i.RestStep2)
-    RestStep3                                0x0800216d   Thumb Code   116  motormove.o(i.RestStep3)
-    SPI_1_32bit_Init                         0x080022e1   Thumb Code    20  spi.o(i.SPI_1_32bit_Init)
-    SPI_BiDirectionalLineConfig              0x080022f5   Thumb Code    64  hal_spi.o(i.SPI_BiDirectionalLineConfig)
-    SPI_CSInternalSelected                   0x08002335   Thumb Code    24  hal_spi.o(i.SPI_CSInternalSelected)
-    SPI_Cmd                                  0x0800234d   Thumb Code    24  hal_spi.o(i.SPI_Cmd)
-    SPI_Init                                 0x08002365   Thumb Code   140  hal_spi.o(i.SPI_Init)
-    SPI_StructInit                           0x080023f1   Thumb Code    32  hal_spi.o(i.SPI_StructInit)
-    ScissorsReset                            0x08002411   Thumb Code   122  motormove.o(i.ScissorsReset)
-    Send_CANFrame                            0x080024a1   Thumb Code   112  can.o(i.Send_CANFrame)
-    SysTick_Handler                          0x080026a5   Thumb Code     8  delay.o(i.SysTick_Handler)
-    SystemInit                               0x080026ad   Thumb Code    90  system_mm32spin06xx_s.o(i.SystemInit)
-    TIM2_IRQHandler                          0x08002719   Thumb Code    84  tim3_pwm_input.o(i.TIM2_IRQHandler)
-    TIM3_IRQHandler                          0x08002771   Thumb Code   110  tim3_pwm_input.o(i.TIM3_IRQHandler)
-    TIM3_PWM_Input_Init                      0x080027f5   Thumb Code    78  tim3_pwm_input.o(i.TIM3_PWM_Input_Init)
-    TIM3_PWM_Input_Test                      0x08002849   Thumb Code    36  tim3_pwm_input.o(i.TIM3_PWM_Input_Test)
-    TIM_ARRPreloadConfig                     0x08002879   Thumb Code    24  hal_tim.o(i.TIM_ARRPreloadConfig)
-    TIM_ClearFlag                            0x08002891   Thumb Code     8  hal_tim.o(i.TIM_ClearFlag)
-    TIM_ClearITPendingBit                    0x08002899   Thumb Code     8  hal_tim.o(i.TIM_ClearITPendingBit)
-    TIM_Cmd                                  0x080028a1   Thumb Code    24  hal_tim.o(i.TIM_Cmd)
-    TIM_GetITStatus                          0x080028b9   Thumb Code    26  hal_tim.o(i.TIM_GetITStatus)
-    TIM_ITConfig                             0x080028d3   Thumb Code    20  hal_tim.o(i.TIM_ITConfig)
-    TIM_TimeBaseInit                         0x080028e9   Thumb Code    90  hal_tim.o(i.TIM_TimeBaseInit)
-    TIM_TimeBaseStructInit                   0x08002955   Thumb Code    18  hal_tim.o(i.TIM_TimeBaseStructInit)
-    UART1_IRQHandler                         0x08002981   Thumb Code   102  uart.o(i.UART1_IRQHandler)
-    UART1_ITRX_InIt                          0x080029f5   Thumb Code   176  uart.o(i.UART1_ITRX_InIt)
-    UART_ClearITPendingBit                   0x08002aa9   Thumb Code     4  hal_uart.o(i.UART_ClearITPendingBit)
-    UART_Cmd                                 0x08002aad   Thumb Code    12  hal_uart.o(i.UART_Cmd)
-    UART_GetFlagStatus                       0x08002ab9   Thumb Code    18  hal_uart.o(i.UART_GetFlagStatus)
-    UART_GetITStatus                         0x08002acb   Thumb Code    18  hal_uart.o(i.UART_GetITStatus)
-    UART_ITConfig                            0x08002add   Thumb Code    20  hal_uart.o(i.UART_ITConfig)
-    UART_Init                                0x08002af1   Thumb Code   116  hal_uart.o(i.UART_Init)
-    UART_ReceiveData                         0x08002b69   Thumb Code     8  hal_uart.o(i.UART_ReceiveData)
-    UART_StructInit                          0x08002b71   Thumb Code    26  hal_uart.o(i.UART_StructInit)
-    W25xx_CS_High                            0x08002b8d   Thumb Code    12  spi.o(i.W25xx_CS_High)
-    YMoveZero                                0x08002b9d   Thumb Code   270  motormove.o(i.YMoveZero)
-    __ARM_clz                                0x08002cc9   Thumb Code    46  depilogue.o(i.__ARM_clz)
-    __scatterload_copy                       0x08002d71   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08002d7f   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08002d81   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    clearM                                   0x08002d8f   Thumb Code    36  motormove.o(i.clearM)
-    exNVIC_Init                              0x08002db5   Thumb Code   100  hal_misc.o(i.exNVIC_Init)
-    main                                     0x08002e1d   Thumb Code   184  main.o(i.main)
-    Region$$Table$$Base                      0x08002f64   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08002f84   Number         0  anon$$obj.o(Region$$Table)
+    DreMoveZero                              0x08001109   Thumb Code   600  motormove.o(i.DreMoveZero)
+    EnableOrClearALarm                       0x0800137d   Thumb Code    80  motormove.o(i.EnableOrClearALarm)
+    GPIO_Init                                0x080013d1   Thumb Code   154  hal_gpio.o(i.GPIO_Init)
+    GPIO_PinAFConfig                         0x0800146b   Thumb Code    40  hal_gpio.o(i.GPIO_PinAFConfig)
+    GPIO_ReadInputDataBit                    0x08001493   Thumb Code    18  hal_gpio.o(i.GPIO_ReadInputDataBit)
+    GPIO_ReadOutputDataBit                   0x080014a5   Thumb Code    18  hal_gpio.o(i.GPIO_ReadOutputDataBit)
+    GPIO_ResetBits                           0x080014b7   Thumb Code     4  hal_gpio.o(i.GPIO_ResetBits)
+    GPIO_SetBits                             0x080014bb   Thumb Code     4  hal_gpio.o(i.GPIO_SetBits)
+    GPIO_StructInit                          0x080014bf   Thumb Code    16  hal_gpio.o(i.GPIO_StructInit)
+    GetCAN_FilterNum                         0x080014d1   Thumb Code    22  can.o(i.GetCAN_FilterNum)
+    GetMotorSpeed_Torque_Pos                 0x080014ed   Thumb Code    42  motorcan.o(i.GetMotorSpeed_Torque_Pos)
+    Input_Init                               0x0800151d   Thumb Code    60  gpio.o(i.Input_Init)
+    KnifeSelection2                          0x0800155d   Thumb Code   380  motormove.o(i.KnifeSelection2)
+    LED_Init                                 0x080016f5   Thumb Code    94  gpio.o(i.LED_Init)
+    MRevbuffEmpty                            0x08001759   Thumb Code    18  motorcan.o(i.MRevbuffEmpty)
+    MRevbuffFull                             0x0800176b   Thumb Code    28  motorcan.o(i.MRevbuffFull)
+    MRevbuffLen                              0x08001787   Thumb Code    24  motorcan.o(i.MRevbuffLen)
+    MotorCanInit                             0x080017a1   Thumb Code   378  motormove.o(i.MotorCanInit)
+    MotorSendCanData                         0x0800197d   Thumb Code   122  motorcan.o(i.MotorSendCanData)
+    MoveSeepMode                             0x080019fd   Thumb Code    90  motormove.o(i.MoveSeepMode)
+    MoveToTargetPos                          0x08001a61   Thumb Code   104  motormove.o(i.MoveToTargetPos)
+    MoveZero                                 0x08001ad5   Thumb Code   230  motormove.o(i.MoveZero)
+    NVIC_Configure                           0x08001bc9   Thumb Code    26  tim3_pwm_input.o(i.NVIC_Configure)
+    NVIC_Init                                0x08001be5   Thumb Code   100  hal_misc.o(i.NVIC_Init)
+    PollingMotorSta                          0x08001c4d   Thumb Code    20  motorcan.o(i.PollingMotorSta)
+    Queue_init                               0x08001c65   Thumb Code    30  uart.o(i.Queue_init)
+    RCC_AHBPeriphClockCmd                    0x08001c8d   Thumb Code    28  hal_rcc.o(i.RCC_AHBPeriphClockCmd)
+    RCC_APB1PeriphClockCmd                   0x08001cad   Thumb Code    28  hal_rcc.o(i.RCC_APB1PeriphClockCmd)
+    RCC_APB2PeriphClockCmd                   0x08001ccd   Thumb Code    28  hal_rcc.o(i.RCC_APB2PeriphClockCmd)
+    RCC_GetClocksFreq                        0x08001ced   Thumb Code    58  hal_rcc.o(i.RCC_GetClocksFreq)
+    RCC_GetHCLKFreq                          0x08001d35   Thumb Code    24  hal_rcc.o(i.RCC_GetHCLKFreq)
+    RCC_GetPCLK1Freq                         0x08001d55   Thumb Code    26  hal_rcc.o(i.RCC_GetPCLK1Freq)
+    RCC_GetPCLK2Freq                         0x08001d79   Thumb Code    26  hal_rcc.o(i.RCC_GetPCLK2Freq)
+    RCC_GetSysClockFreq                      0x08001d9d   Thumb Code   110  hal_rcc.o(i.RCC_GetSysClockFreq)
+    ReadAnPackData                           0x08001e1d   Thumb Code   106  motorcan.o(i.ReadAnPackData)
+    RestStep1                                0x08001e8d   Thumb Code   224  motormove.o(i.RestStep1)
+    RestStep2                                0x08001f79   Thumb Code   268  motormove.o(i.RestStep2)
+    RestStep3                                0x08002099   Thumb Code   116  motormove.o(i.RestStep3)
+    SPI_1_32bit_Init                         0x0800220d   Thumb Code    20  spi.o(i.SPI_1_32bit_Init)
+    SPI_BiDirectionalLineConfig              0x08002221   Thumb Code    64  hal_spi.o(i.SPI_BiDirectionalLineConfig)
+    SPI_CSInternalSelected                   0x08002261   Thumb Code    24  hal_spi.o(i.SPI_CSInternalSelected)
+    SPI_Cmd                                  0x08002279   Thumb Code    24  hal_spi.o(i.SPI_Cmd)
+    SPI_Init                                 0x08002291   Thumb Code   140  hal_spi.o(i.SPI_Init)
+    SPI_StructInit                           0x0800231d   Thumb Code    32  hal_spi.o(i.SPI_StructInit)
+    ScissorsReset                            0x0800233d   Thumb Code   122  motormove.o(i.ScissorsReset)
+    Send_CANFrame                            0x080023cd   Thumb Code   112  can.o(i.Send_CANFrame)
+    SysTick_Handler                          0x080025d1   Thumb Code     8  delay.o(i.SysTick_Handler)
+    SystemInit                               0x080025d9   Thumb Code    90  system_mm32spin06xx_s.o(i.SystemInit)
+    TIM2_IRQHandler                          0x08002645   Thumb Code    84  tim3_pwm_input.o(i.TIM2_IRQHandler)
+    TIM3_IRQHandler                          0x0800269d   Thumb Code   110  tim3_pwm_input.o(i.TIM3_IRQHandler)
+    TIM3_PWM_Input_Init                      0x08002721   Thumb Code    78  tim3_pwm_input.o(i.TIM3_PWM_Input_Init)
+    TIM3_PWM_Input_Test                      0x08002775   Thumb Code    36  tim3_pwm_input.o(i.TIM3_PWM_Input_Test)
+    TIM_ARRPreloadConfig                     0x080027a5   Thumb Code    24  hal_tim.o(i.TIM_ARRPreloadConfig)
+    TIM_ClearFlag                            0x080027bd   Thumb Code     8  hal_tim.o(i.TIM_ClearFlag)
+    TIM_ClearITPendingBit                    0x080027c5   Thumb Code     8  hal_tim.o(i.TIM_ClearITPendingBit)
+    TIM_Cmd                                  0x080027cd   Thumb Code    24  hal_tim.o(i.TIM_Cmd)
+    TIM_GetITStatus                          0x080027e5   Thumb Code    26  hal_tim.o(i.TIM_GetITStatus)
+    TIM_ITConfig                             0x080027ff   Thumb Code    20  hal_tim.o(i.TIM_ITConfig)
+    TIM_TimeBaseInit                         0x08002815   Thumb Code    90  hal_tim.o(i.TIM_TimeBaseInit)
+    TIM_TimeBaseStructInit                   0x08002881   Thumb Code    18  hal_tim.o(i.TIM_TimeBaseStructInit)
+    UART1_IRQHandler                         0x080028ad   Thumb Code   102  uart.o(i.UART1_IRQHandler)
+    UART1_ITRX_InIt                          0x08002921   Thumb Code   176  uart.o(i.UART1_ITRX_InIt)
+    UART_ClearITPendingBit                   0x080029d5   Thumb Code     4  hal_uart.o(i.UART_ClearITPendingBit)
+    UART_Cmd                                 0x080029d9   Thumb Code    12  hal_uart.o(i.UART_Cmd)
+    UART_GetFlagStatus                       0x080029e5   Thumb Code    18  hal_uart.o(i.UART_GetFlagStatus)
+    UART_GetITStatus                         0x080029f7   Thumb Code    18  hal_uart.o(i.UART_GetITStatus)
+    UART_ITConfig                            0x08002a09   Thumb Code    20  hal_uart.o(i.UART_ITConfig)
+    UART_Init                                0x08002a1d   Thumb Code   116  hal_uart.o(i.UART_Init)
+    UART_ReceiveData                         0x08002a95   Thumb Code     8  hal_uart.o(i.UART_ReceiveData)
+    UART_StructInit                          0x08002a9d   Thumb Code    26  hal_uart.o(i.UART_StructInit)
+    W25xx_CS_High                            0x08002ab9   Thumb Code    12  spi.o(i.W25xx_CS_High)
+    YMoveZero                                0x08002ac9   Thumb Code   270  motormove.o(i.YMoveZero)
+    YMoveZeroTrial                           0x08002bf5   Thumb Code   320  motormove.o(i.YMoveZeroTrial)
+    __ARM_clz                                0x08002d41   Thumb Code    46  depilogue.o(i.__ARM_clz)
+    __scatterload_copy                       0x08002de9   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08002df7   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08002df9   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    clearM                                   0x08002e07   Thumb Code    36  motormove.o(i.clearM)
+    exNVIC_Init                              0x08002e2d   Thumb Code   100  hal_misc.o(i.exNVIC_Init)
+    main                                     0x08002e95   Thumb Code   184  main.o(i.main)
+    Region$$Table$$Base                      0x08002fdc   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08002ffc   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_mm32spin06xx_s.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_mm32spin06xx_s.o(.data)
     tbPresc                                  0x20000014   Data          16  hal_rcc.o(.data)
@@ -1371,15 +1380,15 @@ Image Symbol Table
     MSCmd                                    0x2000003e   Data          26  motorcan.o(.data)
     MRevBuff                                 0x20000058   Data         268  motorcan.o(.data)
     MErrState                                0x20000164   Data          18  motorcan.o(.data)
-    SPI_sencallk                             0x20000188   Data           5  main.o(.data)
-    myspeed                                  0x2000018e   Data           2  main.o(.data)
-    torq                                     0x20000190   Data           2  main.o(.data)
-    Posv                                     0x20000194   Data           4  main.o(.data)
-    uartrevQ                                 0x20000198   Data         104  uart.o(.bss)
-    CMD_buff                                 0x20000200   Data         100  uart.o(.bss)
-    gCanPeliRxBuff                           0x20000264   Data          16  can.o(.bss)
-    MExeSta                                  0x20000274   Data          12  motormove.o(.bss)
-    __initial_sp                             0x20000680   Data           0  startup_mm32spin06xx_s_keil.o(STACK)
+    SPI_sencallk                             0x20000180   Data           5  main.o(.data)
+    myspeed                                  0x20000186   Data           2  main.o(.data)
+    torq                                     0x20000188   Data           2  main.o(.data)
+    Posv                                     0x2000018c   Data           4  main.o(.data)
+    uartrevQ                                 0x20000190   Data         104  uart.o(.bss)
+    CMD_buff                                 0x200001f8   Data         100  uart.o(.bss)
+    gCanPeliRxBuff                           0x2000025c   Data          16  can.o(.bss)
+    MExeSta                                  0x2000026c   Data          12  motormove.o(.bss)
+    __initial_sp                             0x20000678   Data           0  startup_mm32spin06xx_s_keil.o(STACK)
 
 
 
@@ -1389,35 +1398,35 @@ Memory Map of the image
 
   Image Entry point : 0x080000c1
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000311c, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x00002fe0])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000318c, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x00003058])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00002f84, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00002ffc, Max: 0x00010000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x000000c0   Data   RO          135    RESET               startup_mm32spin06xx_s_keil.o
-    0x080000c0   0x00000000   Code   RO         2594  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
-    0x080000c0   0x00000004   Code   RO         2872    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
-    0x080000c4   0x00000004   Code   RO         2875    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
-    0x080000c8   0x00000000   Code   RO         2877    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
-    0x080000c8   0x00000000   Code   RO         2879    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
-    0x080000c8   0x00000008   Code   RO         2880    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
-    0x080000d0   0x00000000   Code   RO         2882    .ARM.Collect$$$$0000000D  mc_p.l(entry10a.o)
-    0x080000d0   0x00000000   Code   RO         2884    .ARM.Collect$$$$0000000F  mc_p.l(entry11a.o)
-    0x080000d0   0x00000004   Code   RO         2873    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
+    0x080000c0   0x00000000   Code   RO         2600  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
+    0x080000c0   0x00000004   Code   RO         2878    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
+    0x080000c4   0x00000004   Code   RO         2881    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
+    0x080000c8   0x00000000   Code   RO         2883    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
+    0x080000c8   0x00000000   Code   RO         2885    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
+    0x080000c8   0x00000008   Code   RO         2886    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
+    0x080000d0   0x00000000   Code   RO         2888    .ARM.Collect$$$$0000000D  mc_p.l(entry10a.o)
+    0x080000d0   0x00000000   Code   RO         2890    .ARM.Collect$$$$0000000F  mc_p.l(entry11a.o)
+    0x080000d0   0x00000004   Code   RO         2879    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
     0x080000d4   0x00000060   Code   RO          136    .text               startup_mm32spin06xx_s_keil.o
-    0x08000134   0x0000002c   Code   RO         2597    .text               mc_p.l(uidiv.o)
-    0x08000160   0x00000024   Code   RO         2599    .text               mc_p.l(memcpya.o)
-    0x08000184   0x00000024   Code   RO         2601    .text               mc_p.l(memseta.o)
-    0x080001a8   0x0000001c   Code   RO         2866    .text               mf_p.l(dfltui.o)
-    0x080001c4   0x00000028   Code   RO         2870    .text               mf_p.l(cdrcmple.o)
-    0x080001ec   0x00000000   Code   RO         2889    .text               mc_p.l(iusefp.o)
-    0x080001ec   0x000000be   Code   RO         2890    .text               mf_p.l(depilogue.o)
+    0x08000134   0x0000002c   Code   RO         2603    .text               mc_p.l(uidiv.o)
+    0x08000160   0x00000024   Code   RO         2605    .text               mc_p.l(memcpya.o)
+    0x08000184   0x00000024   Code   RO         2607    .text               mc_p.l(memseta.o)
+    0x080001a8   0x0000001c   Code   RO         2872    .text               mf_p.l(dfltui.o)
+    0x080001c4   0x00000028   Code   RO         2876    .text               mf_p.l(cdrcmple.o)
+    0x080001ec   0x00000000   Code   RO         2895    .text               mc_p.l(iusefp.o)
+    0x080001ec   0x000000be   Code   RO         2896    .text               mf_p.l(depilogue.o)
     0x080002aa   0x00000002   PAD
-    0x080002ac   0x00000024   Code   RO         2902    .text               mc_p.l(init.o)
-    0x080002d0   0x00000020   Code   RO         2904    .text               mc_p.l(llshl.o)
-    0x080002f0   0x00000022   Code   RO         2906    .text               mc_p.l(llushr.o)
-    0x08000312   0x00000056   Code   RO         2918    .text               mc_p.l(__dczerorl2.o)
+    0x080002ac   0x00000024   Code   RO         2908    .text               mc_p.l(init.o)
+    0x080002d0   0x00000020   Code   RO         2910    .text               mc_p.l(llshl.o)
+    0x080002f0   0x00000022   Code   RO         2912    .text               mc_p.l(llushr.o)
+    0x08000312   0x00000056   Code   RO         2924    .text               mc_p.l(__dczerorl2.o)
     0x08000368   0x0000006a   Code   RO            3    i.AutoCalPllFactor  system_mm32spin06xx_s.o
     0x080003d2   0x00000088   Code   RO         1586    i.CAN_AutoCfg_BaudParam  hal_can.o
     0x0800045a   0x0000000a   Code   RO         1588    i.CAN_ClearDataOverflow  hal_can.o
@@ -1444,106 +1453,106 @@ Memory Map of the image
     0x08000e18   0x00000054   Code   RO         1795    i.DELAY_Init        delay.o
     0x08000e6c   0x00000018   Code   RO         1796    i.DELAY_Ms          delay.o
     0x08000e84   0x00000284   Code   RO         2365    i.DataAnalyze       motorcan.o
-    0x08001108   0x00000310   Code   RO         2445    i.DreMoveZero       motormove.o
-    0x08001418   0x00000054   Code   RO         2446    i.EnableOrClearALarm  motormove.o
-    0x0800146c   0x0000009a   Code   RO          144    i.GPIO_Init         hal_gpio.o
-    0x08001506   0x00000028   Code   RO          145    i.GPIO_PinAFConfig  hal_gpio.o
-    0x0800152e   0x00000012   Code   RO          149    i.GPIO_ReadInputDataBit  hal_gpio.o
-    0x08001540   0x00000012   Code   RO          151    i.GPIO_ReadOutputDataBit  hal_gpio.o
-    0x08001552   0x00000004   Code   RO          152    i.GPIO_ResetBits    hal_gpio.o
-    0x08001556   0x00000004   Code   RO          153    i.GPIO_SetBits      hal_gpio.o
-    0x0800155a   0x00000010   Code   RO          154    i.GPIO_StructInit   hal_gpio.o
-    0x0800156a   0x00000002   PAD
-    0x0800156c   0x0000001c   Code   RO         2308    i.GetCAN_FilterNum  can.o
-    0x08001588   0x00000030   Code   RO         2366    i.GetMotorSpeed_Torque_Pos  motorcan.o
-    0x080015b8   0x00000040   Code   RO         2067    i.Input_Init        gpio.o
-    0x080015f8   0x0000019c   Code   RO         2448    i.KnifeSelection2   motormove.o
-    0x08001794   0x00000064   Code   RO         2068    i.LED_Init          gpio.o
-    0x080017f8   0x00000012   Code   RO         2367    i.MRevbuffEmpty     motorcan.o
-    0x0800180a   0x0000001c   Code   RO         2368    i.MRevbuffFull      motorcan.o
-    0x08001826   0x00000018   Code   RO         2369    i.MRevbuffLen       motorcan.o
-    0x0800183e   0x00000002   PAD
-    0x08001840   0x00000184   Code   RO         2449    i.MotorCanInit      motormove.o
-    0x080019c4   0x00000058   Code   RO         2450    i.MotorMoveStandard  motormove.o
-    0x08001a1c   0x00000080   Code   RO         2370    i.MotorSendCanData  motorcan.o
-    0x08001a9c   0x00000064   Code   RO         2451    i.MoveSeepMode      motormove.o
-    0x08001b00   0x00000074   Code   RO         2452    i.MoveToTargetPos   motormove.o
-    0x08001b74   0x000000e4   Code   RO         2453    i.MoveZero          motormove.o
-    0x08001c58   0x0000001a   Code   RO         2102    i.NVIC_Configure    tim3_pwm_input.o
-    0x08001c72   0x00000002   PAD
-    0x08001c74   0x00000068   Code   RO          723    i.NVIC_Init         hal_misc.o
-    0x08001cdc   0x00000018   Code   RO         2371    i.PollingMotorSta   motorcan.o
-    0x08001cf4   0x00000028   Code   RO         1914    i.Queue_init        uart.o
-    0x08001d1c   0x00000020   Code   RO          259    i.RCC_AHBPeriphClockCmd  hal_rcc.o
-    0x08001d3c   0x00000020   Code   RO          261    i.RCC_APB1PeriphClockCmd  hal_rcc.o
-    0x08001d5c   0x00000020   Code   RO          263    i.RCC_APB2PeriphClockCmd  hal_rcc.o
-    0x08001d7c   0x00000048   Code   RO          270    i.RCC_GetClocksFreq  hal_rcc.o
-    0x08001dc4   0x00000020   Code   RO          272    i.RCC_GetHCLKFreq   hal_rcc.o
-    0x08001de4   0x00000024   Code   RO          274    i.RCC_GetPCLK1Freq  hal_rcc.o
-    0x08001e08   0x00000024   Code   RO          275    i.RCC_GetPCLK2Freq  hal_rcc.o
-    0x08001e2c   0x00000080   Code   RO          277    i.RCC_GetSysClockFreq  hal_rcc.o
-    0x08001eac   0x00000070   Code   RO         2372    i.ReadAnPackData    motorcan.o
-    0x08001f1c   0x00000040   Code   RO         2454    i.ReadMotorOriginalEncodedVal  motormove.o
-    0x08001f5c   0x000000f0   Code   RO         2455    i.RestStep1         motormove.o
-    0x0800204c   0x00000120   Code   RO         2456    i.RestStep2         motormove.o
-    0x0800216c   0x0000007c   Code   RO         2457    i.RestStep3         motormove.o
-    0x080021e8   0x00000052   Code   RO         2214    i.SPI2_Config       spi.o
-    0x0800223a   0x000000a6   Code   RO         2215    i.SPI2_GPIO_Config  spi.o
-    0x080022e0   0x00000014   Code   RO         2216    i.SPI_1_32bit_Init  spi.o
-    0x080022f4   0x00000040   Code   RO         1425    i.SPI_BiDirectionalLineConfig  hal_spi.o
-    0x08002334   0x00000018   Code   RO         1426    i.SPI_CSInternalSelected  hal_spi.o
-    0x0800234c   0x00000018   Code   RO         1428    i.SPI_Cmd           hal_spi.o
-    0x08002364   0x0000008c   Code   RO         1437    i.SPI_Init          hal_spi.o
-    0x080023f0   0x00000020   Code   RO         1443    i.SPI_StructInit    hal_spi.o
-    0x08002410   0x00000090   Code   RO         2458    i.ScissorsReset     motormove.o
-    0x080024a0   0x00000070   Code   RO         2309    i.Send_CANFrame     can.o
-    0x08002510   0x00000008   Code   RO            4    i.SetSysClock       system_mm32spin06xx_s.o
-    0x08002518   0x0000018c   Code   RO            5    i.SetSysClockToXX   system_mm32spin06xx_s.o
-    0x080026a4   0x00000008   Code   RO         1797    i.SysTick_Handler   delay.o
-    0x080026ac   0x0000006c   Code   RO            6    i.SystemInit        system_mm32spin06xx_s.o
-    0x08002718   0x00000058   Code   RO         2104    i.TIM2_IRQHandler   tim3_pwm_input.o
-    0x08002770   0x00000084   Code   RO         2108    i.TIM3_IRQHandler   tim3_pwm_input.o
-    0x080027f4   0x00000054   Code   RO         2109    i.TIM3_PWM_Input_Init  tim3_pwm_input.o
-    0x08002848   0x00000030   Code   RO         2110    i.TIM3_PWM_Input_Test  tim3_pwm_input.o
-    0x08002878   0x00000018   Code   RO          768    i.TIM_ARRPreloadConfig  hal_tim.o
-    0x08002890   0x00000008   Code   RO          774    i.TIM_ClearFlag     hal_tim.o
-    0x08002898   0x00000008   Code   RO          775    i.TIM_ClearITPendingBit  hal_tim.o
-    0x080028a0   0x00000018   Code   RO          780    i.TIM_Cmd           hal_tim.o
-    0x080028b8   0x0000001a   Code   RO          801    i.TIM_GetITStatus   hal_tim.o
-    0x080028d2   0x00000014   Code   RO          805    i.TIM_ITConfig      hal_tim.o
-    0x080028e6   0x00000002   PAD
-    0x080028e8   0x0000006c   Code   RO          857    i.TIM_TimeBaseInit  hal_tim.o
-    0x08002954   0x00000012   Code   RO          858    i.TIM_TimeBaseStructInit  hal_tim.o
-    0x08002966   0x00000002   PAD
-    0x08002968   0x00000018   Code   RO         1798    i.TimingDelayDecrement  delay.o
-    0x08002980   0x00000074   Code   RO         1916    i.UART1_IRQHandler  uart.o
-    0x080029f4   0x000000b4   Code   RO         1917    i.UART1_ITRX_InIt   uart.o
-    0x08002aa8   0x00000004   Code   RO          546    i.UART_ClearITPendingBit  hal_uart.o
-    0x08002aac   0x0000000c   Code   RO          547    i.UART_Cmd          hal_uart.o
-    0x08002ab8   0x00000012   Code   RO          551    i.UART_GetFlagStatus  hal_uart.o
-    0x08002aca   0x00000012   Code   RO          552    i.UART_GetITStatus  hal_uart.o
-    0x08002adc   0x00000014   Code   RO          554    i.UART_ITConfig     hal_uart.o
-    0x08002af0   0x00000078   Code   RO          555    i.UART_Init         hal_uart.o
-    0x08002b68   0x00000008   Code   RO          556    i.UART_ReceiveData  hal_uart.o
-    0x08002b70   0x0000001a   Code   RO          568    i.UART_StructInit   hal_uart.o
-    0x08002b8a   0x00000002   PAD
-    0x08002b8c   0x00000010   Code   RO         2217    i.W25xx_CS_High     spi.o
-    0x08002b9c   0x0000012c   Code   RO         2459    i.YMoveZero         motormove.o
-    0x08002cc8   0x0000002e   Code   RO         2892    i.__ARM_clz         mf_p.l(depilogue.o)
-    0x08002cf6   0x00000002   PAD
-    0x08002cf8   0x00000078   Code   RO         1799    i.__NVIC_SetPriority  delay.o
-    0x08002d70   0x0000000e   Code   RO         2912    i.__scatterload_copy  mc_p.l(handlers.o)
-    0x08002d7e   0x00000002   Code   RO         2913    i.__scatterload_null  mc_p.l(handlers.o)
-    0x08002d80   0x0000000e   Code   RO         2914    i.__scatterload_zeroinit  mc_p.l(handlers.o)
-    0x08002d8e   0x00000024   Code   RO         2460    i.clearM            motormove.o
-    0x08002db2   0x00000002   PAD
-    0x08002db4   0x00000068   Code   RO          726    i.exNVIC_Init       hal_misc.o
-    0x08002e1c   0x000000c8   Code   RO         2573    i.main              main.o
-    0x08002ee4   0x00000080   Data   RO         2462    .constdata          motormove.o
-    0x08002f64   0x00000020   Data   RO         2910    Region$$Table       anon$$obj.o
+    0x08001108   0x00000274   Code   RO         2445    i.DreMoveZero       motormove.o
+    0x0800137c   0x00000054   Code   RO         2446    i.EnableOrClearALarm  motormove.o
+    0x080013d0   0x0000009a   Code   RO          144    i.GPIO_Init         hal_gpio.o
+    0x0800146a   0x00000028   Code   RO          145    i.GPIO_PinAFConfig  hal_gpio.o
+    0x08001492   0x00000012   Code   RO          149    i.GPIO_ReadInputDataBit  hal_gpio.o
+    0x080014a4   0x00000012   Code   RO          151    i.GPIO_ReadOutputDataBit  hal_gpio.o
+    0x080014b6   0x00000004   Code   RO          152    i.GPIO_ResetBits    hal_gpio.o
+    0x080014ba   0x00000004   Code   RO          153    i.GPIO_SetBits      hal_gpio.o
+    0x080014be   0x00000010   Code   RO          154    i.GPIO_StructInit   hal_gpio.o
+    0x080014ce   0x00000002   PAD
+    0x080014d0   0x0000001c   Code   RO         2308    i.GetCAN_FilterNum  can.o
+    0x080014ec   0x00000030   Code   RO         2366    i.GetMotorSpeed_Torque_Pos  motorcan.o
+    0x0800151c   0x00000040   Code   RO         2067    i.Input_Init        gpio.o
+    0x0800155c   0x00000198   Code   RO         2448    i.KnifeSelection2   motormove.o
+    0x080016f4   0x00000064   Code   RO         2068    i.LED_Init          gpio.o
+    0x08001758   0x00000012   Code   RO         2367    i.MRevbuffEmpty     motorcan.o
+    0x0800176a   0x0000001c   Code   RO         2368    i.MRevbuffFull      motorcan.o
+    0x08001786   0x00000018   Code   RO         2369    i.MRevbuffLen       motorcan.o
+    0x0800179e   0x00000002   PAD
+    0x080017a0   0x00000184   Code   RO         2449    i.MotorCanInit      motormove.o
+    0x08001924   0x00000058   Code   RO         2450    i.MotorMoveStandard  motormove.o
+    0x0800197c   0x00000080   Code   RO         2370    i.MotorSendCanData  motorcan.o
+    0x080019fc   0x00000064   Code   RO         2451    i.MoveSeepMode      motormove.o
+    0x08001a60   0x00000074   Code   RO         2452    i.MoveToTargetPos   motormove.o
+    0x08001ad4   0x000000f4   Code   RO         2453    i.MoveZero          motormove.o
+    0x08001bc8   0x0000001a   Code   RO         2102    i.NVIC_Configure    tim3_pwm_input.o
+    0x08001be2   0x00000002   PAD
+    0x08001be4   0x00000068   Code   RO          723    i.NVIC_Init         hal_misc.o
+    0x08001c4c   0x00000018   Code   RO         2371    i.PollingMotorSta   motorcan.o
+    0x08001c64   0x00000028   Code   RO         1914    i.Queue_init        uart.o
+    0x08001c8c   0x00000020   Code   RO          259    i.RCC_AHBPeriphClockCmd  hal_rcc.o
+    0x08001cac   0x00000020   Code   RO          261    i.RCC_APB1PeriphClockCmd  hal_rcc.o
+    0x08001ccc   0x00000020   Code   RO          263    i.RCC_APB2PeriphClockCmd  hal_rcc.o
+    0x08001cec   0x00000048   Code   RO          270    i.RCC_GetClocksFreq  hal_rcc.o
+    0x08001d34   0x00000020   Code   RO          272    i.RCC_GetHCLKFreq   hal_rcc.o
+    0x08001d54   0x00000024   Code   RO          274    i.RCC_GetPCLK1Freq  hal_rcc.o
+    0x08001d78   0x00000024   Code   RO          275    i.RCC_GetPCLK2Freq  hal_rcc.o
+    0x08001d9c   0x00000080   Code   RO          277    i.RCC_GetSysClockFreq  hal_rcc.o
+    0x08001e1c   0x00000070   Code   RO         2372    i.ReadAnPackData    motorcan.o
+    0x08001e8c   0x000000ec   Code   RO         2455    i.RestStep1         motormove.o
+    0x08001f78   0x00000120   Code   RO         2456    i.RestStep2         motormove.o
+    0x08002098   0x0000007c   Code   RO         2457    i.RestStep3         motormove.o
+    0x08002114   0x00000052   Code   RO         2214    i.SPI2_Config       spi.o
+    0x08002166   0x000000a6   Code   RO         2215    i.SPI2_GPIO_Config  spi.o
+    0x0800220c   0x00000014   Code   RO         2216    i.SPI_1_32bit_Init  spi.o
+    0x08002220   0x00000040   Code   RO         1425    i.SPI_BiDirectionalLineConfig  hal_spi.o
+    0x08002260   0x00000018   Code   RO         1426    i.SPI_CSInternalSelected  hal_spi.o
+    0x08002278   0x00000018   Code   RO         1428    i.SPI_Cmd           hal_spi.o
+    0x08002290   0x0000008c   Code   RO         1437    i.SPI_Init          hal_spi.o
+    0x0800231c   0x00000020   Code   RO         1443    i.SPI_StructInit    hal_spi.o
+    0x0800233c   0x00000090   Code   RO         2458    i.ScissorsReset     motormove.o
+    0x080023cc   0x00000070   Code   RO         2309    i.Send_CANFrame     can.o
+    0x0800243c   0x00000008   Code   RO            4    i.SetSysClock       system_mm32spin06xx_s.o
+    0x08002444   0x0000018c   Code   RO            5    i.SetSysClockToXX   system_mm32spin06xx_s.o
+    0x080025d0   0x00000008   Code   RO         1797    i.SysTick_Handler   delay.o
+    0x080025d8   0x0000006c   Code   RO            6    i.SystemInit        system_mm32spin06xx_s.o
+    0x08002644   0x00000058   Code   RO         2104    i.TIM2_IRQHandler   tim3_pwm_input.o
+    0x0800269c   0x00000084   Code   RO         2108    i.TIM3_IRQHandler   tim3_pwm_input.o
+    0x08002720   0x00000054   Code   RO         2109    i.TIM3_PWM_Input_Init  tim3_pwm_input.o
+    0x08002774   0x00000030   Code   RO         2110    i.TIM3_PWM_Input_Test  tim3_pwm_input.o
+    0x080027a4   0x00000018   Code   RO          768    i.TIM_ARRPreloadConfig  hal_tim.o
+    0x080027bc   0x00000008   Code   RO          774    i.TIM_ClearFlag     hal_tim.o
+    0x080027c4   0x00000008   Code   RO          775    i.TIM_ClearITPendingBit  hal_tim.o
+    0x080027cc   0x00000018   Code   RO          780    i.TIM_Cmd           hal_tim.o
+    0x080027e4   0x0000001a   Code   RO          801    i.TIM_GetITStatus   hal_tim.o
+    0x080027fe   0x00000014   Code   RO          805    i.TIM_ITConfig      hal_tim.o
+    0x08002812   0x00000002   PAD
+    0x08002814   0x0000006c   Code   RO          857    i.TIM_TimeBaseInit  hal_tim.o
+    0x08002880   0x00000012   Code   RO          858    i.TIM_TimeBaseStructInit  hal_tim.o
+    0x08002892   0x00000002   PAD
+    0x08002894   0x00000018   Code   RO         1798    i.TimingDelayDecrement  delay.o
+    0x080028ac   0x00000074   Code   RO         1916    i.UART1_IRQHandler  uart.o
+    0x08002920   0x000000b4   Code   RO         1917    i.UART1_ITRX_InIt   uart.o
+    0x080029d4   0x00000004   Code   RO          546    i.UART_ClearITPendingBit  hal_uart.o
+    0x080029d8   0x0000000c   Code   RO          547    i.UART_Cmd          hal_uart.o
+    0x080029e4   0x00000012   Code   RO          551    i.UART_GetFlagStatus  hal_uart.o
+    0x080029f6   0x00000012   Code   RO          552    i.UART_GetITStatus  hal_uart.o
+    0x08002a08   0x00000014   Code   RO          554    i.UART_ITConfig     hal_uart.o
+    0x08002a1c   0x00000078   Code   RO          555    i.UART_Init         hal_uart.o
+    0x08002a94   0x00000008   Code   RO          556    i.UART_ReceiveData  hal_uart.o
+    0x08002a9c   0x0000001a   Code   RO          568    i.UART_StructInit   hal_uart.o
+    0x08002ab6   0x00000002   PAD
+    0x08002ab8   0x00000010   Code   RO         2217    i.W25xx_CS_High     spi.o
+    0x08002ac8   0x0000012c   Code   RO         2459    i.YMoveZero         motormove.o
+    0x08002bf4   0x0000014c   Code   RO         2460    i.YMoveZeroTrial    motormove.o
+    0x08002d40   0x0000002e   Code   RO         2898    i.__ARM_clz         mf_p.l(depilogue.o)
+    0x08002d6e   0x00000002   PAD
+    0x08002d70   0x00000078   Code   RO         1799    i.__NVIC_SetPriority  delay.o
+    0x08002de8   0x0000000e   Code   RO         2918    i.__scatterload_copy  mc_p.l(handlers.o)
+    0x08002df6   0x00000002   Code   RO         2919    i.__scatterload_null  mc_p.l(handlers.o)
+    0x08002df8   0x0000000e   Code   RO         2920    i.__scatterload_zeroinit  mc_p.l(handlers.o)
+    0x08002e06   0x00000024   Code   RO         2461    i.clearM            motormove.o
+    0x08002e2a   0x00000002   PAD
+    0x08002e2c   0x00000068   Code   RO          726    i.exNVIC_Init       hal_misc.o
+    0x08002e94   0x000000c8   Code   RO         2579    i.main              main.o
+    0x08002f5c   0x00000080   Data   RO         2463    .constdata          motormove.o
+    0x08002fdc   0x00000020   Data   RO         2916    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000680, Max: 0x00004000, ABSOLUTE, COMPRESSED[0x0000005c])
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000678, Max: 0x00004000, ABSOLUTE, COMPRESSED[0x0000005c])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1554,14 +1563,13 @@ Memory Map of the image
     0x2000002b   0x00000002   Data   RW         2311    .data               can.o
     0x2000002d   0x00000003   PAD
     0x20000030   0x00000146   Data   RW         2373    .data               motorcan.o
-    0x20000176   0x00000002   PAD
-    0x20000178   0x0000000f   Data   RW         2463    .data               motormove.o
-    0x20000187   0x00000001   PAD
-    0x20000188   0x00000010   Data   RW         2574    .data               main.o
-    0x20000198   0x000000cc   Zero   RW         1921    .bss                uart.o
-    0x20000264   0x00000010   Zero   RW         2310    .bss                can.o
-    0x20000274   0x0000000c   Zero   RW         2461    .bss                motormove.o
-    0x20000280   0x00000400   Zero   RW          133    STACK               startup_mm32spin06xx_s_keil.o
+    0x20000176   0x00000009   Data   RW         2464    .data               motormove.o
+    0x2000017f   0x00000001   PAD
+    0x20000180   0x00000010   Data   RW         2580    .data               main.o
+    0x20000190   0x000000cc   Zero   RW         1921    .bss                uart.o
+    0x2000025c   0x00000010   Zero   RW         2310    .bss                can.o
+    0x2000026c   0x0000000c   Zero   RW         2462    .bss                motormove.o
+    0x20000278   0x00000400   Zero   RW          133    STACK               startup_mm32spin06xx_s_keil.o
 
 
 ==============================================================================
@@ -1571,29 +1579,29 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1032         44          0          2         16       5588   can.o
-       260         30          0          4          0      25960   delay.o
-       164         10          0          0          0        960   gpio.o
-       788         18          0          0          0       9874   hal_can.o
-       254          0          0          0          0       6542   hal_gpio.o
-       208          8          0          0          0       2482   hal_misc.o
-       400         72          0         16          0       7614   hal_rcc.o
-       284          0          0          0          0       6105   hal_spi.o
-       236         18          0          0          0      11262   hal_tim.o
-       226          4          0          0          0       6609   hal_uart.o
-       200         16          0         16          0       1220   main.o
-      1158         46          0        326          0       9604   motorcan.o
-      4004        276        128         15         12      15195   motormove.o
-       284          4          0          0          0       2339   spi.o
+      1032         44          0          2         16       5548   can.o
+       260         30          0          4          0      25896   delay.o
+       164         10          0          0          0        948   gpio.o
+       788         18          0          0          0       9810   hal_can.o
+       254          0          0          0          0       6490   hal_gpio.o
+       208          8          0          0          0       2462   hal_misc.o
+       400         72          0         16          0       7566   hal_rcc.o
+       284          0          0          0          0       6077   hal_spi.o
+       236         18          0          0          0      11214   hal_tim.o
+       226          4          0          0          0       6557   hal_uart.o
+       200         16          0         16          0       1208   main.o
+      1158         46          0        326          0       9544   motorcan.o
+      4124        252        128          9         12      15346   motormove.o
+       284          4          0          0          0       2315   spi.o
         96         40        192          0       1024        696   startup_mm32spin06xx_s_keil.o
-       618         46          0         20          0      83232   system_mm32spin06xx_s.o
-       378         44          0          0          0       9189   tim3_pwm_input.o
-       540         42          0          3        204      17023   uart.o
+       618         46          0         20          0      83164   system_mm32spin06xx_s.o
+       378         44          0          0          0       9161   tim3_pwm_input.o
+       540         42          0          3        204      16955   uart.o
 
     ----------------------------------------------------------------------
-     11150        718        352        408       1256     221494   Object Totals
+     11270        694        352        400       1256     220957   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        20          0          0          6          0          0   (incl. Padding)
+        20          0          0          4          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1641,15 +1649,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     11812        740        352        408       1256     217614   Grand Totals
-     11812        740        352         92       1256     217614   ELF Image Totals (compressed)
-     11812        740        352         92          0          0   ROM Totals
+     11932        716        352        400       1256     217077   Grand Totals
+     11932        716        352         92       1256     217077   ELF Image Totals (compressed)
+     11932        716        352         92          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                12164 (  11.88kB)
-    Total RW  Size (RW Data + ZI Data)              1664 (   1.63kB)
-    Total ROM Size (Code + RO Data + RW Data)      12256 (  11.97kB)
+    Total RO  Size (Code + RO Data)                12284 (  12.00kB)
+    Total RW  Size (RW Data + ZI Data)              1656 (   1.62kB)
+    Total ROM Size (Code + RO Data + RW Data)      12376 (  12.09kB)
 
 ==============================================================================
 

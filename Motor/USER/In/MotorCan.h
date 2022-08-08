@@ -3,6 +3,7 @@
 
 #include "delay.h"
 #include "led.h"
+
 #define  MOTORBUFFLEN                     80 
 #define  MOTORREVCANID                    0x000001
 #define  MOTORDATALEN                     8
@@ -10,7 +11,7 @@
 #define  MotorYID                         0x02          //剪刀电机ID
 #define  MotorXID                         0x01					//平移电机ID
 #define  MotorXYLACUNA                    2000          //剪刀电机在平移位置上的两刀之间的间隙偏移量
-#define  MotorYLACUNA                     2412          //剪刀电机回零偏移量
+#define  MotorYLACUNA                     612           //剪刀电机回零偏移量
 #define  MotorYReadyPos                   2008          //剪刀电机就绪位置 
 #define  MotorYbackKnife                  6620          //剪刀复位反向回刀位置
 #define  MotorYbackKnifeIN                4500          //剪刀复位反向回刀到位位置
@@ -145,6 +146,7 @@ signed char DreMoveZero(void);
 signed char YMoveZero(const signed short torque,signed int tarSeep, const unsigned short MID);
 signed char KnifeSelection2(const short KnifeNum);
 signed char CloseKnife2(const short KnifeNum);
+signed char YMoveZeroTrial(void);
 #endif
 
 

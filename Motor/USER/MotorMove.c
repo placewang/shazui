@@ -133,10 +133,12 @@ signed char MoveZero(const unsigned short MID,const signed short Seep,\
 		if(MID==MotorYID)
 		{
 				ClearMStat(MotorYID,1);	
+				MExeSta.MoveTimeOutY=0;	
 		}
 		else if(MID==MotorXID)
 		{
-				ClearMStat(MotorXID,1);	
+				ClearMStat(MotorXID,1);
+				MExeSta.MoveTimeOutX=0;		
 		}
 		unsigned char   MotorInitVal[8]={0x00,MID,0x00,0x00,0x00,0x00,0x00,0x00};
 		MotorInitVal[0]=MCmd.Parameter;
@@ -258,7 +260,7 @@ signed char YMoveZero(const signed short torque,signed int tarSeep, const unsign
 			MotorInitVal[2]=MSCmd.SetEncodervalue&0xff;
 			MotorInitVal[3]=MSCmd.SetEncodervalue>>8;
 			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                //设置编码器值0					
-			MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                             //移动至齿轮水平位
+			MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
 			step=4;
 		}
 		else if(step==4&&MExeSta.MoveTargetStaY)
@@ -273,7 +275,7 @@ signed char YMoveZero(const signed short torque,signed int tarSeep, const unsign
 				step =2;
 			}
 		}
-		else if(step>0&&MExeSta.MoveTimeOutY>=100*40)                              //超时处理4S
+		else if(step>0&&MExeSta.MoveTimeOutY>=100*30)                              //超时处理4S
 		{
 			MoveSeepMode(torque,0x00,MID);     
 			EnableOrClearALarm(MotorYID,0);
@@ -443,6 +445,72 @@ void clearM(void)
 		ClearMStat(MotorYID,0);	
 }
 
+
+/******************************************************************
+Y回零试错
+解决上电回零齿轮与齿条错位卡顿（循环6次移动齿轮位置错开卡顿）
+********************************************************************/
+
+signed char YMoveZeroTrial(void)
+{
+			signed   short  SeepYMZ=2800;
+			signed   short  TorqueYMZ=280;
+			signed   short  seepXMZ=800;
+			signed   short  TorqueXMZ=230;
+			
+			static signed   char   TrialState=10;
+			static signed   char   TrialCount =0;
+			if(TrialCount==6)
+			{
+				TrialState=10;
+				TrialCount =0;
+				return -1;
+			}
+			if(TrialState==10)
+			{
+				 MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x610);
+				 TrialState=2;
+			}
+			else if(TrialState==2&&!MExeSta.MoveZeroStaX&&MExeSta.MoveTimeOutX>100*10*2)
+			{
+				EnableOrClearALarm(MotorXID,0);
+				EnableOrClearALarm(MotorXID,3);
+				TrialState=-1;
+			}
+			else if(TrialState==2&&MExeSta.MoveZeroStaX)
+			{
+				
+				TrialState=YMoveZero(TorqueYMZ,SeepYMZ,MotorYID);
+				if(TrialState==0)
+				{
+					TrialState=2;
+				}
+				
+			}
+			else if(TrialState==1)
+			{
+				TrialState=10;
+				TrialCount =0;
+				return 1;
+			}
+			else if(TrialState==-1)
+			{
+				MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x180);
+				TrialState=3;
+			}		
+			else if(TrialState==3&&MExeSta.MoveZeroStaX)
+			{
+					MoveSeepMode(0x200,0x100,MotorYID);
+					TrialState=4;
+			}
+			else if(TrialState==4&&MExeSta.MoveTimeOutY>100*10)
+			{
+					MoveSeepMode(0x100,0x00,MotorYID);
+					TrialState=10;
+					TrialCount++;
+			}
+	return 0;
+}
 /************************************************************************
 设备回零
 **************************************************************************/
@@ -453,8 +521,8 @@ signed char DreMoveZero(void)
 		signed   short  TorqueXMZ=130;
 		signed   short  SeepYMZ=4800;
 		signed   short  TorqueYMZ=280;
-		static signed   int    OriginalEncodedX1=0;
-		static signed   int    OriginalEncodedX2=0;
+	  signed   char    OriginalEncodedX1=0;
+//		static signed   int    OriginalEncodedX2=0;
 		static   char   RunState=0;
 		
 		if(RunState==0)
@@ -464,10 +532,24 @@ signed char DreMoveZero(void)
 		}		
 		else if(RunState==1)
 		{
-			MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x210);
-			RunState=2;
+			OriginalEncodedX1=YMoveZeroTrial();
+			if(OriginalEncodedX1==1)
+			{
+					MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x210);
+					RunState=2;
+			}
+			else if(OriginalEncodedX1==-1)
+			{
+				EnableOrClearALarm(MotorXID,0);
+				EnableOrClearALarm(MotorXID,3);
+				EnableOrClearALarm(MotorYID,0);
+				EnableOrClearALarm(MotorYID,3);				
+				clearM();
+				RunState=0;
+				return -1;
+			}
 		}
-	  else if(MExeSta.MoveZeroStaX&&RunState==2)
+	  else if(MExeSta.MoveZeroStaX&&(RunState==2))
 	  {
 			MotorInitVal[0]=MCmd.Parameter;
 			MotorInitVal[1]=MotorXID;
@@ -478,80 +560,53 @@ signed char DreMoveZero(void)
 	  }
 	  else if((MRevBuff.M1pos>=-10&&MRevBuff.M1pos<=10)&&RunState==3)
 		{
-			if(MExeSta.OriginalEncodedX==0)
-			{ReadMotorOriginalEncodedVal(MotorXID);}                                             //发送读编码器原始值
-			if(MExeSta.OriginalEncodedX==2)
-			{ 
-				OriginalEncodedX1=MRevBuff.XoriginalEncodeval;                                     //存第一次撞零后的编码器原始值 
-				clearM();
-				MoveZero(0x01,seepXMZ,TorqueXMZ,0x00,0xB0);                                        //反向撞零测最大行程
-				RunState=4;
-			}				
+					MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[15], MotorXID);
+					RunState=4;
 		}
-		
-    else if(MExeSta.MoveZeroStaX&&RunState==4)
+		else if(RunState==4&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*3)
+		{
+				EnableOrClearALarm(MotorXID,0);
+				EnableOrClearALarm(MotorXID,3);
+				clearM();
+				RunState=0;
+				return -1;
+		}
+    else if(MExeSta.MoveTargetStaX&&RunState==4)
 		{	
-			if(MExeSta.OriginalEncodedX==0)
-			{ReadMotorOriginalEncodedVal(MotorXID);}                                              //发送读编码器原始值
-		  if(MExeSta.OriginalEncodedX==2)
-			{ 
-				OriginalEncodedX2=MRevBuff.XoriginalEncodeval;                                      //存第二次撞零后的编码器原始值 
-				clearM();
+				MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0]+MotorXYLACUNA, MotorXID);
 				RunState=5;
-			}	
 		}
-		else if(RunState==5)
+		else if(RunState==5&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*3)
 		{
-			//计算行程
-			OriginalEncodedX1=OriginalEncodedX2-OriginalEncodedX1<0?OriginalEncodedX1-OriginalEncodedX2:OriginalEncodedX2-OriginalEncodedX1;
-			OriginalEncodedX2=OriginalEncodedX1/32*2;
-			if(OriginalEncodedX2+600>=61400&&OriginalEncodedX2-600<=61400)
-			{
-				memset(MotorInitVal,0,sizeof(MotorInitVal));
-				MotorInitVal[0]=MCmd.Parameter;
-				MotorInitVal[1]=MotorXID;
-				MotorInitVal[2]=MSCmd.SetEncodervalue&0xff;
-				MotorInitVal[3]=MSCmd.SetEncodervalue>>8;
-				MotorInitVal[4]=OriginalEncodedX2&0xff;
-				MotorInitVal[5]=(OriginalEncodedX2>>8)&0xff;
-				MotorInitVal[6]=(OriginalEncodedX2>>16)&0xff;
-				MotorInitVal[7]=OriginalEncodedX2>>24;				
-				MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                             //撞零成功设置编码器值
-				MRevBuff.XMoveStandard[15]=OriginalEncodedX2;
-				RunState=6;
+				EnableOrClearALarm(MotorXID,0);
+				EnableOrClearALarm(MotorXID,3);
 				clearM();
-			}
-			else
-			{
-				 clearM();
-				 RunState=0;
-				 return -1;
-			}				
+				RunState=0;
+				return -1;
 		}
-		else if(RunState==6||RunState==7||RunState==8)
+		else if(RunState==5&&MExeSta.MoveTargetStaX)
 		{
-			if(MExeSta.MoveTargetStaX==0&&RunState==6)
-			{
-					MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0]+MotorXYLACUNA, MotorXID);
-					RunState=7;
-			}
-			else if(MExeSta.MoveTargetStaX&&RunState==7)
-			{
-					if(YMoveZero(TorqueYMZ,SeepYMZ,MotorYID)==1)
-					{
-						RunState=8;
-						MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0],MotorXID);
+				clearM();
+				RunState=6;
+		}
+		else if(RunState==6)
+		{
+				OriginalEncodedX1= YMoveZero(TorqueYMZ,SeepYMZ,MotorYID);
+				if(OriginalEncodedX1==1)
+				{
+						RunState=7;
+					  MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0],MotorXID);
 						ClearMStat(MotorXID,0);
-					}
-					else if(YMoveZero(TorqueYMZ,SeepYMZ,MotorYID)==-1)
-					{
+				}
+				else if(OriginalEncodedX1==-1)
+			 {
 						clearM();
 						RunState=0;
 						return -1;
-					}
-			}
-			else if (RunState==8&&MExeSta.MoveTargetStaX)
-			{
+				}
+		}
+		else if (RunState==7&&MExeSta.MoveTargetStaX)
+		{
 				clearM();
 				if(!MotorINPUT)
 				{
@@ -560,7 +615,6 @@ signed char DreMoveZero(void)
 				}
 				else
 					RunState=9;	
-			}
 		}
 		else if(RunState==9)
 		{
@@ -588,7 +642,7 @@ signed char KnifeSelection(const short KnifeNum)
 	{
 		return -1;
 	}
-	MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[KnifeNum-1], MotorXID);
+	MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[KnifeNum-1],MotorXID);
 
 	while(!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX<1000*6)
 	{

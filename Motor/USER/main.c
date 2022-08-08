@@ -26,10 +26,9 @@ int main()
 		SPI_1_32bit_Init(SPI,32);
 		CAN_Filter_20GroupInit(CAN_1M);
 		MotorCanInit();
-
+		
 		while(1)
-		{
-			
+		{	
 			if(Posv==0)
 			{
 					Posv=DreMoveZero();
