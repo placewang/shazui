@@ -99,9 +99,6 @@
 
 
 
-
-
-
 #define SK_IN1  GPIO_ReadInputDataBit(IN1T3_Port,IN1T3_Pin)
 #define SK_IN2  GPIO_ReadInputDataBit(IN2T3_Port,IN2T3_Pin)
 #define SK_IN3  GPIO_ReadInputDataBit(IN3T2_Port,IN3T2_Pin)

@@ -150,8 +150,11 @@ void TIM3_IRQHandler(void)
 				  TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 					LED2_TOGGLE();
 					MRevBuff.TaskTime++;
-					MExeSta.MoveTimeOutX++;
-					MExeSta.MoveTimeOutY++;
+					MExeSta.MoveTimeOut[0]++;
+					MExeSta.MoveTimeOut[1]++;
+			
+					RMExeSta.MoveTimeOut[0]++;
+					RMExeSta.MoveTimeOut[1]++;
     }
 		if(CAN_GetFlagStatus(CAN1,CAN_STATUS_RS)==0)
 		{

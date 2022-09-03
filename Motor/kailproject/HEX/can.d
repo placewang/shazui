@@ -56,7 +56,4 @@
 .\hex\can.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h
 .\hex\can.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h
 .\hex\can.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h
-.\hex\can.o: ..\USER\In\queue.h
 .\hex\can.o: ..\USER\In\MotorCan.h
-.\hex\can.o: ..\USER\In\delay.h
-.\hex\can.o: ..\USER\In\led.h

@@ -1,6 +1,6 @@
 .\hex\motormove.o: ..\USER\MotorMove.c
 .\hex\motormove.o: ..\USER\In\MotorCan.h
-.\hex\motormove.o: ..\USER\In\delay.h
+.\hex\motormove.o: ..\USER\In\can.h
 .\hex\motormove.o: E:\kail\ARM\ARMCC\Bin\..\include\string.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\Include\mm32_device.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\Include\mm32_reg.h
@@ -32,7 +32,6 @@
 .\hex\motormove.o: ..\MM32SPIN06xx_s\Include\reg_uart.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\Include\reg_wwdg.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\Include\mm32_reg_redefine_v1.h
-.\hex\motormove.o: ..\USER\In\led.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_conf.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_adc.h
 .\hex\motormove.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_bkp.h

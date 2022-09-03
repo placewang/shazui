@@ -1,99 +1,31 @@
+
 #include "MotorCan.h"
 
-MotorExeSTa MExeSta={0,0,0,0,0,0,0};
+//电机报警
+MotorAlarm   MErrState={0};                                                                             
+MotorAlarm   RMErrState={0};                                                                             
 
-/*****************************************************************
-电机移动位置标定量
-******************************************************************/
-static void MotorMoveStandard(void)
-{
-	int i=0;
-	signed int standardvalY[16]={4463,4418,4410,4498,4540,4476,4483,4555,4545,4537,4532,4506,4508,4497,4471,4520};
-	signed int standardvalX[16]={10,3960,8140,12263,16343,20416,24560,28607,32697,36810,40957,45093,49183,53341,57257,61418};
-	for(i=0;i<16;i++)
-	{
-		MRevBuff.XMoveStandard[i]=standardvalX[i];
-	}
-	for(i=0;i<16;i++)
-	{
-		MRevBuff.YMoveStandard[i]=standardvalY[i];
-	}
-}
+//电机状态
+MotorExeSTa MExeSta ={{0},{0},{0},{0},{0}};
+MotorExeSTa RMExeSta={{0},{0},{0},{0},{0}};
 
-/******************************************************************
-初始化电机工作参数
-*******************************************************************/
-unsigned char MotorCanInit(void)
-{
-	unsigned char   MotorInitVal[8]={MCmd.Parameter,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-	MotorMoveStandard();
-	//初始化出刀电机
-	MotorInitVal[1]=MotorYID;
-  MotorInitVal[2]=MSCmd.SetDir&0xff; 
-	MotorInitVal[3]=MSCmd.SetDir>>8;
-	MotorInitVal[4]=0x01;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
-  MotorInitVal[2]=MSCmd.SetFindZeroMode&0xff;
-	MotorInitVal[3]=MSCmd.SetFindZeroMode>>8;
-	MotorInitVal[4]=0x00;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置以撞零方式回零
-	MotorInitVal[2]=MSCmd.SetMaxSpeed&0xff;
-	MotorInitVal[3]=MSCmd.SetMaxSpeed>>8;
-	MotorInitVal[4]=0xFF;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置最高速度255RPM
-	MotorInitVal[2]=MSCmd.ElectronicGearRatio&0xff;
-	MotorInitVal[3]=MSCmd.ElectronicGearRatio>>8;
-	MotorInitVal[4]=0x02;
-	MotorInitVal[6]=0x01;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //电子齿轮比2：1  4096个脉冲转一圈
-	MotorInitVal[2]=MSCmd.VersionSwitch&0xff;
-	MotorInitVal[3]=MSCmd.VersionSwitch>>8;
-	MotorInitVal[4]=0x02;
-	MotorInitVal[6]=0x00;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //协议版本切换为恒强
-	//初始化平移电机
-	memset(&MotorInitVal[2],0,6);
-	MotorInitVal[1]=MotorXID;
-  MotorInitVal[2]=MSCmd.SetDir&0xff; 
-	MotorInitVal[3]=MSCmd.SetDir>>8;
-	MotorInitVal[4]=0x01;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
-  MotorInitVal[2]=MSCmd.SetFindZeroMode&0xff;
-	MotorInitVal[3]=MSCmd.SetFindZeroMode>>8;
-	MotorInitVal[4]=0x00;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置以撞零方式回零
-	MotorInitVal[2]=MSCmd.SetMaxSpeed&0xff;
-	MotorInitVal[3]=MSCmd.SetMaxSpeed>>8;
-	MotorInitVal[4]=0xFF;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置最高速度255RPM	
-	MotorInitVal[2]=MSCmd.ElectronicGearRatio&0xff;
-	MotorInitVal[3]=MSCmd.ElectronicGearRatio>>8;
-	MotorInitVal[4]=0x02;
-	MotorInitVal[6]=0x01;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //电子齿轮比2：1  4096个脉冲转一圈
-	MotorInitVal[2]=MSCmd.VersionSwitch&0xff;
-	MotorInitVal[3]=MSCmd.VersionSwitch>>8;
-	MotorInitVal[4]=0x02;
-	MotorInitVal[6]=0x00;
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //协议版本切换为恒强
-	EnableOrClearALarm(MotorXID,3);
-	EnableOrClearALarm(MotorYID,3);
-	return 0;
-}
-/************************************************************************
-读原始编码值
-@MID：电机ID
-*************************************************************************/
-signed char ReadMotorOriginalEncodedVal(const unsigned short MID)
-{
-	unsigned char   MotorInitVal[8]={MCmd.OriginalEncodedVal,MID,0x00,0x00,0x00,0x00,0x00,0x00};
-	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
-	if(MID==MotorXID)
-	{MExeSta.OriginalEncodedX=1;}
-	else if(MID==MotorYID)
-	{MExeSta.OriginalEncodedY=1;}
-	return 0;
-}	
+//左模块电机移动位置标定量
+const  signed int standardvalY_L[KnifeNum]={4463,4418,4410,4498,4540,4476,4483,4555,4545,4537,4532,4506,4508,4497,4471,4520};
+const signed int standardvalX_L[KnifeNum]={10,3960,8140,12263,16343,20416,24560,28607,32697,36810,40957,45093,49183,53341,57257,61418};
+
+//右模块电机移动位置标定量
+const	signed int standardvalY_R[KnifeNum]={4463,4418,4410,4498,4540,4476,4483,4555,4545,4537,4532,4506,4508,4497,4471,4520};
+const	signed int standardvalX_R[KnifeNum]={10,3960,8140,12263,16343,20416,24560,28607,32697,36810,40957,45093,49183,53341,57257,61418};
+
+//电机配置
+MotorConfig  MtCgL={2000,612,0xc00,standardvalY_L,standardvalX_L,{0x01,0x02}};
+MotorConfig  MtCgR={2000,612,0xc00,standardvalY_R,standardvalX_R,{0x03,0x04}};
+
+//左电机属性句柄
+MotorProperty  MtProperty1_L={&MtCgL,&MErrState,&MExeSta};
+//左电机属性句柄
+MotorProperty  MtProperty1_R={&MtCgR,&RMErrState,&RMExeSta};
+
 /*********************************************************************
 使能/失能/清报警
 MID：电机ID
@@ -118,35 +50,69 @@ signed char EnableOrClearALarm(const unsigned short MID,const unsigned char Ner)
 			return -1;
 		return 0;
 }
+/*	
+清标志状态		
+@Mp:电机属性句柄
+@St:模块状态
+@MID:设备ID(0/1:X/Y轴)
+@zero 
+				0:清运动状态
+				1:清回零标志
+				3:清报警		
+*/
+
+signed char ClearMStat(MotorProperty* Mp,const unsigned short MID,char zero)
+{
+		if(Mp==NULL||(MID!=0&&MID!=1))
+		{
+				return -1;
+		}
+		if(zero==0)
+		{
+			 Mp->Mst->MoveTargetSta[MID]=0;	
+		}
+		else if(zero==1)
+		{
+			Mp->Mst->MoveZeroSta[MID]=0;
+		}
+		else if(zero==3)
+		{
+			Mp->Mer->MotorErrID[MID]     =0;
+			Mp->Mer->MotorEorrStat[MID]  =0;
+			Mp->Mer->MotorAlarmGrade[MID]=0;
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+		return 0;
+}	
 
 /************************************************************************
 电机回零（撞零方式）
-@MID:      设备ID
+@Mpy:      电机属性句柄
+@MID:      设备ID(0/1:X/Y轴)
 @Seep:     回零速度
 @Torque：  回零转矩
 @Dir:      回零方向
 @offsetval:撞零后偏移量
 **************************************************************************/
-signed char MoveZero(const unsigned short MID,const signed short Seep,\
+signed char MoveZero(MotorProperty* Mpy,const unsigned short MID,const signed short Seep,\
 										 const unsigned short Torque,unsigned char Dir,signed int offsetval)
 {
-		if(MID==MotorYID)
+		if(Mpy==NULL||(MID!=0&&MID!=1))
 		{
-				ClearMStat(MotorYID,1);	
-				MExeSta.MoveTimeOutY=0;	
+				return -1;
 		}
-		else if(MID==MotorXID)
-		{
-				ClearMStat(MotorXID,1);
-				MExeSta.MoveTimeOutX=0;		
-		}
+		Mpy->Mst->MoveTimeOut[MID]=0;
+		ClearMStat(Mpy,MID,1);
 		unsigned char   MotorInitVal[8]={0x00,MID,0x00,0x00,0x00,0x00,0x00,0x00};
 		MotorInitVal[0]=MCmd.Parameter;
 		MotorInitVal[2]=MSCmd.SetDir&0xff; 
 		MotorInitVal[3]=MSCmd.SetDir>>8;	
 		MotorInitVal[6]=Dir;
 		MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
-		MotorInitVal[6]=0x00;	
 		MotorInitVal[2]=MSCmd.SetReturnZeroOffset&0xff;
 		MotorInitVal[3]=MSCmd.SetReturnZeroOffset>>8;
 		MotorInitVal[4]=offsetval&0xff;
@@ -168,29 +134,24 @@ signed char MoveZero(const unsigned short MID,const signed short Seep,\
 		MotorInitVal[4]=0x00;
 		MotorInitVal[5]=0x00;
 		MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //回零返回
-		return 0;		
+		return 1;		
 }
 /*****************************************************************************
 移动到目标位置
+@Mpt:      电机属性句柄
+@MID:      设备ID(0/1:X/Y轴)
 @tarSeep :运动速度
 @valpos  :目标位置
-@MID     ：设备ID
 ********************************************************************************/
-void MoveToTargetPos(const signed short tarSeep,signed int valpos, const unsigned short MID)
+signed char MoveToTargetPos(MotorProperty* Mpt,const signed short tarSeep,signed int valpos, const unsigned short MID)
 {
 		unsigned char   MotorInitVal[8]={0x00,MID,0x00,0x00,0x00,0x00,0x00,0x00};
-		if(MID==MotorYID)
+		if(Mpt==NULL||(MID!=0&&MID!=1))
 		{
-			MExeSta.MoveTimeOutY=0;
-			MRevBuff.YMoveTargetval=valpos;
-			MExeSta.MoveTargetStaY=0;	
+				return -1;
 		}
-		else if(MID==MotorXID)
-		{	
-			MExeSta.MoveTimeOutX=0;
-			MRevBuff.XMoveTargetval=valpos;
-			MExeSta.MoveTargetStaX=0;		
-		}
+		Mpt->Mst->MoveTimeOut[MID]=0;
+		ClearMStat(Mpt,MID,0);
 		MotorInitVal[0]=MCmd.MoveWith;
 		MotorInitVal[2]=tarSeep&0xff; 
 		MotorInitVal[3]=tarSeep>>8;
@@ -203,21 +164,20 @@ void MoveToTargetPos(const signed short tarSeep,signed int valpos, const unsigne
 
 /********************************************************************************
 速度模式下运动
+@Mpv:      电机属性句柄
+@MID:      设备ID(0/1:X/Y轴)
 @torque:运动扭矩
 @tarSeep:运动速度
-@MID：   设备ID
+
 ********************************************************************************/
-signed char MoveSeepMode(const signed short torque,signed int tarSeep, const unsigned short MID)
+signed char MoveSeepMode(MotorProperty* Mpv,const signed short torque,signed int tarSeep, const unsigned short MID)
 {
 		unsigned char   MotorInitVal[8]={0x00,MID,0x00,0x00,0x00,0x00,0x00,0x00};
-		if(MID==MotorYID)
+		if(Mpv==NULL||(MID!=0&&MID!=1))
 		{
-			MExeSta.MoveTimeOutY=0;	
+				return -1;
 		}
-		else if(MID==MotorXID)
-		{	
-			MExeSta.MoveTimeOutX=0;		
-		}
+		Mpv->Mst->MoveTimeOut[MID]=0;
 		MotorInitVal[0]=MCmd.SeepMode;
 		MotorInitVal[2]=torque&0xff; 
 		MotorInitVal[3]=torque>>8;
@@ -229,673 +189,58 @@ signed char MoveSeepMode(const signed short torque,signed int tarSeep, const uns
 		return 0;
 }
 
-/********************************************************************************
-Y轴（剪刀电机）回零函数--依靠外部光电传感器
-左右X轴移动一次间隙量
-@torque:运动扭矩
-@tarSeep:运动速度
-@MID：   设备ID
-********************************************************************************/
-signed char YMoveZero(const signed short torque,signed int tarSeep, const unsigned short MID)
-{
-		unsigned char   MotorInitVal[8]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-		static signed char step=0;
-		if(step==0)
-		{
-				MoveSeepMode(torque,tarSeep,MID);
-				if(MotorZeroIN)
-				{
-					step=1;
-				}
-				else
-				{
-					step=3;
-				}
-		}
-		else if((step==1||step==2)&&!MotorZeroIN)
-		{
-			MoveSeepMode(torque,0x00,MID);                                            //停电机
-			MotorInitVal[0]=MCmd.Parameter;
-			MotorInitVal[1]=MotorYID;
-			MotorInitVal[2]=MSCmd.SetEncodervalue&0xff;
-			MotorInitVal[3]=MSCmd.SetEncodervalue>>8;
-			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                //设置编码器值0					
-			MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-			step=4;
-		}
-		else if(step==4&&MExeSta.MoveTargetStaY)
-		{
-			step=0;
-			return 1;
-		}
-		else if(step==3)
-		{
-			if(MotorZeroIN)
-			{
-				step =2;
-			}
-		}
-		else if(step>0&&MExeSta.MoveTimeOutY>=100*30)                              //超时处理4S
-		{
-			MoveSeepMode(torque,0x00,MID);     
-			EnableOrClearALarm(MotorYID,0);
-			EnableOrClearALarm(MotorYID,3);
-			step=0;
-			return -1;
-		}	
-		return 0;
-}
-
-/*
-剪刀复位步骤1
-*/
-void RestStep1(char *stepnum,char * Restnum,char *ifstat,signed short seepXMZ ,signed short seepYMZ,const signed short torque)
-{
-		if(*stepnum==0)
-		{
-			MoveSeepMode(torque,seepYMZ*-1,MotorYID);         //推出剪刀
-			*stepnum=1;
-		}
-		else if(*stepnum==1&&MExeSta.MoveTimeOutY>=100*1.3)
-		{
-				MoveSeepMode(torque,0x00,MotorYID);  
-				if(*Restnum==15)
-				{
-					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum]-MotorXYLACUNA,MotorXID);                             //运动回初始位
-				}
-				else
-				{
-					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum]+MotorXYLACUNA,MotorXID);                             //运动回初始位
-				}	
-//				EnableOrClearALarm(MotorYID,0);
-//				EnableOrClearALarm(MotorYID,3);
-//				DELAY_Ms(1);
-				*stepnum=2;
-		}
-		else if(*stepnum==2&&MExeSta.MoveTargetStaX)
-		{
-			MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);
-			*stepnum=3;
-		}
-		else if(*stepnum==3&&MExeSta.MoveTargetStaY)
-		{
-			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum],MotorXID);                             //运动回初始位
-			*stepnum=4;
-		}
-		
-		else if(*stepnum==4&&MExeSta.MoveTargetStaX)
-		{
-			*stepnum=0;
-			*ifstat=1;
-		}
-}
-/*
-剪刀复位步骤2
-*/
-void RestStep2(char *stepnum,char * Restnum,char *ifstat,signed short seepXMZ ,signed short seepYMZ,const signed short torque)
-{
-		if(*stepnum==0)
-		{
-			MoveSeepMode(torque,seepYMZ,MotorYID);         //收剪刀
-			*stepnum=1;
-		}
-		else if(*stepnum==1&&MExeSta.MoveTimeOutY>=100*1.3)
-		{
-					MoveSeepMode(torque,0x00,MotorYID); 
-//				EnableOrClearALarm(MotorYID,0);
-//				EnableOrClearALarm(MotorYID,3);
-				if(*Restnum==15||!MotorINPUT)
-				{
-					if(*Restnum==0&&!MotorINPUT)
-					{
-						MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum]+MotorXYLACUNA,MotorXID);  
-					}
-					else
-					{
-						MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum]-MotorXYLACUNA,MotorXID); 					
-					}
-					DELAY_Ms(50);
-					MoveToTargetPos(0x355,MotorYLACUNA, MotorYID);                                              //移动至齿轮水平位	
-					DELAY_Ms(50);
-					*ifstat=3;
-				}
-				else
-				{
-					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum]+MotorXYLACUNA,MotorXID);                             //运动回初始位
-				}	
-				*stepnum=2;
-		}
-		else if(*stepnum==2&&MExeSta.MoveTargetStaX)
-		{
-			MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位	
-			*stepnum=3;
-		}
-		else if(*stepnum==3&&MExeSta.MoveTargetStaY)
-		{
-				*stepnum=0;
-			  *ifstat=2;
-		}
-}
-/*
-剪刀复位步骤3
-*/
-void RestStep3(char *stepnum,char * Restnum,char *ifstat,signed short seepXMZ ,signed short seepYMZ)
-{
-		if(*stepnum==0)
-		{
-			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[*Restnum+1],MotorXID);                             //下一位
-			(*Restnum)++;
-			*stepnum=1;
-		}
-		else if(*stepnum==1&&(MExeSta.MoveTargetStaX||MExeSta.MoveTimeOutY>=100*20))
-		{
-			if(MExeSta.MoveTimeOutY>=100*20&&!MExeSta.MoveTargetStaY)                                        //堵转超时
-			{
-				EnableOrClearALarm(MotorYID,0);
-				EnableOrClearALarm(MotorYID,3);
-			}
-			*stepnum=0;                                                                                      //循环返回step1 直到剪刀全部复位
-			*ifstat=0;
-		}	
-}
-
-/**********************************************************************
-剪刀复位
-***********************************************************************/
-signed char ScissorsReset(void)
-{
-		signed short seepX=2800;
-		signed short seepY=5000;
-	  signed short torqueY=400;
-		static   char   ifstat=0;			
-		static   char   Restnum=0;
-		static   char   stepnum=0;
-
-		switch (ifstat)
-		{
-					case  0 :
-						RestStep1(&stepnum,&Restnum,&ifstat,seepX,seepY,torqueY);
-						break;
-					case 1:
-						RestStep2(&stepnum,&Restnum,&ifstat,seepX,seepY,torqueY);
-						break;
-					case 2:
-   					RestStep3(&stepnum,&Restnum,&ifstat,seepX,seepY);
-						break;
-					case 3:
-					if(!MotorINPUT)
-					{ 
-							ifstat=0;			
-							Restnum=0;
-							stepnum=0;
-							return 1;
-					}
-					break;
-		}
-	return 0;
-}
-/************************************************************
-清电机状态
-*************************************************************/
-void clearM(void)
-{
-		ClearMStat(MotorXID,1);
-		ClearMStat(MotorYID,1);
-		ClearMStat(MotorXID,0);
-		ClearMStat(MotorYID,0);	
-}
-
-
 /******************************************************************
-Y回零试错
-解决上电回零齿轮与齿条错位卡顿（循环6次移动齿轮位置错开卡顿）
-********************************************************************/
-
-signed char YMoveZeroTrial(void)
+初始化电机工作参数
+*******************************************************************/
+unsigned char MotorCanInit(void)
 {
-			signed   short  SeepYMZ=2800;
-			signed   short  TorqueYMZ=280;
-			signed   short  seepXMZ=800;
-			signed   short  TorqueXMZ=230;
-			
-			static signed   char   TrialState=10;
-			static signed   char   TrialCount =0;
-			if(TrialCount==6)
-			{
-				TrialState=10;
-				TrialCount =0;
-				return -1;
-			}
-			if(TrialState==10)
-			{
-				 MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x610);
-				 TrialState=2;
-			}
-			else if(TrialState==2&&!MExeSta.MoveZeroStaX&&MExeSta.MoveTimeOutX>100*10*2)
-			{
-				EnableOrClearALarm(MotorXID,0);
-				EnableOrClearALarm(MotorXID,3);
-				TrialState=-1;
-			}
-			else if(TrialState==2&&MExeSta.MoveZeroStaX)
-			{
-				
-				TrialState=YMoveZero(TorqueYMZ,SeepYMZ,MotorYID);
-				if(TrialState==0)
-				{
-					TrialState=2;
-				}
-				
-			}
-			else if(TrialState==1)
-			{
-				TrialState=10;
-				TrialCount =0;
-				return 1;
-			}
-			else if(TrialState==-1)
-			{
-				MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x180);
-				TrialState=3;
-			}		
-			else if(TrialState==3&&MExeSta.MoveZeroStaX)
-			{
-					MoveSeepMode(0x200,0x100,MotorYID);
-					TrialState=4;
-			}
-			else if(TrialState==4&&MExeSta.MoveTimeOutY>100*10)
-			{
-					MoveSeepMode(0x100,0x00,MotorYID);
-					TrialState=10;
-					TrialCount++;
-			}
+	unsigned char   MotorInitVal[8]={MCmd.Parameter,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	//初始化出刀电机
+	MotorInitVal[1]=MotorYID;
+  MotorInitVal[2]=MSCmd.SetDir&0xff; 
+	MotorInitVal[3]=MSCmd.SetDir>>8;
+	MotorInitVal[4]=0x01;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
+  MotorInitVal[2]=MSCmd.SetFindZeroMode&0xff;
+	MotorInitVal[3]=MSCmd.SetFindZeroMode>>8;
+	MotorInitVal[4]=0x00;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置以撞零方式回零
+	MotorInitVal[2]=MSCmd.SetMaxSpeed&0xff;
+	MotorInitVal[3]=MSCmd.SetMaxSpeed>>8;
+	MotorInitVal[4]=0xFF;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置最高速度255RPM
+	MotorInitVal[2]=MSCmd.ElectronicGearRatio&0xff;
+	MotorInitVal[3]=MSCmd.ElectronicGearRatio>>8;
+	MotorInitVal[6]=0x68;
+	MotorInitVal[7]=0x01;
+	MotorInitVal[4]=0x00;
+	MotorInitVal[5]=0x10;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //电子齿轮比2：1  4096个脉冲转一圈
+	//初始化平移电机
+	memset(&MotorInitVal[2],0,6);
+	MotorInitVal[1]=MotorXID;
+  MotorInitVal[2]=MSCmd.SetDir&0xff; 
+	MotorInitVal[3]=MSCmd.SetDir>>8;
+	MotorInitVal[4]=0x01;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
+  MotorInitVal[2]=MSCmd.SetFindZeroMode&0xff;
+	MotorInitVal[3]=MSCmd.SetFindZeroMode>>8;
+	MotorInitVal[4]=0x00;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置以撞零方式回零
+	MotorInitVal[2]=MSCmd.SetMaxSpeed&0xff;
+	MotorInitVal[3]=MSCmd.SetMaxSpeed>>8;
+	MotorInitVal[4]=0xFF;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置最高速度255RPM	
+	MotorInitVal[2]=MSCmd.ElectronicGearRatio&0xff;
+	MotorInitVal[3]=MSCmd.ElectronicGearRatio>>8;
+	MotorInitVal[6]=0x68;
+	MotorInitVal[7]=0x01;
+	MotorInitVal[4]=0x00;
+	MotorInitVal[5]=0x10;
+	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //电子齿轮比2：1 4096个脉冲转一圈
+	EnableOrClearALarm(MotorXID,3);
+	EnableOrClearALarm(MotorYID,3);
 	return 0;
-}
-/************************************************************************
-设备回零
-**************************************************************************/
-signed char DreMoveZero(void)
-{ 	
-		unsigned char   MotorInitVal[8]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-		signed   short  seepXMZ=800;
-		signed   short  TorqueXMZ=130;
-		signed   short  SeepYMZ=4800;
-		signed   short  TorqueYMZ=280;
-	  signed   char    OriginalEncodedX1=0;
-//		static signed   int    OriginalEncodedX2=0;
-		static   char   RunState=0;
-		
-		if(RunState==0)
-		{
-				clearM();
-				RunState=1;
-		}		
-		else if(RunState==1)
-		{
-			OriginalEncodedX1=YMoveZeroTrial();
-			if(OriginalEncodedX1==1)
-			{
-					MoveZero(MotorXID,seepXMZ,TorqueXMZ,0x01,0x210);
-					RunState=2;
-			}
-			else if(OriginalEncodedX1==-1)
-			{
-				EnableOrClearALarm(MotorXID,0);
-				EnableOrClearALarm(MotorXID,3);
-				EnableOrClearALarm(MotorYID,0);
-				EnableOrClearALarm(MotorYID,3);				
-				clearM();
-				RunState=0;
-				return -1;
-			}
-		}
-	  else if(MExeSta.MoveZeroStaX&&(RunState==2))
-	  {
-			MotorInitVal[0]=MCmd.Parameter;
-			MotorInitVal[1]=MotorXID;
-			MotorInitVal[2]=MSCmd.SetEncodervalue&0xff;
-			MotorInitVal[3]=MSCmd.SetEncodervalue>>8;
-			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                            //撞零成功设置编码器值0		
-			RunState=3;	
-	  }
-	  else if((MRevBuff.M1pos>=-10&&MRevBuff.M1pos<=10)&&RunState==3)
-		{
-					MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[15], MotorXID);
-					RunState=4;
-		}
-		else if(RunState==4&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*3)
-		{
-				EnableOrClearALarm(MotorXID,0);
-				EnableOrClearALarm(MotorXID,3);
-				clearM();
-				RunState=0;
-				return -1;
-		}
-    else if(MExeSta.MoveTargetStaX&&RunState==4)
-		{	
-				MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0]+MotorXYLACUNA, MotorXID);
-				RunState=5;
-		}
-		else if(RunState==5&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*3)
-		{
-				EnableOrClearALarm(MotorXID,0);
-				EnableOrClearALarm(MotorXID,3);
-				clearM();
-				RunState=0;
-				return -1;
-		}
-		else if(RunState==5&&MExeSta.MoveTargetStaX)
-		{
-				clearM();
-				RunState=6;
-		}
-		else if(RunState==6)
-		{
-				OriginalEncodedX1= YMoveZero(TorqueYMZ,SeepYMZ,MotorYID);
-				if(OriginalEncodedX1==1)
-				{
-						RunState=7;
-					  MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[0],MotorXID);
-						ClearMStat(MotorXID,0);
-				}
-				else if(OriginalEncodedX1==-1)
-			 {
-						clearM();
-						RunState=0;
-						return -1;
-				}
-		}
-		else if (RunState==7&&MExeSta.MoveTargetStaX)
-		{
-				clearM();
-				if(!MotorINPUT)
-				{
-					RunState=0;
-					return 1;
-				}
-				else
-					RunState=9;	
-		}
-		else if(RunState==9)
-		{
-			 if(ScissorsReset())
-			 {
-						clearM();
-						RunState=0;
-						return 1;
-			 }
-		}
-		return 0;
-}
-/*******************************************************************************
-剪刀出刀 阻塞
-@KnifeNum:剪刀编号1-16
-********************************************************************************/
-signed char KnifeSelection(const short KnifeNum)
-{
-		signed   short  seepXMZ=800;
-//		signed   short  TorqueXMZ=200;
-		signed   short  SeepYMZ=3800;
-		signed   short  TorqueYMZ=280;
-	
-	if(KnifeNum<=0||KnifeNum>16)
-	{
-		return -1;
-	}
-	MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[KnifeNum-1],MotorXID);
-
-	while(!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX<1000*6)
-	{
-		ReadAnPackData(&MRevBuff);
-	}
-	if(MExeSta.MoveTimeOutX>1000*6)                      //超时检测
-	{
-		MoveSeepMode(TorqueYMZ,0x00,MotorYID);
-		return -1;
-	}
-	MoveSeepMode(TorqueYMZ,SeepYMZ*-1,MotorYID);         //推出剪刀
-	while(MExeSta.MoveTimeOutY<1000*0.3)
-	{
-	}
-	MoveSeepMode(TorqueYMZ,0x00,MotorYID);              
-
-	if(KnifeNum==1)                                      //移出齿轮啮合
-	{
-		MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-	}
-	else
-	{
-			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-	}
-	DELAY_Ms(100);
-	MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-	DELAY_Ms(100);
-	while(ReadAnPackData(&MRevBuff)){;}                                       //清包
-	return 1;	
-
-}
-
-/*******************************************************************************
-剪刀出刀  非阻塞
-@KnifeNum:剪刀编号1-16
-********************************************************************************/
-signed char KnifeSelection2(const short KnifeNum)
-{
-		signed   short  seepXMZ=800;
-//		signed   short  TorqueXMZ=200;
-		signed   short  SeepYMZ=3800;
-		signed   short  TorqueYMZ=280;
-		static   char   OutKnifeStep=0;
-	if(KnifeNum<=0||KnifeNum>16)
-	{
-		return -1;
-	}
-	if(OutKnifeStep==0)
-	{
-		MoveToTargetPos(seepXMZ,MRevBuff.XMoveStandard[KnifeNum-1], MotorXID);
-		OutKnifeStep=1;
-	}
-	
-	else if(OutKnifeStep==1&&MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX<1000*6)
-	{
-		MoveSeepMode(TorqueYMZ,SeepYMZ*-1,MotorYID);                             //推出剪刀
-		OutKnifeStep=2;
-	}
-	
-	else if(OutKnifeStep==1&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
-	{
-		EnableOrClearALarm(MotorXID,0);
-		EnableOrClearALarm(MotorXID,3);
-		OutKnifeStep=0;
-		clearM();
-		return -1;
-	}
-	else if(OutKnifeStep==2&&MExeSta.MoveTimeOutY>1000*0.3)
-	{
-		MoveSeepMode(TorqueYMZ,0x00,MotorYID);   
-		OutKnifeStep=3;
-	}	
-	
-	else if(OutKnifeStep==3)
-	{					 
-		if(KnifeNum==1)                                      //移出齿轮啮合
-		{
-			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-		}
-		else
-		{
-				MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-		}
-		OutKnifeStep=4;
-  }
-	else if(OutKnifeStep==4&&MExeSta.MoveTimeOutX>1000*0.1)
-	{
-		MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-		OutKnifeStep=5;
-	}
-	else if(OutKnifeStep==5&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>1000*0.1)
-	{
-		OutKnifeStep=0;
-		return 1;	
-	}
-	return 0;
-
-}
-
-
-
-
-
-/**************************************************************************
-剪刀收刀 阻塞方式
-@KnifeNum:剪刀编号1-16
-0:默认当前剪刀号
-
-****************************************************************************/
-
-
-signed char CloseKnife(const short KnifeNum)
-{
-		signed   short  seepXMZ=1200;
-//		signed   short  TorqueXMZ=200;
-		signed   short  SeepYMZ=3800;
-		signed   short  TorqueYMZ=400;
-		if(KnifeNum<=0||KnifeNum>16)
-		{
-			return -1;
-		}
-		if(KnifeNum==1)
-		{
-				MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-		}
-		else
-		{
-					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-		}
-		while(!MExeSta.MoveTargetStaX)
-		{
-				ReadAnPackData(&MRevBuff);
-		}
-		MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-		DELAY_Ms(100);	
-		MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1],MotorXID); 
-		while(!MExeSta.MoveTargetStaX)
-		{
-			ReadAnPackData(&MRevBuff);
-		}
-		MoveSeepMode(TorqueYMZ,SeepYMZ,MotorYID);                                  //收剪刀
-		while(MExeSta.MoveTimeOutY<1000*0.3)                                       //超时检测
-		{
-		}
-		MoveSeepMode(TorqueYMZ,0x00,MotorYID);
-		if(KnifeNum==1)                                                           //移出齿轮啮合
-		{
-				  MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-		}
-		else
-		{
-					MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-		}
-		DELAY_Ms(100);
-		MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-		DELAY_Ms(100);
-		while(ReadAnPackData(&MRevBuff)){;}                                       //清包
-		return 1;	
-}
-
-
-/**************************************************************************
-剪刀收刀 非阻塞方式
-@KnifeNum:剪刀编号1-16
-0:默认当前剪刀号
-
-****************************************************************************/
-
-
-signed char CloseKnife2(const short KnifeNum)
-{
-		signed   short  seepXMZ=1200;
-//		signed   short  TorqueXMZ=200;
-		signed   short  SeepYMZ=3800;
-		signed   short  TorqueYMZ=400;
-		static   char   CloseKnife=0;
-		if(KnifeNum<=0||KnifeNum>16)
-		{
-			return -1;
-		}
-		if(CloseKnife==0)
-		{
-			if(KnifeNum==1)
-			{
-				MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-			}
-			else
-			{
-					MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-			}
-			CloseKnife=1;
-	  }
-		else if(CloseKnife==1&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
-		{
-			EnableOrClearALarm(MotorXID,0);
-			EnableOrClearALarm(MotorXID,3);
-			CloseKnife=0;
-			clearM();
-			return -1;
-		}		
-		else if(CloseKnife==1&&MExeSta.MoveTargetStaX)
-		{
-				MoveToTargetPos(0x155,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-				CloseKnife=2;
-		}
-		else if(CloseKnife==2&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>=1000*0.1)
-		{
-			MoveToTargetPos(seepXMZ, MRevBuff.XMoveStandard[KnifeNum-1],MotorXID);
-			CloseKnife=3;		
-		}
-		else if(CloseKnife==3&&!MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>1000*6)                      //超时检测
-		{
-			EnableOrClearALarm(MotorXID,0);
-			EnableOrClearALarm(MotorXID,3);
-			CloseKnife=0;
-			clearM();
-			return -1;
-		}				
-		else if(CloseKnife==3&&MExeSta.MoveTargetStaX)
-		{
-			MoveSeepMode(TorqueYMZ,SeepYMZ,MotorYID);                                  //收剪刀
-			CloseKnife=4;
-		}
-		
-		else if(CloseKnife==4&&MExeSta.MoveTimeOutY>1000*0.3)                       //时间到停止
-		{
-			CloseKnife=5;
-			MoveSeepMode(TorqueYMZ,0x00,MotorYID);
-		}
-		else if(CloseKnife==5)
-		{
-				if(KnifeNum==1)                                                           //移出齿轮啮合
-				{
-						MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]+MotorXYLACUNA,MotorXID);  
-				}
-				else
-				{
-						MoveToTargetPos(seepXMZ+200, MRevBuff.XMoveStandard[KnifeNum-1]-MotorXYLACUNA,MotorXID); 
-				}
-				CloseKnife=6;
-		}
-		else if(CloseKnife==6&&MExeSta.MoveTargetStaX&&MExeSta.MoveTimeOutX>=1000*0.1)
-		{
-			MoveToTargetPos(0x255,MotorYLACUNA, MotorYID);                            //移动至齿轮水平位
-			CloseKnife=7;
-		}
-		else if(CloseKnife==7&&MExeSta.MoveTargetStaY&&MExeSta.MoveTimeOutY>=1000*0.1)
-		{
-			CloseKnife=0;
-			clearM();
-			return 1;
-		}			
-		return 0;
 }
 
 

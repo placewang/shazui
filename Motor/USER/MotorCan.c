@@ -3,9 +3,10 @@
                                                                                
 MotorCmd     MCmd={0x01,0x02,0x07,0x0A,0x8A,0x71,0x72,0x12,0x76,0x75,0x08,0x78,0x73,0x0B};
 MotorSubCmd	 MSCmd={0x8001,0x8002,0x8003,0x8004,0x8009,0x800B,0x8008,0x800C,0x8040,0x8041, 0x0201,0x8005,0x800e};
+MotorRevBuff MRevBuff={0,0,0,0,{0},MRevbuffLen,DeQueue,EnQueue};
 
-MotorRevBuff MRevBuff={0,0,0,{0},0,0,0,0,0,0,0,0,0,0,0,{0},{0},0,0,MRevbuffFull,MRevbuffEmpty,MRevbuffLen};
-MotorAlarm   MErrState ={1,16,17,18,19,20,21,22,33,34,35,41,36,0,0,0,0,0};
+
+
 
 /*
 判断缓存区是否满
@@ -14,6 +15,8 @@ int MRevbuffFull(MotorRevBuff *buff)
 {
 	return (buff->subscript+1)%MOTORBUFFLEN==buff->out;
 }
+
+
 /*
 判断缓存区是否空
 */
@@ -22,14 +25,44 @@ int MRevbuffEmpty(MotorRevBuff *buff)
 	return buff->subscript==buff->out;
 }
 
+
 /*
 计算缓存队列长度
 */
-
 unsigned int MRevbuffLen(MotorRevBuff *buff)
 {
 	return (buff->subscript-buff->out+MOTORBUFFLEN )%MOTORBUFFLEN;
 }
+
+/*
+入队
+*/
+int EnQueue(MotorRevBuff* q, MotorCanRevBuff *data){
+    if(MRevbuffFull(q)){
+        return False;
+    }
+    // 存
+    q ->RevBuff[q ->subscript] = *data;
+    // 下一包
+    q -> subscript = (q -> subscript+1 )%MOTORBUFFLEN;
+    return True;
+}
+
+
+/*
+出队 
+*/
+int DeQueue(MotorRevBuff* q, MotorCanRevBuff *val){
+    if(MRevbuffEmpty(q)){
+        return False;
+    }
+    // 出
+    *val = q->RevBuff[q ->out];
+    // 下一包
+    q->out = (q ->out+ 1)%MOTORBUFFLEN;
+    return True;
+}
+
 
 /****************************************************************************
 	Can数据发送接口/若移植变更 Send_CANFrame(&McanPeliTxBuff)硬件接口函数;
@@ -37,10 +70,9 @@ unsigned int MRevbuffLen(MotorRevBuff *buff)
 	num:    数据大小或者长度
 	Dev_num:设备接收CANID  
 *****************************************************************************/
-
 signed char MotorSendCanData(const unsigned char * dataval,\
-							 const unsigned int    num,\
-							 const unsigned int    Dev_num)
+														 const unsigned int    num,\
+														 const unsigned int    Dev_num)
 {
 	CanTxMsg  McanPeliTxBuff;
 	unsigned char i;
@@ -48,7 +80,7 @@ signed char MotorSendCanData(const unsigned char * dataval,\
 	{
 		return -1;
 	}
-	ClearMStat(dataval[1] ,3);
+//	ClearMStat(dataval[1] ,3);
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}                    //等待总线空闲
 	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_RS)){;}	
 	while(!CAN_GetFlagStatus(CAN1,CAN_STATUS_TCS)){;}		
@@ -63,211 +95,187 @@ signed char MotorSendCanData(const unsigned char * dataval,\
 	Send_CANFrame(&McanPeliTxBuff);	
 	return 0;
 }
-
 /*****************************************************************
 接收数据包解析	
 @Dpack :要解析的数据
 ******************************************************************/
 signed char DataAnalyze(const unsigned char *Dpack)
 {
-	if(Dpack!=NULL)
+	if(Dpack==NULL)
 	{
-			if(Dpack[0]==0xF0&&Dpack[1]==MotorXID)
-			{
-				MErrState.MotorErrID     =Dpack[1];
-				MErrState.MotorEorrStat  =Dpack[2];
-				MErrState.MotorAlarmGrade=Dpack[3];
-				MErrState.MotorErrXSta=1;
-			}
-			else if(Dpack[0]==0xF0&&Dpack[1]==MotorYID)
-			{
-				MErrState.MotorErrID     =Dpack[1];
-				MErrState.MotorEorrStat  =Dpack[2];
-				MErrState.MotorAlarmGrade=Dpack[3];
-				MErrState.MotorErrYSta=1;
-			}			
-			else if(Dpack[0]==0x75&&Dpack[1]==MotorXID)
-			{
-				MRevBuff.M1Seep=Dpack[4];
-				MRevBuff.M1Seep|=Dpack[5]<<8;
-			}
-			else if(Dpack[0]==0x75&&Dpack[1]==MotorYID)
-			{
-				MRevBuff.M2Seep=Dpack[4];
-				MRevBuff.M2Seep|=Dpack[5]<<8;
-			}
-			else if(Dpack[0]==0x76&&Dpack[1]==MotorXID)
-			{
-				MRevBuff.M1torq =Dpack[4];
-				MRevBuff.M1torq|=Dpack[5]<<8;
-			}
-			else if(Dpack[0]==0x76&&Dpack[1]==MotorYID)
-			{
-				MRevBuff.M2torq =Dpack[4];
-				MRevBuff.M2torq|=Dpack[5]<<8;
-			}
-			else if(Dpack[0]==0x71&&Dpack[1]==MotorXID)
-			{
-				MRevBuff.M1pos=Dpack[4];
-				MRevBuff.M1pos|=Dpack[5]<<8;
-				MRevBuff.M1pos|=Dpack[6]<<16;
-				MRevBuff.M1pos|=Dpack[7]<<24;
-			}
-			else if(Dpack[0]==0x71&&Dpack[1]==MotorYID)
-			{
-				MRevBuff.M2pos=Dpack[4];
-				MRevBuff.M2pos|=Dpack[5]<<8;
-				MRevBuff.M2pos|=Dpack[6]<<16;
-				MRevBuff.M2pos|=Dpack[7]<<24;
-			}
-			else if(Dpack[0]==0x15&&Dpack[1]==MotorXID)
-			{
-					MExeSta.MoveTargetStaX=1;	
-			}
-			else if(Dpack[0]==0x15&&Dpack[1]==MotorYID)
-			{
-					MExeSta.MoveTargetStaY=1;
-			}
-			else if(Dpack[0]==0x78&&Dpack[1]==MotorXID&&Dpack[2]==0x01&&Dpack[3]==0)
-			{
-					MExeSta.MoveZeroStaX=1;	
-			}
-			else if(Dpack[0]==0x78&&Dpack[1]==MotorYID&&Dpack[2]==0x01&&Dpack[3]==0)
-			{
-					MExeSta.MoveZeroStaY=1;	
-			}
-			
-			else if(Dpack[0]==0x73&&Dpack[1]==MotorXID&&Dpack[2]==0xff&&Dpack[3]==0xff)
-			{
-				MRevBuff.XoriginalEncodeval=Dpack[4];
-				MRevBuff.XoriginalEncodeval|=Dpack[5]<<8;
-				MRevBuff.XoriginalEncodeval|=Dpack[6]<<16;
-				MRevBuff.XoriginalEncodeval|=Dpack[7]<<24;
-				MExeSta.OriginalEncodedX=2;
-			}
-			else if(Dpack[0]==0x73&&Dpack[1]==MotorYID&&Dpack[2]==0xff&&Dpack[3]==0xff)
-			{
-				MRevBuff.YoriginalEncodeval=Dpack[4];
-				MRevBuff.YoriginalEncodeval|=Dpack[5]<<8;
-				MRevBuff.YoriginalEncodeval|=Dpack[6]<<16;
-				MRevBuff.YoriginalEncodeval|=Dpack[7]<<24;
-				MExeSta.OriginalEncodedY=2;
-			}			
-			else
-			{
-				return 0;
-			}		
+		 return -1;
 	}
-	else
+	//报错报文
+	
+	if(Dpack[0]==0xF0&&Dpack[1]==MtCgL.MotorID[0])
 	{
-		
-		return 0;
+		MErrState.MotorErrID[0]     =Dpack[1];
+		MErrState.MotorEorrStat[0]  =Dpack[2];
+		MErrState.MotorAlarmGrade[0]=Dpack[3];
+		EnableOrClearALarm(MtCgL.MotorID[0],3);
 	}
+	else if(Dpack[0]==0xF0&&Dpack[1]==MtCgL.MotorID[1])
+	{
+		MErrState.MotorErrID[1]     =Dpack[1];
+		MErrState.MotorEorrStat[1]  =Dpack[2];
+		MErrState.MotorAlarmGrade[1]=Dpack[3];
+		EnableOrClearALarm(MtCgL.MotorID[1],3);
+	}	
+	if(Dpack[0]==0xF0&&Dpack[1]==MtCgR.MotorID[0])
+	{
+		RMErrState.MotorErrID[0]     =Dpack[1];
+		RMErrState.MotorEorrStat[0]  =Dpack[2];
+		RMErrState.MotorAlarmGrade[0]=Dpack[3];
+		EnableOrClearALarm(MtCgR.MotorID[0],3);
+	}
+	else if(Dpack[0]==0xF0&&Dpack[1]==MtCgR.MotorID[1])
+	{
+		RMErrState.MotorErrID[1]     =Dpack[1];
+		RMErrState.MotorEorrStat[1]  =Dpack[2];
+		RMErrState.MotorAlarmGrade[1]=Dpack[3];
+		EnableOrClearALarm(MtCgR.MotorID[1],3);
+	}		
+	//编码器/传感器返回值
+	else if(Dpack[0]==0x71&&Dpack[1]==MtCgL.MotorID[0])
+	{
+			MExeSta.Mpos[0]=Dpack[4];
+			MExeSta.Mpos[0]|=Dpack[5]<<8;
+			MExeSta.Mpos[0]|=Dpack[6]<<16;
+			MExeSta.Mpos[0]|=Dpack[7]<<24;
+			MExeSta.SenSorSta[0] =(0x20&Dpack[3])>>5;                               
+	}
+	else if(Dpack[0]==0x71&&Dpack[1]==MtCgL.MotorID[1])
+	{
+			MExeSta.Mpos[1]=Dpack[4];
+			MExeSta.Mpos[1]|=Dpack[5]<<8;
+			MExeSta.Mpos[1]|=Dpack[6]<<16;
+			MExeSta.Mpos[1]|=Dpack[7]<<24;
+			MExeSta.SenSorSta[1] =(0x20&Dpack[3])>>5;                               
+	}	
+	else if(Dpack[0]==0x71&&Dpack[1]==MtCgR.MotorID[0])
+	{
+			RMExeSta.Mpos[0]=Dpack[4];
+			RMExeSta.Mpos[0]|=Dpack[5]<<8;
+			RMExeSta.Mpos[0]|=Dpack[6]<<16;
+			RMExeSta.Mpos[0]|=Dpack[7]<<24;
+			RMExeSta.SenSorSta[0] =(0x20&Dpack[3])>>5;                               
+	}
+	else if(Dpack[0]==0x71&&Dpack[1]==MtCgR.MotorID[1])
+	{
+			RMExeSta.Mpos[1]=Dpack[4];
+			RMExeSta.Mpos[1]|=Dpack[5]<<8;
+			RMExeSta.Mpos[1]|=Dpack[6]<<16;
+			RMExeSta.Mpos[1]|=Dpack[7]<<24;
+			RMExeSta.SenSorSta[1] =(0x20&Dpack[3])>>5;                               
+	}		
+  //运动到位返回	
+	else if(Dpack[0]==0x15&&Dpack[1]==MtCgL.MotorID[0])
+	{
+			MExeSta.MoveTargetSta[0]=1;	
+	}
+	else if(Dpack[0]==0x15&&Dpack[1]==MtCgL.MotorID[1])
+	{
+			MExeSta.MoveTargetSta[1]=1;
+	}
+	else if(Dpack[0]==0x15&&Dpack[1]==MtCgR.MotorID[0])
+	{
+			RMExeSta.MoveTargetSta[0]=1;	
+	}
+	else if(Dpack[0]==0x15&&Dpack[1]==MtCgR.MotorID[1])
+	{
+			RMExeSta.MoveTargetSta[1]=1;
+	}
+	//归零完成返回
+	else if(Dpack[0]==0x78&&Dpack[1]==MtCgL.MotorID[0]&&Dpack[2]==0x01&&Dpack[3]==0)
+	{
+			MExeSta.MoveZeroSta[0]=1;	
+	}
+	else if(Dpack[0]==0x78&&Dpack[1]==MtCgL.MotorID[1]&&Dpack[2]==0x01&&Dpack[3]==0)
+	{
+			MExeSta.MoveZeroSta[1]=1;	
+	}	
+	else if(Dpack[0]==0x78&&Dpack[1]==MtCgR.MotorID[0]&&Dpack[2]==0x01&&Dpack[3]==0)
+	{
+			RMExeSta.MoveZeroSta[0]=1;	
+	}
+	else if(Dpack[0]==0x78&&Dpack[1]==MtCgR.MotorID[1]&&Dpack[2]==0x01&&Dpack[3]==0)
+	{
+			RMExeSta.MoveZeroSta[1]=1;	
+	}	
+	
 	return 1;
 }
 
 /***********************************************************************
-获取设备返回数据
+获取设备返回数据（电机返回数据字节统一有无用数据，长度>=4做过滤）
 @MotorRevBuff:缓存结构
 @Data:返回数据包缓存
 ***********************************************************************/
 signed char ReadAnPackData(MotorRevBuff *buff)
 {
-	int i=0;
-	int len=8;
-	unsigned char Data[8]={0};
 	
-	while(CAN_GetFlagStatus(CAN1,CAN_STATUS_TS)){;}
-	while(CAN_GetFlagStatus(CAN1, CAN_IT_RI)){;}		
-	if(buff->MLen(buff)>=8)
+	MotorCanRevBuff PData;
+	if(buff==NULL)
 	{
-					for(i=0;i<len;i++)
-					{
-						Data[i]=buff->RevBuff[buff->out];
-						buff->out=(buff->out+1)%MOTORBUFFLEN;
-					}
-					if(DataAnalyze(Data))
-					{
+		return -1;
+	}
+	if(buff->MLen(buff)>0)
+	{
+			buff->DeQueue(buff,&PData);
+			if(PData.DLC>=4)
+			{
+				 if(DataAnalyze(PData.Data))
+				 {
 						return 1;
-					}	
+				 }
+		  }	
 	}
 	return 0;
 }
 
 /**********************************************************************
 获取电机当前转速，转矩，位置
-@bff:  数据接受结构体
-@speed:返回速度值缓存
-@torque:返回转矩值缓存
 @ID：设备ID
 **********************************************************************/
-signed char GetMotorSpeed_Torque_Pos(MotorRevBuff *bff,const unsigned int  ID)
+signed char GetMotorSpeed_Torque_Pos(const unsigned int  ID)
 {
 	unsigned char   MotorInitVal[8]={MCmd.RotatingSpeed,ID,0x00,0x00,0x00,0x00,0x00,0x00};
 //	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
 //	MotorInitVal[0]=MCmd.Torque;
 //	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
-	MotorInitVal[0]=MCmd.GetEncodervalue ;
+	MotorInitVal[0]=MCmd.GetEncodervalue;
 	MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);
 	return 0;
 }
-/*	
-清标志状态		
-@MID:设备ID
-@zero 
-				0:清运动状态
-				1:清回零标志
-				3:清报警		
-*/
-
-void ClearMStat(const unsigned short MID,char zero)
-{
-		if(MID==MotorYID&&zero==0)
-		{
-			MExeSta.MoveTargetStaY=0;	
-			MRevBuff.YMoveTargetval=0;
-		}
-		else if (MID==MotorXID&&zero==0)
-		{
-			MExeSta.MoveTargetStaX=0;
-			MRevBuff.XMoveTargetval=0;
-		}
-		else if(MID==MotorYID&&zero==1)
-		{
-			MExeSta.MoveZeroStaY=0;
-			MExeSta.OriginalEncodedY=0;
-		}
-		else if (MID==MotorXID&&zero==1)
-		{
-			MExeSta.MoveZeroStaX=0;	
-			MExeSta.OriginalEncodedX=0;
-		}
-		else if(MID==MotorXID&&zero==3)
-		{
-				MErrState.MotorErrID     =0;
-				MErrState.MotorEorrStat  =0;
-				MErrState.MotorAlarmGrade=0;
-				MErrState.MotorErrXSta=0;
-		}
-		else if(MID==MotorYID&&zero==3)
-		{
-				MErrState.MotorErrID     =0;
-				MErrState.MotorEorrStat  =0;
-				MErrState.MotorAlarmGrade=0;
-				MErrState.MotorErrYSta=0;
-		}
-		
-}	
-
-
 /*
-轮询查电机状态及速度，位置，扭矩
+轮询查电机位置,到位传感器状态
 */
 
 void PollingMotorSta(void)
 {
-	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorYID);
-	GetMotorSpeed_Torque_Pos(&MRevBuff,MotorXID);
-//	ReadMotorOriginalEncodedVal(MotorXID);
-//	ReadMotorOriginalEncodedVal(MotorYID);
+//左模块	
+	GetMotorSpeed_Torque_Pos(MtCgL.MotorID[0]);
+	GetMotorSpeed_Torque_Pos(MtCgL.MotorID[1]);
+//右模块	
+	GetMotorSpeed_Torque_Pos(MtCgR.MotorID[0]);
+	GetMotorSpeed_Torque_Pos(MtCgR.MotorID[1]);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,7 +22,7 @@
 
 #include "stdio.h"
 #include "can.h"
-#include "queue.h"
+////#include "queue.h"
 #include "MotorCan.h"
 ////////////////////////////////////////////////////////////////////////////////
 /// @addtogroup MM32_Example_Layer
@@ -306,12 +306,8 @@ void CAN_IRQHandler(void)
 		{
       //Message received successfully
       CAN_Peli_Receive(&gCanPeliRxBuff);
-			for( gRxFlag = 0; gRxFlag<gCanPeliRxBuff.DLC;gRxFlag++)
-			{
-				MRevBuff.RevBuff[MRevBuff.subscript]=gCanPeliRxBuff.Data[gRxFlag];
-				MRevBuff.subscript=(MRevBuff.subscript+1)%MOTORBUFFLEN;
-				MRevBuff.Revouttime=0;	
-			}
+			MRevBuff.EnQueue(&MRevBuff, &gCanPeliRxBuff);
+			MRevBuff.Revouttime=0;	
     }
 		CAN_Peli_ITConfig(CAN_IT_RI,  ENABLE);
     CAN_Peli_ITConfig(CAN_IT_BEI, ENABLE);

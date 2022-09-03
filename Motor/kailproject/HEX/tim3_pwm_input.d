@@ -58,4 +58,4 @@
 .\hex\tim3_pwm_input.o: ..\USER\In\led.h
 .\hex\tim3_pwm_input.o: E:\kail\ARM\ARMCC\Bin\..\include\string.h
 .\hex\tim3_pwm_input.o: ..\USER\In\MotorCan.h
-.\hex\tim3_pwm_input.o: ..\USER\In\delay.h
+.\hex\tim3_pwm_input.o: ..\USER\In\can.h
