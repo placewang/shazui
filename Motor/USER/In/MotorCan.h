@@ -84,9 +84,15 @@ typedef struct Alarm
 
 typedef struct MotorConfig
 {
+	unsigned char ReturnZeroDirection[2];                   //回零方向
   signed int  MotorXYLACUNA;                              //剪刀电机在平移位置上的两刀之间的间隙偏移量
   signed int  MotorYLACUNA;                               //剪刀电机回零偏移量
   signed int  MotorXLACUNA;                               //平移电机回零偏移量	
+	signed int  MoveMentDirection[2];                       //运动正方向
+	signed int  MoveToZero[2];                              //回零方式
+	signed int  TopSpeed[2];                                //最高速度
+	signed int  ElectronicGearRatio[2];                     //电子齿轮比
+
 	const signed int  *YMoveStandard;                       //剪刀电机选刀位置存储
   const signed int  *XMoveStandard;                       //平移电机出刀位置存储
 	unsigned int MotorID[2];                                //电机ID
@@ -115,9 +121,9 @@ extern MotorConfig  MtCgL;
 extern MotorConfig  MtCgR;
 extern MotorAlarm   MErrState;
 extern MotorAlarm   RMErrState;     
-
 extern MotorProperty  MtProperty1_L;
 extern MotorProperty  MtProperty1_R;
+
 /***********************MotorCan.c**************************************/
 unsigned int MRevbuffLen(MotorRevBuff *);
 int DeQueue(MotorRevBuff *, MotorCanRevBuff *); //出队
@@ -127,10 +133,21 @@ signed char ReadAnPackData(MotorRevBuff *);
 signed char MotorSendCanData(const unsigned char * ,const unsigned int,const unsigned int );
 /***********************MotorMove.c**************************************/
 signed char EnableOrClearALarm(const unsigned short,const unsigned char);
+signed char RestMotorSta(MotorProperty* );
 signed char ClearMStat(MotorProperty*,const unsigned short ,char );
-signed char MoveSeepMode(MotorProperty*,const signed short,signed int, const unsigned short);
-signed char MoveToTargetPos(MotorProperty*,const signed short ,signed int , const unsigned short );
+void clearM(MotorProperty* );
+signed char MoveSeepMode(MotorProperty*,const signed short,signed int, const unsigned int);
+signed char MoveToTargetPos(MotorProperty*,const signed short ,signed int , const unsigned int );
 signed char MoveZero(MotorProperty*,const unsigned short,const signed short,const unsigned short ,unsigned char,signed int);
+unsigned char MotorCanInit(MotorProperty* );
+signed char MorotSetEncodervalue(MotorProperty*,const unsigned short,const signed int);
+/**************************************MotorfeatureSet.c*************************************************/
+signed char DreMoveZero(MotorProperty* );
+signed char YMoveZero(MotorProperty* ,const signed short,signed int );
+signed char YMoveZeroTrial(MotorProperty* );
+signed char ScissorsReset(MotorProperty* );
+signed char KnifeSelection2(MotorProperty* ,const short );
+signed char CloseKnife2(MotorProperty* ,const short );
 #endif
 
 

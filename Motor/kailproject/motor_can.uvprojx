@@ -474,6 +474,11 @@
               <FileType>1</FileType>
               <FilePath>..\USER\MotorMove.c</FilePath>
             </File>
+            <File>
+              <FileName>MotorfeatureSet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\MotorfeatureSet.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

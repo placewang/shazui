@@ -16,6 +16,7 @@
 ".\hex\can.o"
 ".\hex\motorcan.o"
 ".\hex\motormove.o"
+".\hex\motorfeatureset.o"
 ".\hex\main.o"
 --library_type=microlib --strict --scatter ".\HEX\motor_can.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
