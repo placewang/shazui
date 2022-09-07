@@ -1,5 +1,5 @@
 #include "MotorCan.h"
-
+#include "delay.h"
 
 /********************************************************************************
 Y轴（剪刀电机）回零函数--依靠外部光电传感器
@@ -65,7 +65,7 @@ signed char YMoveZeroTrial(MotorProperty* Mptry)
 {
 			signed   short  SeepYMZ=300;
 			signed   short  TorqueYMZ=980;
-			signed   short  seepXMZ=500;
+			signed   short  seepXMZ=800;
 			signed   short  TorqueXMZ=300;
 			
 			static signed   char   TrialState=0;
@@ -109,12 +109,12 @@ signed char YMoveZeroTrial(MotorProperty* Mptry)
 			
 			else if(TrialState==3&&Mptry->Mst->MoveZeroSta[0])
 			{
-					MoveSeepMode(Mptry,0x800,0x30,1);
+					MoveSeepMode(Mptry,0x800,0x90,1);
 					TrialState=4;
 			}
-			else if(TrialState==4&&Mptry->Mst->MoveTimeOut[1]>100*8)
+			else if(TrialState==4&&Mptry->Mst->MoveTimeOut[1]>100*4)
 			{
-					MoveSeepMode(Mptry,0x100,0x00,1);
+					MoveSeepMode(Mptry,0x800,0x00,1);
 					TrialCount++;
 					TrialState=0;
 			}
@@ -124,8 +124,6 @@ signed char YMoveZeroTrial(MotorProperty* Mptry)
 				TrialCount =0;
 				return 1;
 			}				
-
-
 	return 0;
 }
 
@@ -363,6 +361,7 @@ signed char DreMoveZero(MotorProperty* Mpdev)
 		}
     else if(Mpdev->Mst->MoveTargetSta[0]&&RunState==4)
 		{	
+					DELAY_Ms(1000);
 				MoveToTargetPos(Mpdev,seepXMZ,((Mpdev->Mcg->XMoveStandard[0])+ (Mpdev->Mcg->MotorXYLACUNA)),0);
 				RunState=5;
 		}

@@ -12,7 +12,6 @@
 
 typedef  CanPeliRxMsg  MotorCanRevBuff;
 
-
 //电机主命令
 typedef struct {
 	unsigned char ZeroHit;																//撞零

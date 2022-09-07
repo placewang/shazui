@@ -27,33 +27,58 @@ int main()
 		SPI_1_32bit_Init(SPI,32);
 		CAN_Filter_20GroupInit(CAN_1M);
 		MotorCanInit(&MtProperty1_L);
-		
+		MotorCanInit(&MtProperty1_R);
 		while(1)
 		{	
 			if(Posv==0)
 			{
-//				Posv=YMoveZero(&MtProperty1_L,200,400);
-//				Posv=YMoveZeroTrial(&MtProperty1_L);
+//				Posv=YMoveZero(&MtProperty1_R,800,400);
+//				Posv=YMoveZeroTrial(&MtProperty1_R);
 //				Posv=ScissorsReset(&MtProperty1_L);
 				Posv=DreMoveZero(&MtProperty1_L);
+//					Posv=YMoveZero(&MtProperty1_R,800,400);
+//					MoveSeepMode(&MtProperty1_R,800,140,1);
+//				torq=DreMoveZero(&MtProperty1_R);
 				
-			}	
-			if(Posv==1&&KnifeSelection2(&MtProperty1_L,1))
-			{
-					Posv=2;
 			}
-			if(Posv==2&&CloseKnife2(&MtProperty1_L,1))
+			if(Posv!=0&&torq==0)
 			{
-				Posv=3;
-			}
-			if(Posv==3&&KnifeSelection2(&MtProperty1_L,16))
-			{
-					Posv=4;
-			}
-			if(Posv==4&&CloseKnife2(&MtProperty1_L,16))
-			{
-				Posv=1;
-			}
+				torq=DreMoveZero(&MtProperty1_R);				
+			}				
+			
+//		 if(torq==1&&KnifeSelection2(&MtProperty1_R,1))
+//			{
+//					torq=2;
+//			}
+//			if(torq==2&&CloseKnife2(&MtProperty1_R,1))
+//			{
+//				torq=3;
+//			}
+//			if(torq==3&&KnifeSelection2(&MtProperty1_R,15))
+//			{
+//					torq=4;
+//			}
+//			if(torq==4&&CloseKnife2(&MtProperty1_R,15))
+//			{
+//				torq=1;
+//			}
+//			
+//			if(Posv==1&&KnifeSelection2(&MtProperty1_L,1))
+//			{
+//					Posv=2;
+//			}
+//			if(Posv==2&&CloseKnife2(&MtProperty1_L,1))
+//			{
+//				Posv=3;
+//			}
+//			if(Posv==3&&KnifeSelection2(&MtProperty1_L,16))
+//			{
+//					Posv=4;
+//			}
+//			if(Posv==4&&CloseKnife2(&MtProperty1_L,16))
+//			{
+//				Posv=1;
+//			}
 			
 			ReadAnPackData(&MRevBuff);       //队列数据拿出解析
 			if(MRevBuff.TaskTime>=30)       //定时查编码器位置 可不要

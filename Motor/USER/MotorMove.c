@@ -15,10 +15,11 @@ const signed int standardvalX_L[KnifeNum]={10,3960,8140,12263,16343,20416,24560,
 //右模块电机移动位置标定量
 const	signed int standardvalY_R[KnifeNum]={4463,4418,4410,4498,4540,4476,4483,4555,4545,4537,4532,4506,4508,4497,4471,4520};
 const	signed int standardvalX_R[KnifeNum]={10,3960,8140,12263,16343,20416,24560,28607,32697,36810,40957,45093,49183,53341,57257,61418};
+//{1271,5440,9440,13563,17543,21416,25660,29707,39917,37910,42057,46073,50183,54378,58527,62541};
 
 //电机属性配置
 MotorConfig  MtCgL={{0x00,0x00},2000,274,0xc00,{0x01,0x01},{0x00,0x00},{0xff,0xff},{0x01681000,0x01681000},standardvalY_L,standardvalX_L,{0x01,0x02}};
-MotorConfig  MtCgR={{0x01,0x01},2000,274,0xc00,{0x01,0x01},{0x00,0x00},{0xff,0xff},{0x01681000,0x01681000},standardvalY_R,standardvalX_R,{0x03,0x04}};
+MotorConfig  MtCgR={{0x00,0x00},2000,-35,0xc00,{0x00,0x00},{0x00,0x00},{0xff,0xff},{0x01681000,0x01681000},standardvalY_R,standardvalX_R,{0x03,0x04}};
 
 //左电机属性句柄
 MotorProperty  MtProperty1_L={&MtCgL,&MErrState,&MExeSta};

@@ -212,8 +212,7 @@ signed char DataAnalyze(const unsigned char *Dpack)
 @Data:返回数据包缓存
 ***********************************************************************/
 signed char ReadAnPackData(MotorRevBuff *buff)
-{
-	
+{	
 	MotorCanRevBuff PData;
 	if(buff==NULL)
 	{
