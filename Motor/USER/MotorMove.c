@@ -5,8 +5,8 @@ MotorAlarm   MErrState={0};
 MotorAlarm   RMErrState={0};                                                                             
 
 //电机状态
-MotorExeSTa MExeSta ={{0},{0},{0},{0},{0}};
-MotorExeSTa RMExeSta={{0},{0},{0},{0},{0}};
+MotorExeSTa MExeSta ={0,0,0,0,0,0,0,0,0,{0},{0},{0},{0},{0}};
+MotorExeSTa RMExeSta={0,0,0,0,0,0,0,0,0,{0},{0},{0},{0},{0}};
 
 //左模块电机移动位置标定量
 const  signed int standardvalY_L[KnifeNum]={4463,4418,4410,4498,4540,4476,4483,4555,4545,4537,4532,4506,4508,4497,4471,4520};

@@ -56,4 +56,3 @@
 .\hex\motorfeatureset.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h
 .\hex\motorfeatureset.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h
 .\hex\motorfeatureset.o: ..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h
-.\hex\motorfeatureset.o: ..\USER\In\delay.h

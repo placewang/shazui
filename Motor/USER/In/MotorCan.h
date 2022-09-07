@@ -61,6 +61,17 @@ typedef struct MotorRev
 
 typedef struct executionstat
 {
+		signed   char   RunState;                           //回零状态步骤
+		signed   char   TrialState;												  //Y回零状态步骤/试错计数			
+		signed   char   TrialCount;												  //Y回零状态试错计数	
+	  signed   char   step;                               //Y单独找零步骤计数
+	
+		signed   char   ifstat;                          		//剪刀复位状态机步数	
+		signed   char   Restnum;                            //剪刀复位剪刀计数
+		signed   char   stepnum;														//剪刀复位小步骤计数	
+		signed   char   OutKnifeStep;                       //选刀推刀步骤计数
+		signed   char   CloseKnife;                         //选刀收刀步骤计数
+	
 	  unsigned char  MoveZeroSta[2];                     //电机回零状态（0:x电机（平移）1:Y电机（剪刀）下同）
 		unsigned char  MoveTargetSta[2];                   //电机返回运动至目标位置
 	  unsigned char  SenSorSta[2];                       //到位传感器(剪刀电路接在X电机上）
@@ -95,6 +106,7 @@ typedef struct MotorConfig
 	const signed int  *YMoveStandard;                       //剪刀电机选刀位置存储
   const signed int  *XMoveStandard;                       //平移电机出刀位置存储
 	unsigned int MotorID[2];                                //电机ID
+	
 }MotorConfig;
 
 
