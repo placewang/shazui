@@ -1,17 +1,22 @@
-
 #include "MotorCan.h"
 //#include "delay.h"
+
+
 /********************************************************************************
-Y轴（剪刀电机）回零函数--依靠外部光电传感器
+Y轴（剪刀电机）回零函数-上位机主动查询外部光电传感器状态
 左右X轴移动一次间隙量
 @Mpy:   电机属性句柄
 @torque:运动扭矩
 @tarSeep:运动速度
 @MID：   设备ID
 ********************************************************************************/
+#if YMOVEZEROINQUIRE
 signed char YMoveZero(MotorProperty* Mpy,const signed short torque,signed int tarSeep)
 {
-		
+		if(Mpy==NULL)
+		{
+			return -1;
+		}
 		if(Mpy->Mst->step==0)
 		{
 				MoveSeepMode(Mpy,torque,tarSeep,1);
@@ -53,7 +58,60 @@ signed char YMoveZero(MotorProperty* Mpy,const signed short torque,signed int ta
 		}	
 		return 0;
 }
+#endif
 
+
+/********************************************************************************
+Y轴（剪刀电机）回零函数--电机本体依靠外部光电传感器
+@Mpz:电机属性句柄
+@torque:运动扭矩
+@tarSeep:运动速度
+@MID：   设备ID
+********************************************************************************/
+# if YMOVEZEROBACK
+signed char YMoveZero(MotorProperty* Mpz,const signed short torque,signed int tarSeep)
+{
+		if(Mpz==NULL)
+		{
+			return -1;
+		}
+		if(Mpz->Mst->step==0)
+		{
+			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA);
+			Mpz->Mst->step=1;
+		}
+		else if(!Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step>0&&Mpz->Mst->MoveTimeOut[1]>=1000*2)
+		{
+			EnableOrClearALarm(Mpz->Mcg->MotorID[1],0);
+			EnableOrClearALarm(Mpz->Mcg->MotorID[1],3);
+			Mpz->Mst->step=0;
+			return -1;			
+		}		
+		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==1)
+		{
+			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA);
+			Mpz->Mst->step=2;
+		}
+		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==2)
+		{
+			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA);
+			Mpz->Mst->step=3;
+		}
+		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==3)
+		{
+			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA-2200);
+			Mpz->Mst->step=4;
+		}
+		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==4)
+		{
+			Mpz->Mst->step=0;
+			return 1;
+		}		
+		return 0;
+}
+
+
+#endif
 
 /******************************************************************
 Y回零试错
@@ -296,7 +354,7 @@ signed char ScissorsReset(MotorProperty* Mps)
 							{
 								return -1;
 							}
-					break;
+//					break;
 		}
 	return 0;
 }

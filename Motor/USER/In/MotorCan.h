@@ -9,7 +9,8 @@
 #define  MOTORREVCANID                    0x000001
 #define  MOTORDATALEN                     8
 #define  KnifeNum                         16           //单个模块剪刀数量	
-
+#define  YMOVEZEROINQUIRE                 0            //Y回零查询方式编译选择
+#define  YMOVEZEROBACK                    1            //Y回零上报方式编译选择
 typedef  CanPeliRxMsg  MotorCanRevBuff;
 
 //电机主命令

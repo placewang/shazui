@@ -179,6 +179,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>MtProperty1_L,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Posv,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
