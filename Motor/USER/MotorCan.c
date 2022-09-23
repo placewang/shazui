@@ -254,10 +254,10 @@ void PollingMotorSta(void)
 {
 //左模块	
 	GetMotorSpeed_Torque_Pos(MtCgL.MotorID[0]);
-	GetMotorSpeed_Torque_Pos(MtCgL.MotorID[1]);
+//	GetMotorSpeed_Torque_Pos(MtCgL.MotorID[1]);
 //右模块	
 	GetMotorSpeed_Torque_Pos(MtCgR.MotorID[0]);
-	GetMotorSpeed_Torque_Pos(MtCgR.MotorID[1]);
+//	GetMotorSpeed_Torque_Pos(MtCgR.MotorID[1]);
 
 }
 

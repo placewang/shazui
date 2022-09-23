@@ -1,9 +1,10 @@
 Dependencies for Project 'motor_can', Target 'Target 1': (DO NOT MODIFY !)
-F (..\MM32SPIN06xx_s\Source\system_mm32spin06xx_s.c)(0x62675B21)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\system_mm32spin06xx_s.o --omf_browse .\hex\system_mm32spin06xx_s.crf --depend .\hex\system_mm32spin06xx_s.d)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
+F (..\MM32SPIN06xx_s\Source\system_mm32spin06xx_s.c)(0x62675B21)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\system_mm32spin06xx_s.o --omf_browse .\hex\system_mm32spin06xx_s.crf --depend .\hex\system_mm32spin06xx_s.d)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -30,12 +31,12 @@ I (..\MM32SPIN06xx_s\Include\reg_tim.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\Include\reg_uart.h)(0x5FA4E9BA)
 I (..\MM32SPIN06xx_s\Include\reg_wwdg.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\Include\mm32_reg_redefine_v1.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\Source\KEIL_StartAsm\startup_mm32spin06xx_s_keil.s)(0x5FA4F32F)(--cpu Cortex-M0 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 521" --pd "MM32SPIN06PF SETA 1"--list .\listings\startup_mm32spin06xx_s_keil.lst --xref -o .\hex\startup_mm32spin06xx_s_keil.o --depend .\hex\startup_mm32spin06xx_s_keil.d)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_gpio.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_gpio.o --omf_browse .\hex\hal_gpio.crf --depend .\hex\hal_gpio.d)
+F (..\MM32SPIN06xx_s\Source\KEIL_StartAsm\startup_mm32spin06xx_s_keil.s)(0x5FA4F32F)(--cpu Cortex-M0 -g --apcs=interwork --pd "__MICROLIB SETA 1"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include--pd "__UVISION_VERSION SETA 536" --pd "MM32SPIN06PF SETA 1"--list .\listings\startup_mm32spin06xx_s_keil.lst --xref -o .\hex\startup_mm32spin06xx_s_keil.o --depend .\hex\startup_mm32spin06xx_s_keil.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_gpio.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_gpio.o --omf_browse .\hex\hal_gpio.crf --depend .\hex\hal_gpio.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_gpio.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_gpio.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
@@ -44,22 +45,22 @@ I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_armcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_adc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_rcc.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_rcc.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_rcc.o --omf_browse .\hex\hal_rcc.crf --depend .\hex\hal_rcc.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_rcc.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_rcc.o --omf_browse .\hex\hal_rcc.crf --depend .\hex\hal_rcc.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_armcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_adc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_rcc.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_uart.c)(0x5FA4F667)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_uart.o --omf_browse .\hex\hal_uart.crf --depend .\hex\hal_uart.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_uart.c)(0x5FA4F667)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_uart.o --omf_browse .\hex\hal_uart.crf --depend .\hex\hal_uart.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
@@ -72,20 +73,20 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_gpio.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_gpio.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_dma.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_dma.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_misc.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_misc.o --omf_browse .\hex\hal_misc.crf --depend .\hex\hal_misc.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_misc.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_misc.o --omf_browse .\hex\hal_misc.crf --depend .\hex\hal_misc.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_misc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_armcc.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_tim.c)(0x5FA4F667)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_tim.o --omf_browse .\hex\hal_tim.crf --depend .\hex\hal_tim.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_tim.c)(0x5FA4F667)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_tim.o --omf_browse .\hex\hal_tim.crf --depend .\hex\hal_tim.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
@@ -94,11 +95,11 @@ I (..\MM32SPIN06xx_s\Include\reg_adc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_tim.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_tim.h)(0x5FA4E778)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_spi.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_spi.o --omf_browse .\hex\hal_spi.crf --depend .\hex\hal_spi.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_spi.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_spi.o --omf_browse .\hex\hal_spi.crf --depend .\hex\hal_spi.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_spi.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_spi.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
@@ -107,11 +108,11 @@ I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_armcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_adc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_rcc.h)(0x5FA4E777)
-F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_can.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_can.o --omf_browse .\hex\hal_can.crf --depend .\hex\hal_can.d)
+F (..\MM32SPIN06xx_s\HAL_Lib\Src\hal_can.c)(0x5FA4E777)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\hal_can.o --omf_browse .\hex\hal_can.crf --depend .\hex\hal_can.d)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_can.h)(0x62BADB50)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\reg_can.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_rcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
@@ -120,13 +121,13 @@ I (..\CMSIS\cmsis_compiler.h)(0x5FA4E777)
 I (..\CMSIS\cmsis_armcc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_adc.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\reg_rcc.h)(0x5FA4E777)
-F (..\USER\delay.c)(0x6261361E)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\delay.o --omf_browse .\hex\delay.crf --depend .\hex\delay.d)
+F (..\USER\delay.c)(0x6261361E)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\delay.o --omf_browse .\hex\delay.crf --depend .\hex\delay.d)
 I (..\USER\In\delay.h)(0x5FA4E782)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -153,13 +154,13 @@ I (..\MM32SPIN06xx_s\Include\reg_tim.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\Include\reg_uart.h)(0x5FA4E9BA)
 I (..\MM32SPIN06xx_s\Include\reg_wwdg.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\Include\mm32_reg_redefine_v1.h)(0x5FA4E777)
-F (..\USER\uart.c)(0x6263F1F1)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\uart.o --omf_browse .\hex\uart.crf --depend .\hex\uart.d)
-I (E:\kail\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+F (..\USER\uart.c)(0x6263F1F1)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\uart.o --omf_browse .\hex\uart.crf --depend .\hex\uart.d)
+I (E:\kail\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\USER\In\uart.h)(0x6263E48A)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -210,14 +211,14 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
-F (..\USER\GPIO.c)(0x62E7BB63)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\gpio.o --omf_browse .\hex\gpio.crf --depend .\hex\gpio.d)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
+F (..\USER\GPIO.c)(0x62E7BB63)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\gpio.o --omf_browse .\hex\gpio.crf --depend .\hex\gpio.d)
 I (..\USER\In\led.h)(0x6302D428)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -268,13 +269,13 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-F (..\USER\tim3_pwm_input.c)(0x63109117)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\tim3_pwm_input.o --omf_browse .\hex\tim3_pwm_input.crf --depend .\hex\tim3_pwm_input.d)
+F (..\USER\tim3_pwm_input.c)(0x63109117)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\tim3_pwm_input.o --omf_browse .\hex\tim3_pwm_input.crf --depend .\hex\tim3_pwm_input.d)
 I (..\USER\In\tim3_pwm_input.h)(0x62739A69)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_conf.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -324,18 +325,18 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\USER\In\led.h)(0x6302D428)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
-I (..\USER\In\MotorCan.h)(0x6319B783)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
+I (..\USER\In\MotorCan.h)(0x632D6E98)
 I (..\USER\In\can.h)(0x62747E47)
-F (..\USER\spi.c)(0x62738B2F)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\spi.o --omf_browse .\hex\spi.crf --depend .\hex\spi.d)
+F (..\USER\spi.c)(0x62738B2F)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\spi.o --omf_browse .\hex\spi.crf --depend .\hex\spi.d)
 I (..\USER\In\delay.h)(0x5FA4E782)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -363,7 +364,7 @@ I (..\MM32SPIN06xx_s\Include\reg_uart.h)(0x5FA4E9BA)
 I (..\MM32SPIN06xx_s\Include\reg_wwdg.h)(0x5FA4E778)
 I (..\MM32SPIN06xx_s\Include\mm32_reg_redefine_v1.h)(0x5FA4E777)
 I (..\USER\In\uart.h)(0x6263E48A)
-I (E:\kail\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\USER\In\spi.h)(0x62738639)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_conf.h)(0x5FA4E777)
@@ -390,14 +391,14 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-F (..\USER\can.c)(0x63106944)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\can.o --omf_browse .\hex\can.crf --depend .\hex\can.d)
-I (E:\kail\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+F (..\USER\can.c)(0x63106944)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\can.o --omf_browse .\hex\can.crf --depend .\hex\can.d)
+I (E:\kail\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\USER\In\can.h)(0x62747E47)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -448,15 +449,15 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-I (..\USER\In\MotorCan.h)(0x6319B783)
-F (..\USER\MotorCan.c)(0x631824EE)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motorcan.o --omf_browse .\hex\motorcan.crf --depend .\hex\motorcan.d)
-I (..\USER\In\MotorCan.h)(0x6319B783)
+I (..\USER\In\MotorCan.h)(0x632D6E98)
+F (..\USER\MotorCan.c)(0x632D7B6B)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motorcan.o --omf_browse .\hex\motorcan.crf --depend .\hex\motorcan.d)
+I (..\USER\In\MotorCan.h)(0x632D6E98)
 I (..\USER\In\can.h)(0x62747E47)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -507,14 +508,14 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-F (..\USER\MotorMove.c)(0x6319AB76)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motormove.o --omf_browse .\hex\motormove.crf --depend .\hex\motormove.d)
-I (..\USER\In\MotorCan.h)(0x6319B783)
+F (..\USER\MotorMove.c)(0x632D8681)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motormove.o --omf_browse .\hex\motormove.crf --depend .\hex\motormove.d)
+I (..\USER\In\MotorCan.h)(0x632D6E98)
 I (..\USER\In\can.h)(0x62747E47)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -565,14 +566,14 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-F (..\USER\MotorfeatureSet.c)(0x6319B946)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motorfeatureset.o --omf_browse .\hex\motorfeatureset.crf --depend .\hex\motorfeatureset.d)
-I (..\USER\In\MotorCan.h)(0x6319B783)
+F (..\USER\MotorfeatureSet.c)(0x632D837C)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\motorfeatureset.o --omf_browse .\hex\motorfeatureset.crf --depend .\hex\motorfeatureset.d)
+I (..\USER\In\MotorCan.h)(0x632D6E98)
 I (..\USER\In\can.h)(0x62747E47)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -623,13 +624,13 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uart.h)(0x5FA4F667)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
-F (..\USER\main.c)(0x6319BAD6)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-I"C:\Users\admin\Desktop\32把沙嘴MotorStepV2 - 副本\Motor\kailproject\RTE"-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-IE:\kail\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\main.o --omf_browse .\hex\main.crf --depend .\hex\main.d)
+F (..\USER\main.c)(0x632D86A9)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\MM32SPIN06xx_s\Include -I ..\MM32SPIN06xx_s\HAL_Lib\Inc -I ..\USER\In-IE:\kail\ARM\PACK\MindMotion\MM32SPIN0x_DFP\1.0.8\Device\MM32SPIN06xx_s\Include-D__UVISION_VERSION="536" -DMM32SPIN06PF -DUSE_STDPERIPH_DRIVER-o .\hex\main.o --omf_browse .\hex\main.crf --depend .\hex\main.d)
 I (..\USER\In\delay.h)(0x5FA4E782)
-I (E:\kail\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\MM32SPIN06xx_s\Include\mm32_device.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\Include\mm32_reg.h)(0x5FA4E777)
-I (E:\kail\ARM\ARMCC\include\stdint.h)(0x574E3E26)
-I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (E:\kail\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (..\MM32SPIN06xx_s\Include\types.h)(0x62661D5C)
 I (..\MM32SPIN06xx_s\Include\reg_common.h)(0x5FA4E976)
 I (..\CMSIS\core_cm0.h)(0x5FA4E777)
@@ -682,9 +683,9 @@ I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_uid.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_wwdg.h)(0x5FA4E777)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_redefine.h)(0x5FA4E777)
 I (..\USER\In\uart.h)(0x6263E48A)
-I (E:\kail\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (E:\kail\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\USER\In\tim3_pwm_input.h)(0x62739A69)
 I (..\USER\In\spi.h)(0x62738639)
 I (..\MM32SPIN06xx_s\HAL_Lib\Inc\hal_device.h)(0x5FA4E777)
 I (..\USER\In\can.h)(0x62747E47)
-I (..\USER\In\MotorCan.h)(0x6319B783)
+I (..\USER\In\MotorCan.h)(0x632D6E98)

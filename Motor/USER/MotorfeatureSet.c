@@ -80,7 +80,7 @@ signed char YMoveZero(MotorProperty* Mpz,const signed short torque,signed int ta
 			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA);
 			Mpz->Mst->step=1;
 		}
-		else if(!Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step>0&&Mpz->Mst->MoveTimeOut[1]>=1000*2)
+		else if(!Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step>0&&Mpz->Mst->MoveTimeOut[1]>=1000*3)
 		{
 			EnableOrClearALarm(Mpz->Mcg->MotorID[1],0);
 			EnableOrClearALarm(Mpz->Mcg->MotorID[1],3);
@@ -99,7 +99,7 @@ signed char YMoveZero(MotorProperty* Mpz,const signed short torque,signed int ta
 		}
 		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==3)
 		{
-			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],Mpz->Mcg->MotorYLACUNA-2200);
+			MoveZero(Mpz,1,tarSeep,torque,Mpz->Mcg->ReturnZeroDirection[1],(Mpz->Mcg->MotorYLACUNA)+(Mpz->Mcg->Homeoffsetcompensation[1]));
 			Mpz->Mst->step=4;
 		}
 		else if(Mpz->Mst->MoveZeroSta[1]&&Mpz->Mst->step==4)
@@ -110,13 +110,12 @@ signed char YMoveZero(MotorProperty* Mpz,const signed short torque,signed int ta
 		return 0;
 }
 
-
 #endif
 
 /******************************************************************
 Y回零试错
 @Mptry:   电机属性句柄
-解决上电回零齿轮与齿条错位卡顿（循环6次移动齿轮位置错开卡顿）
+解决上电回零齿轮与齿条错位卡顿（循环12次移动齿轮位置错开卡顿）
 ********************************************************************/
 
 signed char YMoveZeroTrial(MotorProperty* Mptry)
@@ -168,7 +167,7 @@ signed char YMoveZeroTrial(MotorProperty* Mptry)
 					MoveSeepMode(Mptry,0x800,0x90,1);
 					Mptry->Mst->TrialState=4;
 			}
-			else if(Mptry->Mst->TrialState==4&&Mptry->Mst->MoveTimeOut[1]>100*4)
+			else if(Mptry->Mst->TrialState==4&&Mptry->Mst->MoveTimeOut[1]>100*2)
 			{
 					MoveSeepMode(Mptry,0x800,0x00,1);
 					Mptry->Mst->TrialCount++;
@@ -195,10 +194,10 @@ signed char RestStep1(MotorProperty* Mpr1,signed short seepXMZ ,signed short see
 		}
 		if(Mpr1->Mst->stepnum==0)
 		{
-			MoveSeepMode(Mpr1,torque,seepYMZ*-1,1);         //推出剪刀
+			MoveSeepMode(Mpr1,torque,(seepYMZ*-1),1);         //推出剪刀
 			Mpr1->Mst->stepnum=1;
 		}
-		else if(Mpr1->Mst->stepnum==1&&Mpr1->Mst->MoveTimeOut[1]>=100*1.5)
+		else if(Mpr1->Mst->stepnum==1&&Mpr1->Mst->MoveTimeOut[1]>=100*1.8)
 		{
 				MoveSeepMode(Mpr1,torque,0x00,1);  
 				if(Mpr1->Mst->Restnum==15)
@@ -213,7 +212,7 @@ signed char RestStep1(MotorProperty* Mpr1,signed short seepXMZ ,signed short see
 		}
 		else if(Mpr1->Mst->stepnum==2&&Mpr1->Mst->MoveTargetSta[0])
 		{
-			MoveToTargetPos(Mpr1,0x155,Mpr1->Mcg->MotorYLACUNA,1);
+			MoveToTargetPos(Mpr1,0x155,(Mpr1->Mcg->MotorYLACUNA)+(Mpr1->Mcg->Homeoffsetcompensation[1]),1);
 			Mpr1->Mst->stepnum=3;
 		}
 		else if(Mpr1->Mst->stepnum==3&&Mpr1->Mst->MoveTargetSta[1])
@@ -247,7 +246,7 @@ signed char RestStep2(MotorProperty* Mpr2,signed short seepXMZ ,signed short see
 			Mpr2->Mst->stepnum=1;
 		}
 		
-		else if(Mpr2->Mst->stepnum==1&&Mpr2->Mst->MoveTimeOut[1]>=100*1.5)
+		else if(Mpr2->Mst->stepnum==1&&Mpr2->Mst->MoveTimeOut[1]>=100*1.8)
 		{
 					MoveSeepMode(Mpr2,torque,0x00,1); 
 			
@@ -261,7 +260,7 @@ signed char RestStep2(MotorProperty* Mpr2,signed short seepXMZ ,signed short see
 					{
 						MoveToTargetPos(Mpr2,seepXMZ, Mpr2->Mcg->XMoveStandard[Mpr2->Mst->Restnum]-Mpr2->Mcg->MotorXYLACUNA,0); 					
 					}
-					MoveToTargetPos(Mpr2,0x255,Mpr2->Mcg->MotorYLACUNA,1);                                              //移动至齿轮水平位	
+					MoveToTargetPos(Mpr2,0x255,(Mpr2->Mcg->MotorYLACUNA)+(Mpr2->Mcg->Homeoffsetcompensation[1]),1);                                              //移动至齿轮水平位	
 					Mpr2->Mst->stepnum=4;
 				}
 				else
@@ -273,15 +272,15 @@ signed char RestStep2(MotorProperty* Mpr2,signed short seepXMZ ,signed short see
 		}
 		else if(Mpr2->Mst->stepnum==2&&Mpr2->Mst->MoveTargetSta[0])
 		{
-			MoveToTargetPos(Mpr2,0x255,Mpr2->Mcg->MotorYLACUNA, 1);                                                   //移动至齿轮水平位	
+			MoveToTargetPos(Mpr2,0x255,(Mpr2->Mcg->MotorYLACUNA)+(Mpr2->Mcg->Homeoffsetcompensation[1]), 1);                                                   //移动至齿轮水平位	
 			Mpr2->Mst->stepnum=3;
 		}
 
-		else if(Mpr2->Mst->stepnum==4&&Mpr2->Mst->MoveTargetSta[1]&&Mpr2->Mst->MoveTimeOut[1]>=100*1.5)
+		else if(Mpr2->Mst->stepnum==4&&Mpr2->Mst->MoveTargetSta[1]&&Mpr2->Mst->MoveTimeOut[1]>=100*1.8)
 		{
 			  Mpr2->Mst->ifstat=3;
 		}		
-		else if(Mpr2->Mst->stepnum==3&&Mpr2->Mst->MoveTargetSta[1]&&Mpr2->Mst->MoveTimeOut[1]>=100*1.3)
+		else if(Mpr2->Mst->stepnum==3&&Mpr2->Mst->MoveTargetSta[1]&&Mpr2->Mst->MoveTimeOut[1]>=100*1.5)
 		{
 				Mpr2->Mst->stepnum=0;
 			  Mpr2->Mst->ifstat=2;
@@ -536,7 +535,7 @@ signed char KnifeSelection2(MotorProperty* Mpk,const short KnifeNumber)
   }
 	else if(Mpk->Mst->OutKnifeStep==4&&Mpk->Mst->MoveTimeOut[0]>1000*0.1)
 	{
-		MoveToTargetPos(Mpk,0x255,Mpk->Mcg->MotorYLACUNA, 1);                            //移动至齿轮水平位
+		MoveToTargetPos(Mpk,0x255,(Mpk->Mcg->MotorYLACUNA)+(Mpk->Mcg->Homeoffsetcompensation[1]), 1);                            //移动至齿轮水平位
 		Mpk->Mst->OutKnifeStep=5;
 	}
 	else if(Mpk->Mst->OutKnifeStep==5&&Mpk->Mst->MoveTargetSta[1]&&Mpk->Mst->MoveTimeOut[1]>1000*0.1)
@@ -586,7 +585,7 @@ signed char CloseKnife2(MotorProperty* Mpc,const short KnifeNumber)
 		}		
 		else if(Mpc->Mst->CloseKnife==1&&Mpc->Mst->MoveTargetSta[0])
 		{
-				MoveToTargetPos(Mpc,0x255,Mpc->Mcg->MotorYLACUNA, 1);                                            //移动至齿轮水平位
+				MoveToTargetPos(Mpc,0x255,(Mpc->Mcg->MotorYLACUNA)+(Mpc->Mcg->Homeoffsetcompensation[1]), 1);                                            //移动至齿轮水平位
 				Mpc->Mst->CloseKnife=2;
 		}
 		else if(Mpc->Mst->CloseKnife==2&&Mpc->Mst->MoveTargetSta[1]&&Mpc->Mst->MoveTimeOut[1]>=1000*0.1)
@@ -629,7 +628,7 @@ signed char CloseKnife2(MotorProperty* Mpc,const short KnifeNumber)
 		}
 		else if(Mpc->Mst->CloseKnife==6&&Mpc->Mst->MoveTargetSta[0]&&Mpc->Mst->MoveTimeOut[0]>=1000*0.2)
 		{
-			MoveToTargetPos(Mpc,0x255,Mpc->Mcg->MotorYLACUNA, 1);                            //移动至齿轮水平位
+			MoveToTargetPos(Mpc,0x255,Mpc->Mcg->MotorYLACUNA+(Mpc->Mcg->Homeoffsetcompensation[1]), 1);                            //移动至齿轮水平位
 			Mpc->Mst->CloseKnife=7;
 		}
 		else if(Mpc->Mst->CloseKnife==7&&Mpc->Mst->MoveTargetSta[1]&&Mpc->Mst->MoveTimeOut[1]>=1000*0.2)

@@ -18,8 +18,8 @@ const	signed int standardvalX_R[KnifeNum]={10,3960,8140,12263,16343,20416,24560,
 //{1271,5440,9440,13563,17543,21416,25660,29707,39917,37910,42057,46073,50183,54378,58527,62541};
 
 //电机属性配置
-MotorConfig  MtCgL={{0x00,0x00},2000,2400,0xc00,{0x01,0x01},{0x00,0x01},{0xff,0xff},{0x01681000,0x01681000},standardvalY_L,standardvalX_L,{0x01,0x02}};
-MotorConfig  MtCgR={{0x00,0x00},2000,-35,0xc00,{0x00,0x00},{0x00,0x00},{0xff,0xff},{0x01681000,0x01681000},standardvalY_R,standardvalX_R,{0x03,0x04}};
+MotorConfig  MtCgL={{0x00,0x00},2000,-1800,0xc00,{0x00,2500},{0x00,0x01},{0x00,0x01},{0xff,0xff},{0x01681000,0x01681000},standardvalY_L,standardvalX_L,{0x02,0x08}};
+MotorConfig  MtCgR={{0x00,0x01},2000,-1800,0xc00,{0x00,2500},{0x00,0x00},{0x00,0x01},{0xff,0xff},{0x01681000,0x01681000},standardvalY_R,standardvalX_R,{0x04,0x62}};
 
 //左电机属性句柄
 MotorProperty  MtProperty1_L={&MtCgL,&MErrState,&MExeSta};
@@ -134,7 +134,8 @@ signed char MoveZero(MotorProperty* Mpy,const unsigned short MID,const signed sh
 		MotorInitVal[0]=MCmd.Parameter;
 		MotorInitVal[1]=Mpy->Mcg->MotorID[MID];
 		MotorInitVal[2]=MSCmd.SetDir&0xff; 
-		MotorInitVal[3]=MSCmd.SetDir>>8;	
+		MotorInitVal[3]=MSCmd.SetDir>>8;
+		MotorInitVal[4]=(Mpy->Mcg->MoveMentDirection[MID])&0xff;		
 		MotorInitVal[6]=Dir;
 		MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置运动正方向（逆时针）
 		MotorInitVal[2]=MSCmd.SetReturnZeroOffset&0xff;
@@ -203,7 +204,7 @@ signed char MoveSeepMode(MotorProperty* Mpv,const signed short torque,signed int
 		}
 		Mpv->Mst->MoveTimeOut[MID]=0;
 		MotorInitVal[0]=MCmd.SeepMode;
-		MotorInitVal[1]=Mpv->Mcg->MotorID[MID] ;
+		MotorInitVal[1]=Mpv->Mcg->MotorID[MID];
 		MotorInitVal[2]=torque&0xff; 
 		MotorInitVal[3]=torque>>8;
 		MotorInitVal[4]=tarSeep&0xff;
@@ -252,6 +253,10 @@ unsigned char MotorCanInit(MotorProperty* Mpi)
 	{
 			memset(&MotorInitVal[2],0,6);
 			MotorInitVal[1]=Mpi->Mcg->MotorID[i];
+			MotorInitVal[2]=MSCmd.VersionSwitch&0xff;
+			MotorInitVal[3]=MSCmd.VersionSwitch>>8;
+			MotorInitVal[4]=0x02;
+			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //协议版本切换为恒强			
 			MotorInitVal[2]=MSCmd.SetDir&0xff; 
 			MotorInitVal[3]=MSCmd.SetDir>>8;
 			MotorInitVal[4]=(Mpi->Mcg->MoveMentDirection[i])&0xff;
@@ -262,7 +267,7 @@ unsigned char MotorCanInit(MotorProperty* Mpi)
 			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置以撞零方式回零
 			MotorInitVal[2]=MSCmd.SetMaxSpeed&0xff;
 			MotorInitVal[3]=MSCmd.SetMaxSpeed>>8;
-			MotorInitVal[4]=(Mpi->Mcg->TopSpeed[i])&0xff ;
+			MotorInitVal[4]=(Mpi->Mcg->TopSpeed[i])&0xff;
 			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //设置最高速度255RPM
 			MotorInitVal[2]=MSCmd.ElectronicGearRatio&0xff;
 			MotorInitVal[3]=MSCmd.ElectronicGearRatio>>8;
@@ -270,7 +275,8 @@ unsigned char MotorCanInit(MotorProperty* Mpi)
 			MotorInitVal[5]=((Mpi->Mcg->ElectronicGearRatio[i])>>8)&0xff;
 			MotorInitVal[6]=((Mpi->Mcg->ElectronicGearRatio[i])>>16)&0xff;
 			MotorInitVal[7]=((Mpi->Mcg->ElectronicGearRatio[i])>>24)&0xff;
-			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);                  //电子齿轮比  4096个脉冲转一圈
+			MotorSendCanData(MotorInitVal,MOTORDATALEN,MOTORREVCANID);			         //电子齿轮比  4096个脉冲转一圈
+		
 			EnableOrClearALarm(Mpi->Mcg->MotorID[i],3);
 	}
 	return 1;

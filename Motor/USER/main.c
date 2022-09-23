@@ -30,61 +30,56 @@ int main()
 		MotorCanInit(&MtProperty1_R);
 
 		while(1)
-		{	
-			
+		{		
 			if(Posv==0)
 			{
-
-//				Posv=DreMoveZero(&MtProperty1_L);
-//				Posv=YMoveZero(&MtProperty1_L,900,90);
-				Posv=YMoveZeroTrial(&MtProperty1_L);
-				
+			   Posv=DreMoveZero(&MtProperty1_L);
 			}
-//			if(torq==0)
-//			{
-//				torq=DreMoveZero(&MtProperty1_R);				
-//			}				
+			if(torq==0)
+			{
+				torq=DreMoveZero(&MtProperty1_R);
+			}				
 //			
-//		 if(torq==1&&KnifeSelection2(&MtProperty1_R,1))
-//			{
-//					torq=2;
-//			}
-//			if(torq==2&&CloseKnife2(&MtProperty1_R,1))
-//			{
-//				torq=3;
-//			}
-//			if(torq==3&&KnifeSelection2(&MtProperty1_R,15))
-//			{
-//					torq=4;
-//			}
-//			if(torq==4&&CloseKnife2(&MtProperty1_R,15))
-//			{
-//				torq=1;
-//			}
-////			
-//			if(Posv==1&&KnifeSelection2(&MtProperty1_L,1))
-//			{
-//					Posv=2;
-//			}
-//			if(Posv==2&&CloseKnife2(&MtProperty1_L,1))
-//			{
-//				Posv=3;
-//			}
-//			if(Posv==3&&KnifeSelection2(&MtProperty1_L,16))
-//			{
-//					Posv=4;
-//			}
-//			if(Posv==4&&CloseKnife2(&MtProperty1_L,16))
-//			{
-//				Posv=1;
-//			}
+		 if(torq==1&&KnifeSelection2(&MtProperty1_R,1))
+			{
+					torq=2;
+			}
+			if(torq==2&&CloseKnife2(&MtProperty1_R,1))
+			{
+				torq=3;
+			}
+			if(torq==3&&KnifeSelection2(&MtProperty1_R,15))
+			{
+					torq=4;
+			}
+			if(torq==4&&CloseKnife2(&MtProperty1_R,15))
+			{
+				torq=1;
+			}
+
+			if(Posv==1&&KnifeSelection2(&MtProperty1_L,1))
+			{
+					Posv=2;
+			}
+			if(Posv==2&&CloseKnife2(&MtProperty1_L,1))
+			{
+				Posv=3;
+			}
+			if(Posv==3&&KnifeSelection2(&MtProperty1_L,16))
+			{
+					Posv=4;
+			}
+			if(Posv==4&&CloseKnife2(&MtProperty1_L,16))
+			{
+				Posv=1;
+			}
 			
 			ReadAnPackData(&MRevBuff);       //队列数据拿出解析
-//			if(MRevBuff.TaskTime>=30)       //定时查编码器位置 可不要
-//			{
-//					PollingMotorSta();	
-//					MRevBuff.TaskTime=0;
-//			}
+			if(MRevBuff.TaskTime>=30)       //定时查编码器位置 可不要
+			{
+					PollingMotorSta();	
+					MRevBuff.TaskTime=0;
+			}
 	 }
 }
 

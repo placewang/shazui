@@ -92,13 +92,14 @@ typedef struct Alarm
 																																			)	
 }MotorAlarm;
 
-
 typedef struct MotorConfig
 {
+	
 	unsigned char ReturnZeroDirection[2];                   //回零方向
   signed int  MotorXYLACUNA;                              //剪刀电机在平移位置上的两刀之间的间隙偏移量
   signed int  MotorYLACUNA;                               //剪刀电机回零偏移量
   signed int  MotorXLACUNA;                               //平移电机回零偏移量	
+	signed int  Homeoffsetcompensation[2];									//剪刀电机回零偏移补偿量
 	signed int  MoveMentDirection[2];                       //运动正方向
 	signed int  MoveToZero[2];                              //回零方式
 	signed int  TopSpeed[2];                                //最高速度
@@ -107,9 +108,7 @@ typedef struct MotorConfig
 	const signed int  *YMoveStandard;                       //剪刀电机选刀位置存储
   const signed int  *XMoveStandard;                       //平移电机出刀位置存储
 	unsigned int MotorID[2];                                //电机ID
-	
 }MotorConfig;
-
 
 //电机属性句柄
 
